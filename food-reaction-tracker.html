@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Track what you eat and how your body reacts. ReactLog helps you identify food sensitivities, intolerances, and reactions—100% private, on-device.">
+    <meta name="keywords" content="food reaction tracker, food sensitivity tracker, food intolerance tracker, food diary app, track food reactions, food allergy tracker, digestive health tracking">
+    <meta name="author" content="ReactLog">
+    <meta name="canonical" content="https://reactlog.com/food-reaction-tracker">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://reactlog.com/food-reaction-tracker">
+    <meta property="og:title" content="Food Reaction Tracker — Identify Your Food Sensitivities | ReactLog">
+    <meta property="og:description" content="Track what you eat and how your body reacts. ReactLog helps you identify food sensitivities, intolerances, and reactions—100% private, on-device.">
+    <meta property="og:image" content="https://reactlog.com/screens/dashboard.jpg">
+    <meta property="og:site_name" content="ReactLog">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://reactlog.com/food-reaction-tracker">
+    <meta name="twitter:title" content="Food Reaction Tracker — Identify Your Food Sensitivities | ReactLog">
+    <meta name="twitter:description" content="Track what you eat and how your body reacts. ReactLog helps you identify food sensitivities, intolerances, and reactions—100% private, on-device.">
+    <meta name="twitter:image" content="https://reactlog.com/screens/dashboard.jpg">
+
+    <!-- Schema.org SoftwareApplication -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "SoftwareApplication",
+        "name": "ReactLog",
+        "description": "A private food reaction tracker that correlates meals and ingredients with symptoms and physical responses. 100% on-device, zero data collection.",
+        "url": "https://reactlog.com",
+        "image": "https://reactlog.com/screens/dashboard.jpg",
+        "applicationCategory": "HealthApplication",
+        "operatingSystem": "iOS",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "description": "Free during Early Access"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "342"
+        },
+        "featureList": [
+            "Food and meal logging",
+            "Ingredient tracking",
+            "Symptom tracking",
+            "Reaction timing",
+            "Correlation detection",
+            "On-device analytics",
+            "Face ID/Touch ID security",
+            "No data collection"
+        ]
+    }
+    </script>
+
+    <!-- FAQ Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "How do I identify food sensitivities and intolerances?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Track consistently for 2-3 weeks. Each time you eat, log the meal and ingredients. Throughout the day, note any reactions—bloating, headaches, skin changes, fatigue, digestive issues, or energy crashes. ReactLog automatically detects patterns, showing you which foods correlate with your symptoms. You'll discover which ingredients trigger reactions for you specifically."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What types of foods and reactions can I track?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Track any food or ingredient. Common ones include gluten, dairy, nuts, shellfish, eggs, soy, common allergens, and any specific foods you suspect. For reactions, log bloating, gas, headaches, fatigue, brain fog, skin issues, joint pain, digestive problems, mood changes, anxiety, or any physical symptom you experience. ReactLog adapts to your unique health journey."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How long until I see patterns in my food reactions?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Most users discover meaningful patterns within 2-3 weeks of consistent daily tracking. Some reactions appear immediately (within hours), while others develop over 6-24 hours. The more detailed you log your meals and symptoms, the clearer the patterns become. Consistency matters more than duration—tracking every day produces better data than sporadic entries."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is my food diary data private?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. ReactLog has no backend servers and zero data collection. Your meal logs, symptom entries, and all tracking data never leave your iPhone. We use on-device processing only. You can lock the app with Face ID or Touch ID for additional security. Your food sensitivities and health information stays completely private."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can ReactLog help with diagnosed food allergies?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "ReactLog helps you track reactions and identify patterns that may indicate food sensitivities and intolerances. However, it is not a replacement for medical diagnosis. If you suspect a food allergy, consult a healthcare provider for proper testing and diagnosis. ReactLog works alongside professional medical care to help you understand your body's individual responses to foods."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <title>Food Reaction Tracker — Identify Your Food Sensitivities | ReactLog</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --accent: #33ebe0;
+            --accent-secondary: #57b8ff;
+            --glow: #40f2e6;
+            --bg-top: #0f1f2e;
+            --bg-bottom: #080d17;
+            --bg-primary: #0a1420;
+            --text-primary: #ffffff;
+            --text-secondary: #b0c4de;
+            --text-tertiary: #7a8fa6;
+            --border-color: rgba(51, 235, 224, 0.15);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Work Sans', sans-serif;
+            background: linear-gradient(135deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Canvas background */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.5;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            background: rgba(10, 20, 32, 0.7);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-logo:hover {
+            color: var(--accent);
+        }
+
+        .nav-logo img {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--glow) 100%);
+            color: var(--bg-primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(51, 235, 224, 0.3);
+        }
+
+        .download-btn:hover {
+            box-shadow: 0 0 30px rgba(51, 235, 224, 0.5), 0 0 60px rgba(51, 235, 224, 0.2);
+            transform: translateY(-2px);
+        }
+        .nav-dropdown { position: relative; }
+        .nav-dropdown > a { display: flex; align-items: center; gap: 4px; }
+        .dropdown-arrow { display: inline-block; width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 5px solid currentColor; transition: transform 0.3s; margin-left: 2px; }
+        .nav-dropdown:hover > a .dropdown-arrow { transform: rotate(180deg); }
+        .nav-dropdown-menu { display: none; position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%); min-width: 220px; background: rgba(10,20,32,0.96); backdrop-filter: blur(24px); border: 1px solid rgba(51,235,224,0.18); border-radius: 14px; padding: 10px; z-index: 1001; box-shadow: 0 16px 48px rgba(0,0,0,0.4); }
+        .nav-dropdown-menu::before { content: ''; position: absolute; top: -16px; left: 0; right: 0; height: 16px; }
+        .nav-dropdown:hover .nav-dropdown-menu { display: block; }
+        .nav-dropdown-menu a { display: block; padding: 10px 14px; font-size: 0.85rem; border-radius: 8px; white-space: nowrap; }
+        .nav-dropdown-menu a:hover { background: rgba(51,235,224,0.08); color: #33ebe0 !important; }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                display: none;
+            }
+
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(10, 20, 32, 0.95);
+                padding: 1rem;
+                border-bottom: 1px solid var(--border-color);
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-content h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero-content p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+            animation: fadeInUp 0.8s ease-out 0.1s backwards;
+        }
+
+        .trust-badge {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            color: var(--text-tertiary);
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        .trust-badge-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .trust-icon {
+            width: 20px;
+            height: 20px;
+            fill: var(--accent);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease-out 0.3s backwards;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--glow) 100%);
+            color: var(--bg-primary);
+            box-shadow: 0 0 20px rgba(51, 235, 224, 0.3);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 30px rgba(51, 235, 224, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(51, 235, 224, 0.1);
+        }
+
+        .hero-image {
+            position: relative;
+            animation: fadeIn 1s ease-out 0.2s backwards;
+        }
+
+        .hero-image img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 60px rgba(51, 235, 224, 0.15);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        /* Problem Section */
+        .problem-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .problem-text p {
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .problem-text strong {
+            color: var(--accent);
+        }
+
+        .problem-image img {
+            width: 100%;
+            max-width: 450px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 60px rgba(51, 235, 224, 0.1);
+        }
+
+        /* How It Works */
+        .how-it-works {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step-card {
+            background: rgba(15, 31, 46, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .step-card:hover {
+            background: rgba(15, 31, 46, 0.8);
+            border-color: var(--accent);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(51, 235, 224, 0.2);
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
+            border-radius: 50%;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--bg-primary);
+            margin-bottom: 1rem;
+        }
+
+        .step-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .step-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Trackable Items */
+        .trackable-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .trackable-item {
+            background: rgba(15, 31, 46, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .trackable-item:hover {
+            background: rgba(15, 31, 46, 0.8);
+            border-color: var(--accent);
+            transform: translateY(-4px);
+        }
+
+        .trackable-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 1rem;
+            fill: var(--accent);
+        }
+
+        .trackable-item h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .trackable-item p {
+            font-size: 0.9rem;
+            color: var(--text-tertiary);
+        }
+
+        /* Privacy Section */
+        .privacy-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .privacy-text ul {
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .privacy-text li {
+            padding: 1rem 0;
+            padding-left: 2.5rem;
+            position: relative;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .privacy-text li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+
+        .privacy-image img {
+            width: 100%;
+            max-width: 450px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 60px rgba(51, 235, 224, 0.1);
+        }
+
+        /* FAQ Section */
+        .faq-content {
+            margin-top: 3rem;
+        }
+
+        .faq-item {
+            background: rgba(15, 31, 46, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .faq-item:hover .faq-question {
+            background: rgba(15, 31, 46, 0.8);
+        }
+
+        .faq-question h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .faq-toggle {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0 2rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 0 2rem 2rem 2rem;
+            max-height: 500px;
+        }
+
+        /* CTA Section */
+        .cta {
+            text-align: center;
+            background: rgba(15, 31, 46, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 4rem 2rem;
+        }
+
+        .cta h2 {
+            margin-bottom: 1rem;
+        }
+
+        .cta .section-subtitle {
+            margin-bottom: 2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(10, 20, 32, 0.8);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border-color);
+            padding: 3rem 2rem;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 3rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .footer-brand-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--text-primary);
+        }
+
+        .footer-brand p {
+            font-size: 0.9rem;
+            color: var(--text-tertiary);
+        }
+
+        .footer-links {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .footer-links-col h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .footer-links-col ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .footer-links-col a {
+            color: var(--text-tertiary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links-col a:hover {
+            color: var(--accent);
+        }
+
+        .footer-legal {
+            text-align: right;
+            color: var(--text-tertiary);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 3rem 2rem;
+            }
+
+            .problem-content,
+            .privacy-content {
+                grid-template-columns: 1fr;
+            }
+
+            .how-it-works {
+                grid-template-columns: 1fr;
+            }
+
+            .trackable-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-legal {
+                text-align: left;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .trackable-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .hero {
+                padding: 2rem 1rem;
+                min-height: auto;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            .trust-badge {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+
+            h2 {
+                font-size: 1.75rem;
+            }
+
+            .step-card,
+            .trackable-item {
+                padding: 1.5rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .footer-links {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .trackable-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-content h1 {
+                font-size: 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .download-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+
+    <div class="content-wrapper">
+        <!-- Navigation -->
+        <nav>
+            <a href="/" class="nav-logo">
+                <img src="/screens/icon.png" alt="ReactLog" style="height:32px;width:32px;border-radius:8px;">
+                ReactLog
+            </a>
+            <ul class="nav-links">
+                <li><a href="/#features">Features</a></li>
+                <li class="nav-dropdown">
+                    <a href="#">Use Cases <span class="dropdown-arrow"></span></a>
+                    <div class="nav-dropdown-menu">
+                        <a href="/supplement-tracker">Supplement Tracker</a>
+                        <a href="/food-reaction-tracker">Food Reaction Tracker</a>
+                        <a href="/brain-fog-tracker">Brain Fog Tracker</a>
+                        <a href="/energy-tracker">Energy Tracker</a>
+                        <a href="/medication-tracker">Medication Tracker</a>
+                    </div>
+                </li>
+                <li><a href="/#how-it-works">How It Works</a></li>
+                <li><a href="/#privacy">Privacy</a></li>
+                <li><a href="/#download" class="download-btn">Download</a></li>
+            </ul>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Track What You Eat. Understand How Your Body Reacts.</h1>
+                <p>Most people struggle with unexplained bloating, headaches, fatigue, or skin issues after eating—but never know which foods are the culprit. ReactLog correlates your meals and ingredients with symptoms like digestive issues, brain fog, energy crashes, and skin reactions, revealing which foods your body doesn't tolerate.</p>
+
+                <div class="trust-badge">
+                    <div class="trust-badge-item">
+                        <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+                            <path d="M9 12l2 2 4-4"/>
+                        </svg>
+                        <span>100% on-device</span>
+                    </div>
+                    <div class="trust-badge-item">
+                        <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+                            <path d="M9 12l2 2 4-4"/>
+                        </svg>
+                        <span>Zero data collection</span>
+                    </div>
+                    <div class="trust-badge-item">
+                        <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+                            <path d="M9 12l2 2 4-4"/>
+                        </svg>
+                        <span>No backend servers</span>
+                    </div>
+                </div>
+
+                <div class="hero-buttons">
+                    <button class="btn btn-primary">Download</button>
+                    <button class="btn btn-secondary">Learn More</button>
+                </div>
+            </div>
+
+            <div class="hero-image">
+                <img src="screens/dashboard.jpg" alt="ReactLog Dashboard showing food tracking and symptom correlations" loading="lazy">
+            </div>
+        </section>
+
+        <!-- Problem Section -->
+        <section id="problem" class="reveal">
+            <h2>You're Eating Foods That Make You Feel Terrible—But You Don't Know Which Ones</h2>
+
+            <div class="problem-content">
+                <div class="problem-text">
+                    <p>Your stomach bloats after lunch. You get a headache by 3 PM. You break out in hives. Your energy crashes. You blame stress, sleep, or bad luck. But the real culprit might be what you ate.</p>
+
+                    <p>The problem is that <strong>food reactions aren't always immediate</strong>. Some symptoms appear within 30 minutes, others take 6-24 hours to develop. You eat dairy at breakfast and feel fine. Then you eat pizza at dinner and feel awful the next day. Was it the dairy, the gluten, the tomato sauce, the fat, or something completely unrelated? Without tracking, it's impossible to know.</p>
+
+                    <p><strong>Food sensitivities and intolerances are real and common</strong>. Millions of people experience reactions to gluten, dairy, nuts, shellfish, soy, eggs, and countless other foods. Many don't have diagnosed allergies—they just notice their body doesn't tolerate certain foods well. But without data, they keep eating foods that make them sick.</p>
+
+                    <p><strong>The solution is systematic tracking.</strong> Log what you eat and when. Throughout the day, note any symptoms—bloating, gas, headaches, fatigue, skin changes, brain fog, joint pain, or mood shifts. After 2-3 weeks of consistent logging, patterns emerge. You discover which specific foods or ingredients correlate with your worst symptoms, and which foods make you feel your best.</p>
+
+                    <p>Once you know your triggers, you can make informed choices. You eliminate the foods that harm you and keep the ones that nourish you. You feel better, have more energy, clearer skin, and a functioning digestive system.</p>
+                </div>
+
+                <div class="problem-image">
+                    <img src="screens/sidebar.jpg" alt="ReactLog sidebar showing meal and symptom entries" loading="lazy">
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section id="how-it-works" class="reveal">
+            <h2>How It Works in 3 Steps</h2>
+            <p class="section-subtitle">Transform guessing into data-driven food decisions.</p>
+
+            <div class="how-it-works">
+                <div class="step-card reveal">
+                    <div class="step-number">1</div>
+                    <h3>Log What You Eat</h3>
+                    <p>Each meal, record what you ate and the ingredients. Be specific: note the bread type, dairy sources, added ingredients. ReactLog includes a database of common foods and lets you create custom meal entries. Takes 1-2 minutes per meal.</p>
+                </div>
+
+                <div class="step-card reveal">
+                    <div class="step-number">2</div>
+                    <h3>Track Your Symptoms</h3>
+                    <p>Throughout the day, log any symptoms you experience: bloating, gas, headaches, fatigue, brain fog, skin reactions, joint pain, mood changes, energy crashes, digestive issues, or any other reactions you notice. Use quick sliders and checkboxes.</p>
+                </div>
+
+                <div class="step-card reveal">
+                    <div class="step-number">3</div>
+                    <h3>Discover Your Triggers</h3>
+                    <p>After 2-3 weeks of consistent logging, ReactLog's on-device analytics identify correlations: "Your bloating is 40% worse on days you eat wheat" or "Your energy crashes 8 hours after dairy." You see exactly which foods and ingredients trigger your worst reactions.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- What You Can Track -->
+        <section id="features" class="reveal">
+            <h2>Track Everything That Impacts Your Health</h2>
+            <p class="section-subtitle">ReactLog adapts to your unique food sensitivities and health journey. Track any combination of these:</p>
+
+            <div class="trackable-grid">
+                <div class="trackable-item reveal">
+                    <svg class="trackable-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-13c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5z"/>
+                    </svg>
+                    <h4>Meals & Ingredients</h4>
+                    <p>Food type, ingredients, portion size, brands, and preparation methods</p>
+                </div>
+
+                <div class="trackable-item reveal">
+                    <svg class="trackable-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/>
+                    </svg>
+                    <h4>Digestive Symptoms</h4>
+                    <p>Bloating, gas, cramping, diarrhea, constipation, stomach pain, heartburn</p>
+                </div>
+
+                <div class="trackable-item reveal">
+                    <svg class="trackable-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-13c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5z"/>
+                    </svg>
+                    <h4>Head & Mood</h4>
+                    <p>Headaches, brain fog, anxiety, mood swings, difficulty concentrating</p>
+                </div>
+
+                <div class="trackable-item reveal">
+                    <svg class="trackable-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/>
+                    </svg>
+                    <h4>Energy & Sleep</h4>
+                    <p>Energy crashes, fatigue, sleep quality, wake-ups, afternoon slumps</p>
+                </div>
+
+                <div class="trackable-item reveal">
+                    <svg class="trackable-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/>
+                    </svg>
+                    <h4>Skin & Inflammation</h4>
+                    <p>Acne, rashes, hives, itching, eczema flare-ups, joint pain, swelling</p>
+                </div>
+
+                <div class="trackable-item reveal">
+                    <svg class="trackable-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/>
+                    </svg>
+                    <h4>Specific Allergens</h4>
+                    <p>Track common allergens: gluten, dairy, nuts, shellfish, soy, eggs, sesame</p>
+                </div>
+
+                <div class="trackable-item reveal">
+                    <svg class="trackable-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M21 10c0-7.732-6.268-14-14-14s-14 6.268-14 14 6.268 14 14 14 14-6.268 14-14zm-13 0c0 .552.448 1 1 1s1-.448 1-1-.448-1-1-1-1 .448-1 1zm5 0c0 .552.448 1 1 1s1-.448 1-1-.448-1-1-1-1 .448-1 1zm4-1c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1z"/>
+                    </svg>
+                    <h4>Timing & Context</h4>
+                    <p>Reaction timing, meal combinations, stress level, sleep quality context</p>
+                </div>
+
+                <div class="trackable-item reveal">
+                    <svg class="trackable-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-2.45-3.15-.6.8 3.05 3.93 3.35-4.29z"/>
+                    </svg>
+                    <h4>Custom Tracking</h4>
+                    <p>Create unlimited custom symptoms and metrics unique to your health</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Privacy Section -->
+        <section id="privacy" class="reveal">
+            <h2>Your Food and Health Data Stays on Your Phone</h2>
+            <p class="section-subtitle">Why privacy matters for food reaction tracking.</p>
+
+            <div class="privacy-content">
+                <div class="privacy-text">
+                    <p>Your food diary reveals deeply personal information: <strong>food allergies and intolerances</strong> you manage, <strong>digestive issues</strong> you're dealing with, <strong>health conditions</strong> you're addressing, and vulnerabilities about your body. You don't want that data on someone else's server.</p>
+
+                    <p>Traditional food and health apps sell your dietary data to food companies, health insurers, and data brokers. They track which foods you eat to build profiles, target ads, or adjust your insurance rates. ReactLog takes a fundamentally different approach:</p>
+
+                    <ul>
+                        <li><strong>No backend servers</strong> — Your food diary and symptoms live on your device only. Period.</li>
+                        <li><strong>No analytics SDKs</strong> — We don't send telemetry about your usage patterns or what you eat.</li>
+                        <li><strong>No data collection</strong> — We have nothing to collect. No servers means no data pipeline.</li>
+                        <li><strong>No account required</strong> — You don't need to create a login. No username, no email, nothing that identifies you.</li>
+                        <li><strong>Face ID/Touch ID lock</strong> — Your food and symptom data is biometrically protected on your phone.</li>
+                    </ul>
+
+                    <p><strong>We charge for the app instead of charging you with your privacy.</strong> It's a sustainable business model that aligns our interests with yours. We want you to use ReactLog, but we don't want your food data or health information.</p>
+                </div>
+
+                <div class="privacy-image">
+                    <img src="screens/insights.jpg" alt="ReactLog insights showing food correlations with symptoms" loading="lazy">
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="reveal">
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="faq-content">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>How do I identify food sensitivities and intolerances?</h4>
+                        <div class="faq-toggle">↓</div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Track consistently for 2-3 weeks. Each time you eat, log the meal and specific ingredients. Throughout the day, note any reactions—bloating, headaches, skin changes, fatigue, digestive issues, or energy crashes. ReactLog automatically detects patterns and surfaces correlations. For example: "Your bloating is 40% worse on days you eat wheat" or "You experience brain fog 6 hours after dairy." You'll see which foods and ingredients consistently trigger your worst symptoms.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>What types of foods and reactions can I track?</h4>
+                        <div class="faq-toggle">↓</div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Track any food or ingredient. Common ones include gluten, dairy, nuts, shellfish, soy, eggs, grains, and any specific foods you suspect. For reactions, log bloating, gas, headaches, fatigue, brain fog, skin issues, joint pain, digestive problems, mood changes, anxiety, energy crashes, or any physical symptom you experience. ReactLog supports both pre-loaded foods and unlimited custom meal and symptom entries tailored to your unique sensitivities.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>How long until I see patterns in my food reactions?</h4>
+                        <div class="faq-toggle">↓</div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Most users discover meaningful patterns within 2-3 weeks of consistent daily tracking. Some reactions appear immediately (within 30 minutes to 2 hours), while others develop over 6-24 hours. The more detailed you log your meals and symptoms, the clearer the patterns become. Consistency matters more than duration—tracking every day produces better data than sporadic entries. Some users see significant correlations in as little as 10-14 days, while others want 4-6 weeks to feel confident in their patterns.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>Is my food diary data private?</h4>
+                        <div class="faq-toggle">↓</div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, absolutely. ReactLog has no backend servers and zero data collection. Your meal logs, symptom entries, food sensitivities, and all tracking data never leave your iPhone. We use on-device processing only. You can lock the app with Face ID or Touch ID for an additional security layer. Your food diary and health information stays completely private—we have no way to access, sell, or share it.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>Can ReactLog help with diagnosed food allergies?</h4>
+                        <div class="faq-toggle">↓</div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>ReactLog helps you track reactions and identify patterns that may indicate food sensitivities and intolerances. However, it is not a replacement for medical diagnosis or allergy testing. If you suspect a food allergy, consult a healthcare provider for proper testing and diagnosis. ReactLog works alongside professional medical care to help you understand your body's individual responses to foods and make informed dietary choices.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA -->
+        <section id="cta" class="cta reveal">
+            <h2>Start tracking today.</h2>
+            <p class="section-subtitle">Discover which foods work for your body. Free during Early Access. No account required. Your food data stays on your phone.</p>
+
+            <div class="cta-buttons">
+                <button class="btn btn-primary">Download</button>
+            </div>
+
+            <div class="trust-badge" style="justify-content: center;">
+                <div class="trust-badge-item">
+                    <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+                        <path d="M9 12l2 2 4-4"/>
+                    </svg>
+                    <span>100% on-device</span>
+                </div>
+                <div class="trust-badge-item">
+                    <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+                        <path d="M9 12l2 2 4-4"/>
+                    </svg>
+                    <span>Zero data collection</span>
+                </div>
+                <div class="trust-badge-item">
+                    <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+                        <path d="M9 12l2 2 4-4"/>
+                    </svg>
+                    <span>No backend servers</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-brand-name">ReactLog</div>
+                    <p>Track your health with real data, not guesses.</p>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-links-col">
+                        <h4>Product</h4>
+                        <ul>
+                            <li><a href="#features">Features</a></li>
+                            <li><a href="#how-it-works">How It Works</a></li>
+                            <li><a href="#privacy">Privacy</a></li>
+                            <li><a href="/">Homepage</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-links-col">
+                        <h4>Use Cases</h4>
+                        <ul>
+                            <li><a href="/supplement-tracker">Supplement Tracker</a></li>
+                            <li><a href="/food-reaction-tracker">Food Reaction Tracker</a></li>
+                            <li><a href="/brain-fog-tracker">Brain Fog Tracker</a></li>
+                            <li><a href="/energy-tracker">Energy Tracker</a></li>
+                            <li><a href="/medication-tracker">Medication Tracker</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="footer-legal">
+                    <p><a href="/privacy" style="color: inherit; text-decoration: none;">Privacy Policy</a> • <a href="/terms" style="color: inherit; text-decoration: none;">Terms of Service</a></p>
+                    <p style="margin-top: 1rem;"><a href="mailto:support@reactlog.com" style="color: var(--accent); text-decoration: none;">support@reactlog.com</a></p>
+                    <p style="margin-top: 1rem;"><a href="https://twitter.com/reactlogapp" style="color: var(--accent); text-decoration: none;">twitter.com/reactlogapp</a></p>
+                    <p style="margin-top: 2rem; color: var(--text-tertiary);">© 2026 ReactLog. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Animated canvas background
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Particle system
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 1.5 + 0.5;
+                this.speedX = Math.random() * 0.3 - 0.15;
+                this.speedY = Math.random() * 0.3 - 0.15;
+                this.opacity = Math.random() * 0.5 + 0.1;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+
+            draw() {
+                ctx.fillStyle = `rgba(51, 235, 224, ${this.opacity * 0.3})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        const particles = [];
+        for (let i = 0; i < 50; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let particle of particles) {
+                particle.update();
+                particle.draw();
+            }
+
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // Scroll reveal
+        const revealElements = document.querySelectorAll('.reveal');
+
+        function revealOnScroll() {
+            revealElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementBottom = element.getBoundingClientRect().bottom;
+
+                if (elementTop < window.innerHeight * 0.85 && elementBottom > 0) {
+                    element.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll();
+
+        // FAQ toggle
+        const faqItems = document.querySelectorAll('.faq-item');
+
+        faqItems.forEach(item => {
+            item.addEventListener('click', () => {
+                // Close other items
+                faqItems.forEach(other => {
+                    if (other !== item) {
+                        other.classList.remove('active');
+                    }
+                });
+
+                // Toggle current item
+                item.classList.toggle('active');
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Download button click handler
+        document.querySelectorAll('.download-btn, .btn-primary').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                // In production, this would link to App Store
+                console.log('Download ReactLog');
+            });
+        });
+    </script>
+</body>
+</html>
