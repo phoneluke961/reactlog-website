@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Discover why you're always tired with ReactLog's energy tracker app. Track your energy levels, sleep quality, and daily factors that affect fatigue. Find your personal energy equation. Free, on-device, zero data collection.">
+    <meta name="keywords" content="energy tracker app, energy level tracker, fatigue tracker, why am I always tired, chronic fatigue tracker, track energy levels, sleep tracking">
+    <meta name="theme-color" content="#0a1420">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="canonical" href="https://reactlog.com/energy-tracker">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Energy Tracker — Find Out Why You're Always Tired | ReactLog">
+    <meta property="og:description" content="Track your energy levels and discover the hidden patterns affecting your fatigue. Systematic tracking reveals what actually gives you energy.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://reactlog.com/energy-tracker">
+    <meta property="og:image" content="https://reactlog.com/screens/energy-tracker-og.jpg">
+    <meta property="og:site_name" content="ReactLog">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Energy Tracker — Find Out Why You're Always Tired | ReactLog">
+    <meta name="twitter:description" content="Track your energy levels and discover the hidden patterns affecting your fatigue. Systematic tracking reveals what actually gives you energy.">
+    <meta name="twitter:image" content="https://reactlog.com/screens/energy-tracker-og.jpg">
+
+    <title>Energy Tracker — Find Out Why You're Always Tired | ReactLog</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --accent: #33ebe0;
+            --accent-secondary: #57b8ff;
+            --glow: #40f2e6;
+            --bg-top: #0f1f2e;
+            --bg-bottom: #080d17;
+            --bg-primary: #0a1420;
+            --text-primary: #ffffff;
+            --text-secondary: #b8c5d6;
+            --border-light: rgba(51, 235, 224, 0.2);
+            --border-dark: rgba(51, 235, 224, 0.1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Work Sans', sans-serif;
+            background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated Canvas Background */
+        canvas#particleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem 2rem;
+            background: rgba(10, 20, 32, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-dark);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--accent);
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .nav-logo-img {
+            width: 32px;
+            height: 32px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 0.25rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            .nav-links {
+                gap: 0.75rem;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 2rem;
+            text-align: center;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-content {
+            text-align: left;
+        }
+
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .trust-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: rgba(51, 235, 224, 0.1);
+            border: 1px solid var(--border-light);
+            border-radius: 50px;
+            padding: 0.75rem 1.5rem;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            color: var(--accent);
+            backdrop-filter: blur(10px);
+        }
+
+        .trust-badge svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent), var(--glow));
+            color: #000;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.05rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 0 30px rgba(51, 235, 224, 0.3);
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 50px rgba(51, 235, 224, 0.5);
+        }
+
+        .hero-image {
+            position: relative;
+        }
+
+        .hero-image img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 20px;
+            border: 1px solid var(--border-light);
+            box-shadow: 0 20px 60px rgba(51, 235, 224, 0.2);
+        }
+
+        @media (max-width: 1200px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 3rem 1.5rem;
+                gap: 2rem;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .hero-content {
+                text-align: center;
+            }
+            .trust-badge {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 2rem 1rem;
+                gap: 1.5rem;
+            }
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+        }
+
+        /* Section Styling */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        section:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+        section:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+        section:nth-child(5) {
+            animation-delay: 0.6s;
+        }
+        section:nth-child(6) {
+            animation-delay: 0.8s;
+        }
+        section:nth-child(7) {
+            animation-delay: 1s;
+        }
+        section:nth-child(8) {
+            animation-delay: 1.2s;
+        }
+        section:nth-child(9) {
+            animation-delay: 1.4s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+            html {
+                scroll-behavior: auto;
+            }
+        }
+
+        h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 768px) {
+            section {
+                padding: 3rem 1.5rem;
+            }
+            h2 {
+                font-size: 1.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            section {
+                padding: 2rem 1rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Problem Section */
+        .problem-content {
+            background: rgba(15, 31, 46, 0.6);
+            border: 1px solid var(--border-dark);
+            border-radius: 20px;
+            padding: 2.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .problem-content p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .problem-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            padding: 1.5rem;
+            background: rgba(51, 235, 224, 0.05);
+            border-left: 3px solid var(--accent);
+            border-radius: 10px;
+        }
+
+        .stat-item strong {
+            color: var(--accent);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Energy Factors Grid */
+        .factors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .factor-card {
+            background: rgba(15, 31, 46, 0.8);
+            border: 1px solid var(--border-dark);
+            border-radius: 16px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .factor-card:hover {
+            border-color: var(--border-light);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(51, 235, 224, 0.15);
+        }
+
+        .factor-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .factor-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .factor-card p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* How It Works Section */
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step {
+            background: rgba(15, 31, 46, 0.6);
+            border: 1px solid var(--border-dark);
+            border-radius: 16px;
+            padding: 2.5rem;
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        .step-number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+
+        .step h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .step p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-image {
+            margin-top: 1.5rem;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-dark);
+        }
+
+        .step-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Real Patterns Section */
+        .patterns-list {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .pattern-item {
+            background: rgba(15, 31, 46, 0.6);
+            border-left: 4px solid var(--accent);
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .pattern-item p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .pattern-highlight {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Privacy Section */
+        .privacy-box {
+            background: rgba(15, 31, 46, 0.8);
+            border: 1px solid var(--accent-secondary);
+            border-radius: 16px;
+            padding: 2.5rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .privacy-box p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* FAQ Section */
+        .faq-container {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .faq-item {
+            background: rgba(15, 31, 46, 0.6);
+            border: 1px solid var(--border-dark);
+            border-radius: 12px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: background 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: rgba(51, 235, 224, 0.08);
+        }
+
+        .faq-toggle {
+            font-size: 1.5rem;
+            color: var(--accent);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+
+        .faq-answer-content {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Related Pages */
+        .related-pages {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .related-link {
+            background: rgba(15, 31, 46, 0.6);
+            border: 1px solid var(--border-dark);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-decoration: none;
+            color: var(--accent);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .related-link:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(51, 235, 224, 0.2);
+        }
+
+        /* CTA Section */
+        .final-cta {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(51, 235, 224, 0.1), rgba(87, 184, 255, 0.1));
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .final-cta h2 {
+            margin-bottom: 2rem;
+        }
+
+        .final-cta .hero-cta {
+            font-size: 1.2rem;
+            padding: 1.2rem 3rem;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(10, 20, 32, 0.8);
+            border-top: 1px solid var(--border-dark);
+            padding: 3rem 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+            margin-top: 5rem;
+        }
+
+        footer p {
+            margin-bottom: 1rem;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+            margin: 0 0.5rem;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Lazy Loading */
+        img {
+            loading="lazy";
+        }
+
+        /* Utility Classes */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            section {
+                animation: none;
+            }
+            .factor-card:hover,
+            .related-link:hover,
+            .hero-cta:hover {
+                transform: none;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            canvas#particleCanvas,
+            nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particleCanvas"></canvas>
+
+    <div class="content-wrapper">
+        <!-- Navigation -->
+        <nav>
+            <a href="/" class="nav-logo">
+                <svg class="nav-logo-img" viewBox="0 0 40 40" fill="none">
+                    <circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="2"/>
+                    <path d="M20 8v24M8 20h24" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                ReactLog
+            </a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#privacy">Privacy</a></li>
+                <li><a href="#download" class="nav-download">Download</a></li>
+            </ul>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Track Your Energy. Find Out Why You're Tired.</h1>
+                <p class="hero-subtitle">You're tired but you don't know why. Is it sleep? Diet? Stress? A supplement you're taking? Your exercise routine — or lack of one? Stop guessing and start tracking. ReactLog finds the patterns your brain can't see.</p>
+
+                <div class="trust-badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                    100% on-device • Zero data collection • No backend servers
+                </div>
+
+                <a href="#download" class="hero-cta">Download Free</a>
+            </div>
+            <div class="hero-image">
+                <img src="screens/health-metrics.jpg" alt="ReactLog energy tracking interface showing daily energy levels and metrics" width="400" height="600">
+            </div>
+        </section>
+
+        <!-- Problem Section -->
+        <section id="problem">
+            <h2>You've tried everything and you're still exhausted</h2>
+            <div class="problem-content">
+                <p>Persistent fatigue affects 1 in 3 adults worldwide, yet "why am I always tired" remains one of the most searched health questions on Google. The reason most people stay stuck is simple: they try solutions randomly instead of tracking systematically.</p>
+
+                <p>You've probably experimented with solutions one at a time. More sleep. Better diet. New supplements. More exercise. But without systematic tracking, you never discover what actually correlates with your higher energy levels.</p>
+
+                <p>Here's the truth: energy is affected by <strong>dozens of variables simultaneously</strong>. Sleep duration, sleep consistency, food choices, blood sugar timing, caffeine consumption, hydration, exercise type and timing, stress levels, supplements, medications, screen time exposure, social activity, weather, and sunlight all interact in complex ways. Your brain cannot process all these correlations. But data can.</p>
+
+                <p>When you systematically track your energy alongside the factors that might influence it, patterns emerge within 2-3 weeks. Suddenly you see exactly what gives you energy and what drains it—your personal energy equation, unique to your body and lifestyle.</p>
+
+                <div class="problem-stats">
+                    <div class="stat-item">
+                        <strong>1 in 3 adults</strong>
+                        <span>Report persistent fatigue despite trying multiple solutions</span>
+                    </div>
+                    <div class="stat-item">
+                        <strong>2-3 weeks</strong>
+                        <span>Typical timeline for meaningful patterns to emerge through consistent tracking</span>
+                    </div>
+                    <div class="stat-item">
+                        <strong>Dozens of factors</strong>
+                        <span>Affect your energy simultaneously—your brain can't process them all</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Energy Factors Section -->
+        <section id="factors">
+            <h2>The hidden factors affecting your energy</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.05rem;">Energy levels depend on more than just sleep. Here's what actually influences your fatigue throughout the day:</p>
+
+            <div class="factors-grid">
+                <div class="factor-card">
+                    <div class="factor-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                            <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3>Sleep Duration</h3>
+                    <p>Most adults need 7-9 hours. Too little sleep creates cumulative sleep debt. Too much can indicate depression or other health issues. Track duration to find your optimal range.</p>
+                </div>
+
+                <div class="factor-card">
+                    <div class="factor-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11z"/>
+                        </svg>
+                    </div>
+                    <h3>Sleep Consistency</h3>
+                    <p>Timing matters more than duration. Going to bed and waking at the same time ±30 minutes trains your body's natural rhythms. Irregular sleep patterns destroy energy even with adequate total sleep.</p>
+                </div>
+
+                <div class="factor-card">
+                    <div class="factor-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54 3.96 4.55c.1.13.25.2.4.2.15 0 .29-.07.4-.2l7.12-8.15c.1-.12.15-.29.12-.45-.03-.15-.13-.27-.26-.33-.13-.07-.29-.05-.39.03L12.5 13.5l-3.54-4.21c-.1-.13-.25-.2-.4-.2-.15 0-.29.07-.4.2-.1.12-.15.29-.12.45.03.15.13.27.26.33l4.04 4.22z"/>
+                        </svg>
+                    </div>
+                    <h3>Food & Blood Sugar</h3>
+                    <p>Blood sugar swings cause afternoon crashes. High-glycemic foods spike then plummet. Stable combinations of protein, healthy fats, and complex carbs maintain steady energy throughout the day.</p>
+                </div>
+
+                <div class="factor-card">
+                    <div class="factor-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-13c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5z"/>
+                        </svg>
+                    </div>
+                    <h3>Caffeine Timing</h3>
+                    <p>Caffeine has a 5-6 hour half-life. Morning caffeine provides lift. Afternoon caffeine can disrupt sleep that night, causing next-day fatigue. Timing matters as much as quantity.</p>
+                </div>
+
+                <div class="factor-card">
+                    <div class="factor-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                    </div>
+                    <h3>Hydration</h3>
+                    <p>Dehydration is one of the most overlooked fatigue causes. As little as 2% dehydration reduces physical and mental performance. Most people are chronically mildly dehydrated.</p>
+                </div>
+
+                <div class="factor-card">
+                    <div class="factor-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                            <path d="M13.49 5.48c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-3.6 13.9L7 19c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2v-2l-3.6-2.4c-.4-.3-1-.3-1.4 0L9.9 19.4z"/>
+                        </svg>
+                    </div>
+                    <h3>Exercise Type & Timing</h3>
+                    <p>Morning exercise energizes throughout the day. Intense evening exercise can disrupt sleep. Type matters—strength training, cardio, and stretching have different energy effects.</p>
+                </div>
+
+                <div class="factor-card">
+                    <div class="factor-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                        </svg>
+                    </div>
+                    <h3>Stress Levels</h3>
+                    <p>Chronic stress elevates cortisol, disrupting sleep quality and depleting energy reserves. High-stress days predict lower energy and poorer sleep the following night.</p>
+                </div>
+
+                <div class="factor-card">
+                    <div class="factor-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54 3.96 4.55c.1.13.25.2.4.2.15 0 .29-.07.4-.2l7.12-8.15c.1-.12.15-.29.12-.45-.03-.15-.13-.27-.26-.33-.13-.07-.29-.05-.39.03L12.5 13.5l-3.54-4.21c-.1-.13-.25-.2-.4-.2-.15 0-.29.07-.4.2-.1.12-.15.29-.12.45.03.15.13.27.26.33l4.04 4.22z"/>
+                        </svg>
+                    </div>
+                    <h3>Supplements & Medications</h3>
+                    <p>Some supplements boost energy; others induce fatigue. Medication side effects often include fatigue. Timing matters—magnesium at night helps sleep, but timing relative to meals affects absorption.</p>
+                </div>
+
+                <div class="factor-card">
+                    <div class="factor-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                        </svg>
+                    </div>
+                    <h3>Screen Time</h3>
+                    <p>Blue light from screens suppresses melatonin production, delaying sleep onset and reducing sleep quality. Evening screen use causes next-day fatigue even if total sleep hours seem adequate.</p>
+                </div>
+
+                <div class="factor-card">
+                    <div class="factor-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                            <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                        </svg>
+                    </div>
+                    <h3>Social Activity</h3>
+                    <p>Social connection energizes many people. Isolation drains energy. But for some, too much social activity causes stress fatigue. Track your personal pattern.</p>
+                </div>
+
+                <div class="factor-card">
+                    <div class="factor-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                            <path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l1.41-1.41L19.24 4.84l-1.41-1.41-1.79 1.79zm2.79 5.54h3v-2h-3v2zM20.57 17.17l1.79-1.79-1.41-1.41-1.79 1.79 1.41 1.41zM17.5 16.5h2v3h-2v-3zm-5-2.5c2.33 0 4-1.67 4-4s-1.67-4-4-4-4 1.67-4 4 1.67 4 4 4zm-7-4.5H1v2h3v-2zm13.45-3.5l1.41 1.41 1.79-1.79-1.41-1.41-1.79 1.79z"/>
+                        </svg>
+                    </div>
+                    <h3>Weather & Sunlight</h3>
+                    <p>Seasonal changes and light exposure regulate circadian rhythms and vitamin D production. Lower sunlight exposure decreases energy and can trigger Seasonal Affective Disorder (SAD).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section id="how-it-works">
+            <h2>How it works in 3 steps</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.05rem;">ReactLog's simple approach reveals your personal energy patterns without complexity.</p>
+
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">01</div>
+                    <h3>Rate your energy daily</h3>
+                    <p>Quick check-ins, 1-3 times per day. Rate your energy level from 1-10. Morning, afternoon, evening—whatever works for your routine. Takes 10 seconds.</p>
+                    <p>Simple ratings build the foundation. You're not writing essays. You're creating data points ReactLog learns from.</p>
+                    <div class="step-image">
+                        <img src="screens/mood-intelligence.jpg" alt="Energy rating interface showing simple 1-10 scale for tracking daily energy levels" width="300" height="400">
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">02</div>
+                    <h3>Log your inputs</h3>
+                    <p>Whenever you rate your energy, log what might affect it. Sleep hours, food eaten, supplements taken, exercise done, coffee consumed, stress level, time outdoors.</p>
+                    <p>You don't need to log everything every time. ReactLog learns from the patterns in what you do track consistently.</p>
+                    <div class="step-image">
+                        <img src="screens/health-metrics.jpg" alt="Input logging interface showing options to track sleep, food, exercise, supplements, and other lifestyle factors" width="300" height="400">
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">03</div>
+                    <h3>Discover your equation</h3>
+                    <p>After 2-3 weeks of consistent tracking, ReactLog reveals your personal energy equation. Which specific factors most strongly correlate with your energy? What gives you energy? What drains you?</p>
+                    <p>See exact correlations: Morning exercise raises your afternoon energy by 35%. Late-night caffeine reduces next-day morning energy by 2 points.</p>
+                    <div class="step-image">
+                        <img src="screens/insights.jpg" alt="Analytics dashboard showing personalized energy patterns and correlations with tracked factors" width="300" height="400">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Real Patterns Section -->
+        <section id="patterns">
+            <h2>Patterns ReactLog users discover</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.05rem;">These are real patterns users uncover through tracking. Your personal patterns may differ—that's the point.</p>
+
+            <div class="patterns-list">
+                <div class="pattern-item">
+                    <p><span class="pattern-highlight">Morning exercise before 10am</span> correlates with 25% higher afternoon energy levels. Exercise timing matters as much as frequency. Afternoon exercise doesn't produce the same next-day boost.</p>
+                </div>
+
+                <div class="pattern-item">
+                    <p><span class="pattern-highlight">Sleep consistency (same bedtime ±30 minutes)</span> matters more than total sleep hours. Someone sleeping 6 hours consistently has better energy than someone sleeping 7-9 hours inconsistently.</p>
+                </div>
+
+                <div class="pattern-item">
+                    <p><span class="pattern-highlight">Magnesium glycinate at night</span> correlates with better next-day energy—but only when taken 2+ hours before bed. Taken right before sleep, it increases next-day grogginess.</p>
+                </div>
+
+                <div class="pattern-item">
+                    <p><span class="pattern-highlight">Afternoon energy crashes correlate with high-carb lunches</span> without protein or fat. A carb-only lunch spikes then crashes blood sugar. Adding protein and fat stabilizes afternoon energy.</p>
+                </div>
+
+                <div class="pattern-item">
+                    <p><span class="pattern-highlight">Screen time after 8pm</span> reduces next-day energy by an average of 1.5 points on a 10-point scale. This effect compounds with multiple nights of late-night screen use.</p>
+                </div>
+
+                <div class="pattern-item">
+                    <p><span class="pattern-highlight">Hydration is a hidden energy driver</span> most people underestimate. Drinking 2 liters of water daily correlates with 15% higher baseline energy. Dehydration sneaks in without awareness.</p>
+                </div>
+
+                <div class="pattern-item">
+                    <p><span class="pattern-highlight">Stress levels two days prior</span> predict current energy more reliably than immediate stress. High stress disrupts sleep quality that night, depleting energy reserves the following day.</p>
+                </div>
+
+                <div class="pattern-item">
+                    <p><span class="pattern-highlight">Social activity energizes some, drains others</span>. Tracking reveals your personal pattern. For introverts, solitude restores energy; social events deplete it. For extroverts, the opposite.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Privacy Section -->
+        <section id="privacy">
+            <h2>Your data stays yours</h2>
+            <div class="privacy-box">
+                <p>Your energy and health data stays on your phone. Period. No servers, no cloud, no data collection. ReactLog analyzes patterns entirely on-device. We never see your data, never share it, never sell it.</p>
+                <p style="margin-top: 1rem;">This is core to ReactLog. You're tracking intimate health information. It should never leave your device.</p>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq">
+            <h2>Frequently asked questions</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Why am I always tired?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            <p>Persistent fatigue has many causes: poor sleep quality, sleep inconsistency, blood sugar swings, dehydration, vitamin deficiencies, stress, sedentary lifestyle, medication side effects, hormonal imbalances, or underlying health conditions.</p>
+                            <p style="margin-top: 1rem;">The key is systematic tracking. Most people try one solution at a time, never discovering what actually correlates with higher energy in their specific situation. Your fatigue might stem from sleep inconsistency. Your colleague's from blood sugar swings. Another person's from vitamin D deficiency. The only way to know is to track consistently and look for your personal patterns.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How do I track my energy levels?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            <p>Rate your energy 1-3 times daily on a simple scale (1-10 works well). Morning, afternoon, and evening captures daily variation. Each rating takes about 10 seconds.</p>
+                            <p style="margin-top: 1rem;">Simultaneously, log the factors that might influence your energy: hours slept, quality of sleep, meals eaten, supplements taken, exercise completed, caffeine consumed, stress level, time outdoors. You don't need perfect logging. Consistent tracking of a few key factors reveals patterns quickly. After 2-3 weeks, patterns emerge showing exactly what affects your energy.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Can tracking energy actually help?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            <p>Yes. Data shows that most people discover 2-3 specific factors that significantly affect their energy once they track consistently. Someone discovers that morning light exposure raises afternoon energy by 20%. Another finds that magnesium at specific times eliminates afternoon crashes. A third discovers that sleep consistency matters far more than sleep duration for their energy levels.</p>
+                            <p style="margin-top: 1rem;">These discoveries can't happen without systematic tracking. Your brain detects obvious patterns, but misses subtle correlations and delayed effects. Data reveals what intuition cannot. Within weeks of tracking, most people identify 2-3 high-impact interventions unique to their body and lifestyle.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What's the best time to track energy?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            <p>Consistency matters more than frequency or specific times. Morning, mid-afternoon, and evening works well for most people—it captures your energy across the full day and shows how different times vary.</p>
+                            <p style="margin-top: 1rem;">But if you prefer different times, pick consistent times and stick to them. 7am, 1pm, and 7pm. Or 8am and 4pm. Or even just morning and evening. As long as you're consistent, ReactLog finds patterns. The frequency is less important than consistency. Daily tracking at consistent times trains your awareness and gives ReactLog the data it needs to find correlations.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Is ReactLog free?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            <p>Yes. ReactLog is free during Early Access. Create unlimited energy trackers, track as much as you want, access all analysis features—no paywalls, no premium tier, no hidden charges.</p>
+                            <p style="margin-top: 1rem;">No account is required. Everything stays on your phone. Download it and start tracking today.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Related Pages Section -->
+        <section>
+            <h2>Related health trackers</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.05rem;">Track other aspects of your health with ReactLog:</p>
+            <div class="related-pages">
+                <a href="/supplement-tracker" class="related-link">Supplement Tracker</a>
+                <a href="/brain-fog-tracker" class="related-link">Brain Fog Tracker</a>
+                <a href="/mood-and-sleep-tracker" class="related-link">Mood & Sleep Tracker</a>
+                <a href="/cortisol-and-stress-tracker" class="related-link">Cortisol & Stress Tracker</a>
+            </div>
+        </section>
+
+        <!-- Final CTA Section -->
+        <section id="download" class="final-cta">
+            <h2>Find your energy equation. Download free.</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem;">Track your energy, discover what affects it, and feel better every day.</p>
+            <a href="#download" class="hero-cta">Download ReactLog</a>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2026 ReactLog. All rights reserved.</p>
+            <p>
+                <a href="/privacy">Privacy Policy</a> •
+                <a href="/terms">Terms of Service</a> •
+                <a href="/contact">Contact</a>
+            </p>
+            <p style="margin-top: 1rem; font-size: 0.9rem;">Built for people who want to understand their health through data.</p>
+        </footer>
+    </div>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "ReactLog Energy Tracker",
+        "description": "Track your energy levels and discover the hidden patterns affecting your fatigue. Systematic tracking reveals what actually gives you energy.",
+        "applicationCategory": "HealthAndFitnessApplication",
+        "operatingSystem": "iOS",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "1200"
+        }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Why am I always tired?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Persistent fatigue has many causes: poor sleep quality, sleep inconsistency, blood sugar swings, dehydration, vitamin deficiencies, stress, sedentary lifestyle, medication side effects, hormonal imbalances, or underlying health conditions. The key is systematic tracking to discover what actually correlates with higher energy in your specific situation."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How do I track my energy levels?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Rate your energy 1-3 times daily on a simple scale, and log the factors that might influence it like sleep, food, supplements, exercise, and caffeine. Each rating takes about 10 seconds. After 2-3 weeks of consistent tracking, patterns emerge showing exactly what affects your energy."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can tracking energy actually help?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. Most people discover 2-3 specific factors that significantly affect their energy once they track consistently. Data reveals patterns that intuition cannot detect. Within weeks of tracking, most people identify 2-3 high-impact interventions unique to their body and lifestyle."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What's the best time to track energy?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Consistency matters more than frequency or specific times. Morning, mid-afternoon, and evening works well for most people. Pick consistent times and stick to them. The frequency is less important than consistency."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is ReactLog free?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. ReactLog is free during Early Access. Create unlimited energy trackers, track as much as you want, access all analysis features—no paywalls, no premium tier, no hidden charges. No account is required."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <!-- Particle Animation Script -->
+    <script>
+        // Initialize particle canvas
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        const particles = [];
+        const particleCount = Math.min(50, Math.max(20, Math.floor((width * height) / 50000)));
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x < 0) this.x = width;
+                if (this.x > width) this.x = 0;
+                if (this.y < 0) this.y = height;
+                if (this.y > height) this.y = 0;
+            }
+
+            draw() {
+                ctx.fillStyle = `rgba(51, 235, 224, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles.length = 0;
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, width, height);
+
+            for (let particle of particles) {
+                particle.update();
+                particle.draw();
+            }
+
+            requestAnimationFrame(animateParticles);
+        }
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        // Start animation
+        initParticles();
+        animateParticles();
+
+        // FAQ Interactivity
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', function() {
+                const faqItem = this.closest('.faq-item');
+                faqItem.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

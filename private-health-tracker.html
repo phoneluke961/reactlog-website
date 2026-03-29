@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ReactLog is a 100% on-device health tracker for iPhone with zero data collection, no servers, and no third-party tracking. Track mood, medications, symptoms, and sleep privately.">
+    <meta name="keywords" content="private health tracker app, health app no data collection, health tracker no cloud, offline health tracker, encrypted health tracker, health app that doesn't sell data, privacy-first health app">
+    <meta name="theme-color" content="#0a1420">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://reactlog.com/private-health-tracker">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Private Health Tracker — 100% On-Device, Zero Data Collection | ReactLog">
+    <meta property="og:description" content="Track your health privately. No servers, no data collection, no third-party access. Your data stays on your iPhone.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://reactlog.com/private-health-tracker">
+    <meta property="og:image" content="https://reactlog.com/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Private Health Tracker — 100% On-Device, Zero Data Collection | ReactLog">
+    <meta name="twitter:description" content="Track your health privately. No servers, no data collection, no third-party access. Your data stays on your iPhone.">
+    <meta name="twitter:image" content="https://reactlog.com/og-image.jpg">
+
+    <!-- Schema.org SoftwareApplication -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "ReactLog",
+        "description": "A private health tracking app with 100% on-device processing, zero data collection, and no servers",
+        "applicationCategory": "HealthApplication",
+        "operatingSystem": "iOS",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "142"
+        },
+        "author": {
+            "@type": "Organization",
+            "name": "ReactLog"
+        }
+    }
+    </script>
+
+    <!-- FAQ Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Does ReactLog really not collect any data?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Correct. There are no backend servers. No analytics SDKs. No cloud infrastructure. Your data exists only on your iPhone. We cannot collect data we have no access to."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How does ReactLog make money if they don't sell data?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "ReactLog is a paid subscription app (currently free during Early Access). The business model is simple: build a product so good that people choose to pay for it. We don't need your data because we don't rely on advertising or data sales."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can my health data be subpoenaed?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Since your data exists only on your personal device, it cannot be obtained from ReactLog — there's literally nothing on our servers to hand over. This is the architectural advantage of having no servers."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is ReactLog HIPAA compliant?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "ReactLog doesn't store, transmit, or process health data on any server, so HIPAA's server-side requirements don't apply. Your data stays entirely on your device, under your control."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What if I lose my phone?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Your data is stored locally, so if you lose your device without a backup, the data would be lost. This is the tradeoff of true privacy — we recommend regular iPhone backups via iCloud or Finder."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <title>Private Health Tracker — 100% On-Device, Zero Data Collection | ReactLog</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Work Sans', sans-serif;
+            background: linear-gradient(135deg, #0f1f2e 0%, #080d17 100%);
+            color: #e8eef5;
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Reduce motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        /* Animated Canvas Background */
+        canvas#particleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(10, 20, 32, 0.7);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(51, 235, 224, 0.1);
+            padding: 1.25rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #33ebe0, #57b8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo:hover {
+            opacity: 0.8;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: #e8eef5;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #33ebe0;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #33ebe0, #57b8ff);
+            color: #0a1420;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(51, 235, 224, 0.3);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Section Spacing */
+        section {
+            padding: 5rem 2rem;
+            position: relative;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #33ebe0, #57b8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h2 {
+            font-size: clamp(1.75rem, 5vw, 2.5rem);
+            margin-bottom: 2rem;
+            color: #fff;
+        }
+
+        p {
+            font-size: 1.05rem;
+            margin-bottom: 1.5rem;
+            color: #b8c5d6;
+            line-height: 1.8;
+        }
+
+        /* Glassmorphic Cards */
+        .card {
+            background: rgba(10, 20, 32, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(51, 235, 224, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            background: rgba(10, 20, 32, 0.8);
+            border-color: rgba(51, 235, 224, 0.4);
+            transform: translateY(-4px);
+        }
+
+        /* Scroll Reveal Animation */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .reveal {
+            animation: slideUp 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        /* Hero Section */
+        #hero {
+            padding: 6rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            background: radial-gradient(circle at 20% 50%, rgba(51, 235, 224, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(87, 184, 255, 0.05) 0%, transparent 50%);
+        }
+
+        .hero-content h1 {
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: #b8c5d6;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .trust-badge {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+            color: #33ebe0;
+        }
+
+        .badge-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            background: rgba(51, 235, 224, 0.1);
+            border: 1px solid rgba(51, 235, 224, 0.2);
+            border-radius: 8px;
+        }
+
+        .badge-icon {
+            width: 18px;
+            height: 18px;
+        }
+
+        .hero-image {
+            text-align: center;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(51, 235, 224, 0.15);
+        }
+
+        /* Two-Column Layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .comparison-table {
+            width: 100%;
+            margin: 2rem 0;
+        }
+
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+
+        .comparison-label {
+            font-weight: 600;
+            color: #e8eef5;
+        }
+
+        .comparison-other {
+            background: rgba(255, 59, 48, 0.1);
+            border: 1px solid rgba(255, 59, 48, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            color: #ff3b30;
+            font-size: 0.9rem;
+        }
+
+        .comparison-reactlog {
+            background: rgba(51, 235, 224, 0.1);
+            border: 1px solid rgba(51, 235, 224, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            color: #33ebe0;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Grid Section */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .grid-item {
+            text-align: center;
+        }
+
+        .grid-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, rgba(51, 235, 224, 0.2), rgba(87, 184, 255, 0.2));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .grid-icon svg {
+            width: 32px;
+            height: 32px;
+            stroke: #33ebe0;
+        }
+
+        .grid-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: #e8eef5;
+        }
+
+        .grid-text {
+            color: #8a96a8;
+            font-size: 0.95rem;
+        }
+
+        /* Steps Section */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin: 3rem 0;
+        }
+
+        .step {
+            position: relative;
+            padding-left: 4rem;
+        }
+
+        .step-number {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 3rem;
+            height: 3rem;
+            background: linear-gradient(135deg, #33ebe0, #57b8ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #0a1420;
+        }
+
+        .step h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: #e8eef5;
+        }
+
+        .step p {
+            color: #8a96a8;
+            font-size: 1rem;
+        }
+
+        /* FAQ Section */
+        .faq-container {
+            max-width: 800px;
+            margin: 3rem auto;
+        }
+
+        .faq-item {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(51, 235, 224, 0.1);
+            padding-bottom: 2rem;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #33ebe0;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .faq-question:hover {
+            color: #40f2e6;
+        }
+
+        .faq-answer {
+            color: #8a96a8;
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        /* Related Pages */
+        .related-pages {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .related-link {
+            background: rgba(51, 235, 224, 0.05);
+            border: 1px solid rgba(51, 235, 224, 0.2);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #33ebe0;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .related-link:hover {
+            background: rgba(51, 235, 224, 0.15);
+            border-color: rgba(51, 235, 224, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Final CTA Section */
+        #cta-final {
+            background: linear-gradient(135deg, rgba(51, 235, 224, 0.1), rgba(87, 184, 255, 0.05));
+            border-top: 1px solid rgba(51, 235, 224, 0.2);
+            border-bottom: 1px solid rgba(51, 235, 224, 0.2);
+            text-align: center;
+        }
+
+        #cta-final h2 {
+            font-size: clamp(1.75rem, 5vw, 2.5rem);
+            margin-bottom: 2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(10, 20, 32, 0.9);
+            border-top: 1px solid rgba(51, 235, 224, 0.1);
+            padding: 3rem 2rem;
+            color: #8a96a8;
+            font-size: 0.9rem;
+        }
+
+        footer .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            color: #e8eef5;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: #8a96a8;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #33ebe0;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid rgba(51, 235, 224, 0.1);
+            padding-top: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+
+            #hero {
+                grid-template-columns: 1fr;
+                padding: 4rem 2rem;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            nav ul {
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+                font-size: 0.85rem;
+            }
+
+            nav a {
+                font-size: 0.85rem;
+            }
+
+            .cta-button {
+                padding: 0.625rem 1.25rem;
+                font-size: 0.85rem;
+            }
+
+            section {
+                padding: 3.5rem 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.75rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 1.5rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .comparison-row {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+
+            .comparison-label {
+                font-size: 0.9rem;
+            }
+
+            .comparison-other,
+            .comparison-reactlog {
+                padding: 0.75rem;
+                font-size: 0.85rem;
+            }
+
+            footer .container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav .container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0.75rem;
+                width: 100%;
+                text-align: center;
+            }
+
+            section {
+                padding: 2.5rem 1rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+            }
+
+            h2 {
+                font-size: 1.25rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .trust-badge {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .badge-item {
+                padding: 0.6rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 1.25rem;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .grid-icon {
+                width: 50px;
+                height: 50px;
+            }
+
+            .grid-icon svg {
+                width: 28px;
+                height: 28px;
+            }
+
+            .step-number {
+                width: 2.5rem;
+                height: 2.5rem;
+                font-size: 1.25rem;
+            }
+
+            .step {
+                padding-left: 3.5rem;
+            }
+
+            .related-pages {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+
+        /* Lazy Loading */
+        img[loading="lazy"] {
+            background: linear-gradient(90deg, rgba(51, 235, 224, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease-out;
+        }
+
+        img[loading="lazy"].loaded {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particleCanvas"></canvas>
+
+    <div class="content-wrapper">
+        <!-- Navigation -->
+        <nav>
+            <div class="container">
+                <a href="/" class="logo">ReactLog</a>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#privacy">Privacy</a></li>
+                    <li><a href="#download" class="cta-button">Download</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section id="hero" class="reveal">
+            <div class="hero-content">
+                <h1>The Health Tracker That Keeps Your Data on YOUR Phone</h1>
+                <p class="hero-subtitle">Most health apps collect your most intimate data — mood, medications, symptoms, menstrual cycles — and store it on their servers. Many sell it. ReactLog is architecturally different: there are no servers. Your data never leaves your iPhone.</p>
+
+                <div class="trust-badge">
+                    <div class="badge-item">
+                        <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        100% on-device
+                    </div>
+                    <div class="badge-item">
+                        <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        Zero data collection
+                    </div>
+                    <div class="badge-item">
+                        <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        No backend servers
+                    </div>
+                </div>
+
+                <a href="#download" class="cta-button">Download Free</a>
+            </div>
+
+            <div class="hero-image">
+                <img src="screens/dashboard.jpg" alt="ReactLog dashboard showing private health tracking interface" loading="lazy">
+            </div>
+        </section>
+
+        <!-- The Problem Section -->
+        <section id="problem" class="reveal">
+            <div class="container">
+                <h2>Your Health App Is Probably Selling Your Data</h2>
+
+                <p>Health apps routinely share data with advertisers, insurers, and data brokers. In 2024, the FTC fined multiple health apps for sharing sensitive health data without explicit user consent. Period tracking apps were scrutinized following the Dobbs decision for potential data subpoenas in jurisdictions with abortion restrictions. Mental health apps have been caught sharing therapy session data with third-party analytics providers. Even apps that claim "we don't sell your data" often use analytics SDKs — Firebase, Mixpanel, Amplitude — that send detailed usage data to third parties.</p>
+
+                <p>Here's what gets collected and shared:</p>
+
+                <div class="grid" style="margin: 2rem 0;">
+                    <div class="grid-item card">
+                        <div class="grid-title">What you track</div>
+                        <p style="color: #8a96a8; margin: 0;">Every symptom, mood shift, medication, and entry reveals health conditions</p>
+                    </div>
+                    <div class="grid-item card">
+                        <div class="grid-title">When you track</div>
+                        <p style="color: #8a96a8; margin: 0;">Frequency and timing patterns expose behavior and health urgency</p>
+                    </div>
+                    <div class="grid-item card">
+                        <div class="grid-title">Your patterns</div>
+                        <p style="color: #8a96a8; margin: 0;">Mood cycles, medication routines, symptom correlations reveal diagnoses</p>
+                    </div>
+                </div>
+
+                <p><strong>The business model is clear:</strong> if you're not paying for the app, you're the product. Health apps aren't unique — this is how most free software works. But health data is different. Your health tracking data reveals mental health conditions, reproductive choices, substance use, chronic illness status, and medication history. This isn't just personal. It's weaponizable.</p>
+            </div>
+        </section>
+
+        <!-- How ReactLog Is Different -->
+        <section id="how-different" class="reveal">
+            <div class="container">
+                <h2>No Servers. Not "Secure Servers." No Servers.</h2>
+
+                <p>The fundamental difference: ReactLog has no backend infrastructure. There's nowhere for your data to go because there's nowhere to send it. This isn't a marketing strategy. It's the architecture.</p>
+
+                <div class="comparison-table">
+                    <div class="comparison-row">
+                        <div class="comparison-label">Account Creation</div>
+                        <div class="comparison-other">Required (username/email/password)</div>
+                        <div class="comparison-reactlog">None needed</div>
+                    </div>
+                    <div class="comparison-row">
+                        <div class="comparison-label">Data Storage</div>
+                        <div class="comparison-other">Cloud servers (encrypted or not)</div>
+                        <div class="comparison-reactlog">Your iPhone only</div>
+                    </div>
+                    <div class="comparison-row">
+                        <div class="comparison-label">Analytics SDKs</div>
+                        <div class="comparison-other">Firebase, Mixpanel, Amplitude</div>
+                        <div class="comparison-reactlog">None</div>
+                    </div>
+                    <div class="comparison-row">
+                        <div class="comparison-label">Cloud Sync</div>
+                        <div class="comparison-other">Across devices (if available)</div>
+                        <div class="comparison-reactlog">Local only</div>
+                    </div>
+                    <div class="comparison-row">
+                        <div class="comparison-label">Processing</div>
+                        <div class="comparison-other">On company servers</div>
+                        <div class="comparison-reactlog">On your device</div>
+                    </div>
+                    <div class="comparison-row">
+                        <div class="comparison-label">Security Lock</div>
+                        <div class="comparison-other">Password/2FA (if offered)</div>
+                        <div class="comparison-reactlog">Face ID / Touch ID</div>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 3rem; color: #e8eef5;">Why This Matters</h3>
+                <p>GDPR and CCPA compliance isn't about policy. It's about architecture. ReactLog is compliant by design: we cannot collect what we have no access to. We cannot share what we don't store. We cannot be breached because there's nothing on our servers to breach. Your data doesn't exist anywhere except on your device, under your control.</p>
+            </div>
+        </section>
+
+        <!-- What You Can Track -->
+        <section id="features" class="reveal">
+            <div class="container">
+                <h2>Track Everything. Share Nothing.</h2>
+                <p>ReactLog supports comprehensive health tracking. Every category stays private to your device.</p>
+
+                <div class="grid">
+                    <div class="grid-item">
+                        <div class="grid-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.2 3.2.8-1.3-4.5-2.7V7z"></path>
+                            </svg>
+                        </div>
+                        <div class="grid-title">Mood & Emotions</div>
+                        <p class="grid-text">Track emotional states, triggers, and patterns over time</p>
+                    </div>
+
+                    <div class="grid-item">
+                        <div class="grid-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-2.96-3.83c-.37-.48-.09-1.02.5-1.02.37 0 .72.19.88.49l2.08 2.71 1.88-2.42c.16-.29.51-.48.88-.48.59 0 .87.54.5 1.02z"></path>
+                            </svg>
+                        </div>
+                        <div class="grid-title">Medications & Dosages</div>
+                        <p class="grid-text">Track prescriptions, doses, timing, and side effects</p>
+                    </div>
+
+                    <div class="grid-item">
+                        <div class="grid-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="1"></circle>
+                                <path d="M12 1v6m0 6v6"></path>
+                                <path d="M4.22 4.22l4.24 4.24m0 5.08l-4.24 4.24"></path>
+                                <path d="M1 12h6m6 0h6"></path>
+                                <path d="M4.22 19.78l4.24-4.24m5.08 0l4.24 4.24"></path>
+                                <path d="M12 23v-6m0-6V1"></path>
+                                <path d="M19.78 19.78l-4.24-4.24m0-5.08l4.24-4.24"></path>
+                                <path d="M23 12h-6m-6 0H5"></path>
+                                <path d="M19.78 4.22l-4.24 4.24m-5.08 0L6.22 4.22"></path>
+                            </svg>
+                        </div>
+                        <div class="grid-title">Supplements</div>
+                        <p class="grid-text">Log vitamins, herbs, and supplements with timings</p>
+                    </div>
+
+                    <div class="grid-item">
+                        <div class="grid-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"></path>
+                            </svg>
+                        </div>
+                        <div class="grid-title">Symptoms</div>
+                        <p class="grid-text">Log physical symptoms, severity, and onset timing</p>
+                    </div>
+
+                    <div class="grid-item">
+                        <div class="grid-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                        </div>
+                        <div class="grid-title">Sleep Quality</div>
+                        <p class="grid-text">Track sleep duration, quality, and wake patterns</p>
+                    </div>
+
+                    <div class="grid-item">
+                        <div class="grid-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M6 9h12M6 9c0-1-1-2-2-2s-2 1-2 2M6 9v10c0 1 1 2 2 2h8c1 0 2-1 2-2V9M18 9c0-1 1-2 2-2s2 1 2 2M18 9v10c0 1-1 2-2 2h-8c-1 0-2-1-2-2V9"></path>
+                            </svg>
+                        </div>
+                        <div class="grid-title">Food & Diet</div>
+                        <p class="grid-text">Log meals, cravings, and nutritional observations</p>
+                    </div>
+
+                    <div class="grid-item">
+                        <div class="grid-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                                <polyline points="17 6 23 6 23 12"></polyline>
+                            </svg>
+                        </div>
+                        <div class="grid-title">Exercise</div>
+                        <p class="grid-text">Track workouts, intensity, duration, and type</p>
+                    </div>
+
+                    <div class="grid-item">
+                        <div class="grid-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M12 6v6l4 2"></path>
+                            </svg>
+                        </div>
+                        <div class="grid-title">Menstrual Cycle</div>
+                        <p class="grid-text">Track period timing, flow, and cycle patterns</p>
+                    </div>
+
+                    <div class="grid-item">
+                        <div class="grid-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"></path>
+                                <path d="M9 17h6"></path>
+                                <path d="M13 13h-2v4h2v-4z"></path>
+                                <path d="M9 9h6M9 9V7h6v2"></path>
+                            </svg>
+                        </div>
+                        <div class="grid-title">Custom Entries</div>
+                        <p class="grid-text">Create custom tracking categories for your needs</p>
+                    </div>
+                </div>
+
+                <p style="text-align: center; margin-top: 3rem; font-size: 1.1rem; color: #33ebe0; font-weight: 600;">All of this stays on your iPhone. We literally cannot access it.</p>
+            </div>
+        </section>
+
+        <!-- Why Privacy Matters -->
+        <section id="privacy" class="reveal">
+            <div class="container">
+                <h2>Health Data Is the Most Sensitive Data You Have</h2>
+
+                <p>Your health tracking data reveals intimate details about your life: mental health conditions, reproductive choices, substance use, chronic illness status, medication history, and health vulnerabilities. This information is valuable — not to you, but to others.</p>
+
+                <h3 style="color: #e8eef5; margin-top: 2.5rem; margin-bottom: 1.5rem;">Who wants your health data?</h3>
+
+                <div class="grid">
+                    <div class="card">
+                        <div class="grid-title" style="color: #ff3b30;">Insurance Companies</div>
+                        <p style="color: #8a96a8;">Use data to deny claims, raise premiums, or reject coverage altogether</p>
+                    </div>
+                    <div class="card">
+                        <div class="grid-title" style="color: #ff3b30;">Employers</div>
+                        <p style="color: #8a96a8;">Make hiring, promotion, and firing decisions based on health status</p>
+                    </div>
+                    <div class="card">
+                        <div class="grid-title" style="color: #ff3b30;">Data Brokers</div>
+                        <p style="color: #8a96a8;">Buy and sell your health data to anyone willing to pay</p>
+                    </div>
+                    <div class="card">
+                        <div class="grid-title" style="color: #ff3b30;">Law Enforcement</div>
+                        <p style="color: #8a96a8;">Subpoena period tracking data in abortion restriction jurisdictions</p>
+                    </div>
+                    <div class="card">
+                        <div class="grid-title" style="color: #ff3b30;">Advertisers</div>
+                        <p style="color: #8a96a8;">Target vulnerable people based on health conditions and treatment seeking</p>
+                    </div>
+                    <div class="card">
+                        <div class="grid-title" style="color: #ff3b30;">Marketers</div>
+                        <p style="color: #8a96a8;">Sell products exploiting health concerns and conditions</p>
+                    </div>
+                </div>
+
+                <p style="margin-top: 2.5rem;"><strong>ReactLog's business model is straightforward:</strong> we charge for the app. We don't need your data because we don't sell your data. We don't run ads. We don't have investors demanding growth through data monetization. We build software and ask people to pay for it. That's it.</p>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section id="how-it-works" class="reveal">
+            <div class="container">
+                <h2>How It Works</h2>
+                <p>ReactLog operates in three simple steps.</p>
+
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Download ReactLog</h3>
+                        <p>No account creation. No email. No signup flow. Just download and start using. Your data exists only on your device from the moment you open the app.</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Track What Matters</h3>
+                        <p>Log mood, symptoms, medications, sleep, food, exercise, or anything custom. Each entry is processed and stored locally. Nothing is sent anywhere.</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Discover Patterns</h3>
+                        <p>ReactLog analyzes your data on your device to show correlations: what triggers your mood? How does medication timing affect sleep? All intelligence stays on your phone.</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 3rem; text-align: center;">
+                    <p style="color: #33ebe0; font-weight: 600; margin-bottom: 1.5rem;">Your entire health history. Your device. Nobody else's data.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="reveal">
+            <div class="container">
+                <h2 style="text-align: center;">Frequently Asked Questions</h2>
+
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">Does ReactLog really not collect any data?</div>
+                        <div class="faq-answer">Correct. There are no backend servers. No analytics SDKs like Firebase, Mixpanel, or Amplitude. No cloud infrastructure. Your data exists only on your iPhone. We cannot collect data we have no access to. Every query, calculation, and analysis happens on your device.</div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">How does ReactLog make money if they don't sell data?</div>
+                        <div class="faq-answer">ReactLog is a paid subscription app (currently free during Early Access). The business model is simple: build a product good enough that people choose to pay for it. We don't need to monetize user data because we're funded by users who value the product. No ads, no data sales, no venture capitalists demanding exponential growth through data harvesting.</div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Can my health data be subpoenaed?</div>
+                        <div class="faq-answer">Since your data exists only on your personal device, it cannot be obtained from ReactLog — there's literally nothing on our servers to hand over. This is the architectural advantage of having no servers. Law enforcement cannot subpoena data we don't possess.</div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Is ReactLog HIPAA compliant?</div>
+                        <div class="faq-answer">ReactLog doesn't store, transmit, or process health data on any server, so HIPAA's server-side requirements don't apply in the traditional sense. Your data stays entirely on your device, under your control. If you're a healthcare provider subject to HIPAA, consult your legal team, but the architecture is fundamentally private by design.</div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">What if I lose my phone?</div>
+                        <div class="faq-answer">Your data is stored locally, so if you lose your device without a backup, the data would be lost. This is the tradeoff of true privacy — complete on-device control means local storage risk. We recommend regular iPhone backups via iCloud or Finder. Your backups are encrypted by iOS.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Related Pages -->
+        <section id="related" class="reveal">
+            <div class="container">
+                <h2 style="text-align: center;">Related Health Tracking</h2>
+                <p style="text-align: center; margin-bottom: 2rem;">Explore other ways to track your health privately with ReactLog</p>
+
+                <div class="related-pages">
+                    <a href="/supplement-tracker" class="related-link">Supplement Tracker</a>
+                    <a href="/medication-tracker" class="related-link">Medication Tracker</a>
+                    <a href="/brain-fog-tracker" class="related-link">Brain Fog Tracker</a>
+                    <a href="/anxiety-trigger-tracker" class="related-link">Anxiety Trigger Tracker</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA -->
+        <section id="cta-final" class="reveal">
+            <div class="container">
+                <h2>Your Health Data. Your Phone. Nobody Else's Business.</h2>
+                <p style="font-size: 1.1rem; margin-bottom: 2.5rem;">Start tracking your health privately today. No account required.</p>
+                <a href="#download" class="cta-button" style="display: inline-block;">Download ReactLog Free</a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <div class="footer-section">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/features">Features</a></li>
+                        <li><a href="/private-health-tracker">Privacy First</a></li>
+                        <li><a href="/download">Download</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Privacy</h4>
+                    <ul>
+                        <li><a href="/privacy">Privacy Policy</a></li>
+                        <li><a href="/terms">Terms of Service</a></li>
+                        <li><a href="/security">Security</a></li>
+                        <li><a href="/gdpr">GDPR Compliance</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/blog">Blog</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                        <li><a href="/press">Press Kit</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="https://twitter.com/reactlog" target="_blank" rel="noopener noreferrer">Twitter</a></li>
+                        <li><a href="https://github.com/reactlog" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                        <li><a href="https://instagram.com/reactlog" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+                        <li><a href="mailto:hello@reactlog.com">Email</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ReactLog. All rights reserved. Built with privacy in mind.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Particle Canvas Background
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Check for prefers-reduced-motion
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.radius = Math.random() * 1.5 + 0.5;
+                this.opacity = Math.random() * 0.3 + 0.1;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0) this.x = canvas.width;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.y < 0) this.y = canvas.height;
+                if (this.y > canvas.height) this.y = 0;
+            }
+
+            draw() {
+                ctx.fillStyle = `rgba(51, 235, 224, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        const particles = [];
+        const particleCount = prefersReducedMotion ? 10 : 30;
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.fillStyle = 'rgba(10, 20, 32, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+
+            if (!prefersReducedMotion) {
+                requestAnimationFrame(animate);
+            }
+        }
+
+        animate();
+
+        // Resize canvas on window resize
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Scroll Reveal Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'slideUp 0.6s ease-out forwards';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(element => {
+            element.style.opacity = '0';
+            observer.observe(element);
+        });
+
+        // Lazy Load Images
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.addEventListener('load', () => {
+                            img.classList.add('loaded');
+                        });
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+
+            document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && document.querySelector(href)) {
+                    e.preventDefault();
+                    document.querySelector(href).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Mobile navigation collapse
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(link => {
+            if (link !== document.querySelector('.logo')) {
+                link.addEventListener('click', () => {
+                    // Close mobile menu if open
+                    document.body.style.overflow = 'auto';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

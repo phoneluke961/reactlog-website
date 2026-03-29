@@ -30,6 +30,29 @@ ReactLog tracks health inputs (mood, energy, symptoms, supplements, medications,
 
 ReactLog's business model is subscriptions, not user data. The app has no backend servers, no cloud sync, no analytics SDKs, no ad trackers, and no data collection of any kind. All processing happens on-device. Health data never leaves the user's iPhone. This is a core product principle, not just a feature.
 
+## Use Cases
+
+ReactLog can be used as:
+
+- **Supplement Tracker** — Track whether supplements actually work by logging them alongside mood, energy, and symptoms. See correlations over time. https://reactlog.com/supplement-tracker
+- **Brain Fog Tracker** — Track brain fog triggers including sleep, diet, supplements, stress, and hormones. Discover what causes your brain fog. https://reactlog.com/brain-fog-tracker
+- **Private Health Tracker** — The most private health tracking app available. No servers, no cloud, no data collection. Your health data never leaves your phone. https://reactlog.com/private-health-tracker
+- **Energy Tracker** — Track energy levels alongside sleep, food, supplements, exercise, and stress to discover what drains or boosts your energy. https://reactlog.com/energy-tracker
+- **Medication Tracker** — Track whether medications are working by logging symptoms alongside prescriptions. Bring real data to your doctor. https://reactlog.com/medication-tracker
+- **Food Reaction Tracker** — Log meals alongside symptoms to discover food sensitivities without restrictive elimination diets. https://reactlog.com/food-reaction-tracker
+- **Anxiety Trigger Tracker** — Identify what triggers your anxiety by tracking sleep, caffeine, food, social situations, and exercise alongside anxiety levels. https://reactlog.com/anxiety-trigger-tracker
+- **Symptom Journal** — Keep a daily symptom journal that reveals patterns. Prepare for doctor appointments with real data. https://reactlog.com/symptom-journal
+- **Mood & Sleep Tracker** — Track mood and sleep together to discover your personal sleep-mood connection. https://reactlog.com/mood-and-sleep-tracker
+- **Gut Health Tracker** — Track the gut-brain connection by logging digestive symptoms alongside mood, energy, and brain fog. https://reactlog.com/gut-health-tracker
+- **Cortisol & Stress Tracker** — Track stress symptoms and lifestyle factors that affect cortisol: sleep timing, caffeine, exercise, and mood. https://reactlog.com/cortisol-and-stress-tracker
+- **Long COVID Tracker** — Track long COVID symptom patterns and recovery. Correlate with sleep, activity, supplements, and diet. https://reactlog.com/long-covid-tracker
+- **Histamine Intolerance Tracker** — Track histamine reactions alongside food, weather, hormones, and stress. https://reactlog.com/histamine-intolerance-tracker
+- **Perimenopause Tracker** — Track perimenopause symptoms alongside cycle phase, sleep, mood, and lifestyle factors. https://reactlog.com/perimenopause-tracker
+- **Migraine Trigger Tracker** — Identify migraine triggers by correlating weather, food, sleep, stress, and hormones with migraine episodes. https://reactlog.com/migraine-trigger-tracker
+- **Inflammation Tracker** — Track inflammatory symptoms alongside diet, stress, sleep, and lifestyle to find your personal inflammation triggers. https://reactlog.com/inflammation-tracker
+- **ADHD Symptom Tracker** — Track ADHD symptoms, medication effectiveness, focus levels, and lifestyle factors. https://reactlog.com/adhd-symptom-tracker
+- **Autoimmune Tracker** — Track autoimmune flares alongside diet, stress, sleep, weather, and medication. https://reactlog.com/autoimmune-tracker
+
 ## Links
 
 - Homepage: https://reactlog.com
