@@ -1,0 +1,37 @@
+# ReactLog
+
+> ReactLog is a 100% private, on-device biofeedback and self-tracking app for iPhone. It helps users discover what actually affects how they feel by tracking mood, symptoms, supplements, sleep, and lifestyle inputs — then surfacing correlations automatically. All data stays on the device. There are no backend servers, no analytics SDKs, and zero data collection of any kind.
+
+## Key Facts
+
+- Platform: iPhone (iOS). Android coming soon.
+- Privacy: 100% on-device. No backend servers. No data collection. No analytics SDKs. No data sold.
+- Price: Free during Early Access. Will be a paid subscription app.
+- Security: Face ID / Touch ID lock. GDPR & CCPA compliant.
+- Website: https://reactlog.com
+- Support: support@reactlog.com
+
+## What ReactLog Does
+
+ReactLog tracks health inputs (mood, energy, symptoms, supplements, medications, sleep, exercise, diet, weather, menstrual cycle, and custom entries) and discovers statistical correlations between them. For example, it might reveal that a user's headaches correlate with poor sleep, or that a particular supplement correlates with improved mood. It acts as a personal biofeedback operating system.
+
+## Core Features
+
+- Mood and symptom tracking with customizable scales
+- Supplement, medication, and lifestyle logging
+- Sleep quality tracking
+- Automated correlation discovery engine
+- Visual health dashboards and trends
+- Smart journaling with health context
+- Custom tracking categories
+- Face ID / Touch ID protection
+
+## Privacy Model
+
+ReactLog's business model is subscriptions, not user data. The app has no backend servers, no cloud sync, no analytics SDKs, no ad trackers, and no data collection of any kind. All processing happens on-device. Health data never leaves the user's iPhone. This is a core product principle, not just a feature.
+
+## Links
+
+- Homepage: https://reactlog.com
+- Privacy Policy: https://reactlog.com/privacy.html
+- Terms of Service: https://reactlog.com/terms.html
