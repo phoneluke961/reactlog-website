@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Service — ReactLog</title>
+  <meta name="description" content="Terms of Service for ReactLog, a biofeedback and health tracking app by Kriastik.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ======== CSS CUSTOM PROPERTIES ======== */
+    :root {
+      --accent: #33ebe0;
+      --accent-secondary: #57b8ff;
+      --glow: #40f2e6;
+      --bg-top: #0f1f2e;
+      --bg-bottom: #080d17;
+      --bg-primary: #0a1420;
+      --bg-card: rgba(12, 22, 35, 0.75);
+      --border: rgba(51, 235, 224, 0.18);
+      --border-hover: rgba(51, 235, 224, 0.38);
+      --text-primary: #eaf6ff;
+      --text-secondary: rgba(234, 246, 255, 0.72);
+      --text-dim: rgba(234, 246, 255, 0.48);
+      --surface: rgba(14, 26, 42, 0.6);
+      --gradient-primary: linear-gradient(135deg, #33ebe0, #57b8ff);
+      --gradient-accent: linear-gradient(135deg, #33ebe0 0%, #40f2e6 50%, #57b8ff 100%);
+
+      --text-xs: clamp(0.75rem, 1.5vw, 0.875rem);
+      --text-sm: clamp(0.875rem, 2vw, 1rem);
+      --text-base: clamp(1rem, 2.25vw, 1.125rem);
+      --text-lg: clamp(1.125rem, 2.5vw, 1.25rem);
+      --text-xl: clamp(1.25rem, 2.75vw, 1.5rem);
+      --text-2xl: clamp(1.5rem, 3.5vw, 1.875rem);
+      --text-3xl: clamp(1.875rem, 4vw, 2.25rem);
+    }
+
+    /* ======== RESET ======== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: 'Work Sans', system-ui, sans-serif;
+      background: linear-gradient(135deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: var(--accent); text-decoration: none; transition: color 0.3s; }
+    a:hover { color: var(--accent-secondary); }
+
+    /* ======== NAV ======== */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(20px, 4vw, 48px);
+      background: rgba(10, 20, 32, 0.88);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--text-primary);
+    }
+    .nav-logo-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--gradient-primary);
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+    .nav-logo-icon svg { width: 20px; height: 20px; }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      font-size: var(--text-sm);
+      font-weight: 500;
+      transition: color 0.3s;
+      position: relative;
+    }
+    .nav-links a:hover { color: var(--text-primary); }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--gradient-primary);
+      transition: width 0.3s;
+    }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta {
+      padding: 10px 24px;
+      border-radius: 12px;
+      background: rgba(51, 235, 224, 0.12);
+      border: 1px solid rgba(51, 235, 224, 0.35);
+      color: var(--accent) !important;
+      font-weight: 600;
+      font-size: var(--text-sm);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .nav-cta:hover {
+      background: rgba(51, 235, 224, 0.22);
+      border-color: rgba(51, 235, 224, 0.6);
+      box-shadow: 0 0 24px rgba(51, 235, 224, 0.15);
+      transform: translateY(-1px);
+    }
+    .nav-cta::after { display: none; }
+    .mobile-menu-btn { display: none; }
+
+    /* ======== CONTENT ======== */
+    .page-container {
+      position: relative;
+      z-index: 2;
+      padding: 120px clamp(20px, 4vw, 40px) 80px;
+      min-height: 100vh;
+    }
+    .content-wrapper {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    /* ======== HEADERS ======== */
+    .page-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: var(--text-3xl);
+      font-weight: 700;
+      margin-bottom: 16px;
+      background: var(--gradient-accent);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .page-meta {
+      font-size: var(--text-sm);
+      color: var(--text-dim);
+      margin-bottom: 48px;
+    }
+
+    /* ======== SECTION CARDS ======== */
+    .legal-section {
+      margin-bottom: 48px;
+      padding: 32px;
+      border-radius: 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .legal-section:hover {
+      border-color: var(--border-hover);
+      background: rgba(12, 22, 35, 0.85);
+    }
+    .legal-section h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--text-primary);
+    }
+    .legal-section h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: var(--text-lg);
+      font-weight: 600;
+      margin-top: 24px;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+    .legal-section p {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      line-height: 1.8;
+    }
+    .legal-section ul, .legal-section ol {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      margin-left: 20px;
+      margin-bottom: 16px;
+      line-height: 1.8;
+    }
+    .legal-section li {
+      margin-bottom: 12px;
+    }
+
+    /* ======== FOOTER ======== */
+    .footer {
+      position: relative;
+      z-index: 2;
+      border-top: 1px solid rgba(51, 235, 224, 0.08);
+      padding: 60px clamp(20px, 5vw, 60px) 36px;
+      background: rgba(6, 10, 18, 0.6);
+    }
+    .footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+    }
+    .footer-brand h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: var(--text-xl);
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .footer-brand p {
+      font-size: var(--text-sm);
+      color: var(--text-dim);
+      line-height: 1.6;
+      max-width: 320px;
+    }
+    .footer-col h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: var(--text-sm);
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .footer-col a {
+      display: block;
+      font-size: var(--text-sm);
+      color: var(--text-dim);
+      padding: 6px 0;
+      transition: color 0.3s;
+    }
+    .footer-col a:hover { color: var(--accent); }
+    .footer-bottom {
+      max-width: 1280px;
+      margin: 40px auto 0;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: var(--text-xs);
+      color: var(--text-dim);
+    }
+
+    /* ======== RESPONSIVE ======== */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+      .page-title {
+        font-size: var(--text-2xl);
+      }
+      .legal-section {
+        padding: 24px;
+        margin-bottom: 32px;
+      }
+      .legal-section h2 {
+        font-size: var(--text-xl);
+      }
+      .footer-inner {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .footer-bottom {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ====== NAV ====== -->
+<nav class="nav">
+  <a href="index.html" class="nav-logo">
+    <span class="nav-logo-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+    </span>
+    ReactLog
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#features">Features</a></li>
+    <li><a href="privacy.html">Privacy</a></li>
+    <li><a href="terms.html" style="color: var(--accent);">Terms</a></li>
+  </ul>
+  <a href="index.html#download" class="nav-cta">Download App</a>
+  <button class="mobile-menu-btn">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<!-- ====== MAIN CONTENT ====== -->
+<main class="page-container">
+  <div class="content-wrapper">
+
+    <h1 class="page-title">Terms of Service</h1>
+    <div class="page-meta">Effective Date: March 28, 2026</div>
+
+    <!-- ====== ACCEPTANCE OF TERMS ====== -->
+    <section class="legal-section">
+      <h2>1. Acceptance of Terms</h2>
+      <p>By downloading, installing, accessing, or using the ReactLog mobile application ("the App" or "Service"), you ("User," "you," or "your") acknowledge that you have read, understood, and agree to be bound by all terms and conditions contained in this Terms of Service ("Agreement").</p>
+      <p>ReactLog is a product of Kriastik ("Company," "we," "us," or "our"). This Agreement is a legally binding contract between you and Kriastik. If you do not agree to these terms, do not use the App.</p>
+      <p>We reserve the right to modify this Agreement at any time. Your continued use of the App after changes have been posted constitutes your acceptance of the modified terms.</p>
+    </section>
+
+    <!-- ====== DESCRIPTION OF SERVICE ====== -->
+    <section class="legal-section">
+      <h2>2. Description of Service</h2>
+      <p>ReactLog is a biofeedback and health self-tracking application for iPhone. It enables you to:</p>
+      <ul>
+        <li>Read health metrics from Apple Health (with your permission)</li>
+        <li>Manually log mood entries, supplements, food, and medications</li>
+        <li>Receive personalized health insights and correlation analysis (on-device only)</li>
+        <li>Maintain encrypted records of your personal health information on your device</li>
+        <li>Access historical health data and trend analysis</li>
+        <li>Export your data as PDF, JSON, or CSV</li>
+        <li>Access all features free during early access</li>
+      </ul>
+      <p><strong>Critical Limitation:</strong> ReactLog is NOT a medical device. It is designed for personal health tracking and wellness monitoring only. See Section 7 for important medical disclaimers.</p>
+      <p>ReactLog is currently available on iPhone only. Android version is coming soon. The App is provided on an "as-is" and "as-available" basis.</p>
+    </section>
+
+    <!-- ====== ELIGIBILITY AND ACCOUNTS ====== -->
+    <section class="legal-section">
+      <h2>3. User Eligibility and Accounts</h2>
+
+      <h3>3.1 Age Requirements</h3>
+      <p>You must be at least 13 years of age to use ReactLog (or the legal age of digital consent in your jurisdiction). Users between 13 and 18 may be required to obtain parental consent. Users who are 18 or older are considered adults and are fully responsible for their use of the App.</p>
+      <p>We do not knowingly permit children under 13 to use ReactLog. If we become aware that a user is under 13, we will terminate their account and delete their data.</p>
+
+      <h3>3.2 Account Registration</h3>
+      <p>To use ReactLog, you must create an account by providing:</p>
+      <ul>
+        <li>A valid email address</li>
+        <li>A password (which should be strong and unique)</li>
+        <li>Basic profile information (name, optional)</li>
+      </ul>
+      <p>You are responsible for maintaining the confidentiality of your login credentials and for all activities that occur under your account. You agree to notify us immediately of any unauthorized use of your account.</p>
+
+      <h3>3.3 Accurate Information</h3>
+      <p>You agree to provide accurate, current, and complete information during registration and to update such information as necessary. You warrant that you have the right to provide the information you supply.</p>
+
+      <h3>3.4 Account Responsibility</h3>
+      <p>You are solely responsible for all activities that occur on your account, including any use by third parties who gain access to your credentials. We recommend using biometric authentication (Face ID/Touch ID) to secure your account.</p>
+    </section>
+
+    <!-- ====== PRICING AND FUTURE SUBSCRIPTIONS ====== -->
+    <section class="legal-section">
+      <h2>4. Pricing and Future Subscriptions</h2>
+
+      <h3>4.1 Current Pricing</h3>
+      <p>ReactLog is currently <strong>free</strong> during early access. All features are available at no cost. No credit card or payment is required.</p>
+
+      <h3>4.2 Future Paid Features</h3>
+      <p>We may introduce paid subscription plans in the future. If and when paid subscriptions are introduced:</p>
+      <ul>
+        <li>We will notify existing users in advance of any pricing changes</li>
+        <li>All billing and payment processing will be managed exclusively by Apple through StoreKit 2</li>
+        <li>Kriastik will NOT receive, store, or process your payment credentials</li>
+        <li>Kriastik will NOT have access to your billing or payment information</li>
+        <li>Payments will be charged to the payment method associated with your Apple ID</li>
+        <li>Refunds and billing disputes will be handled through Apple per their App Store refund policy</li>
+      </ul>
+
+      <h3>4.3 Price Changes</h3>
+      <p>We reserve the right to introduce or change pricing in the future. We will notify users at least 30 days before any change from free to paid. Your continued use of the App after such notice constitutes acceptance of new pricing terms.</p>
+    </section>
+
+    <!-- ====== USER RESPONSIBILITIES ====== -->
+    <section class="legal-section">
+      <h2>5. User Responsibilities and Data Ownership</h2>
+
+      <h3>5.1 Your Data, Your Responsibility</h3>
+      <p>You are solely responsible for the health data stored on your device:</p>
+      <ul>
+        <li>You are responsible for the accuracy of health data you manually enter</li>
+        <li>You are responsible for protecting your device and app credentials (Face ID, Touch ID, password)</li>
+        <li>You are responsible for maintaining device security and keeping your OS updated</li>
+        <li>You are responsible for backing up your data if you wish to preserve it</li>
+      </ul>
+
+      <h3>5.2 Lawful Use Only</h3>
+      <p>You agree to use ReactLog only for lawful purposes:</p>
+      <ul>
+        <li>Do not attempt to reverse-engineer, decompile, or access the app's source code</li>
+        <li>Do not attempt to hack, bypass, or interfere with the app's security</li>
+        <li>Do not use the app to violate any laws or regulations</li>
+      </ul>
+
+      <h3>5.3 Health Data Not Medical Advice</h3>
+      <p>You acknowledge that:</p>
+      <ul>
+        <li>ReactLog is NOT a medical device and cannot diagnose disease</li>
+        <li>Insights from ReactLog are for informational purposes only</li>
+        <li>You should consult medical professionals for health decisions</li>
+        <li>ReactLog is a personal tracking tool, not medical advice</li>
+      </ul>
+
+      <h3>5.4 Your Account Security</h3>
+      <p>You are responsible for:</p>
+      <ul>
+        <li>Keeping your Face ID/Touch ID and password secure</li>
+        <li>Not sharing your device credentials with others</li>
+        <li>Notifying us immediately if you suspect unauthorized access</li>
+        <li>Maintaining control over your device and app access</li>
+      </ul>
+    </section>
+
+    <!-- ====== INTELLECTUAL PROPERTY ====== -->
+    <section class="legal-section">
+      <h2>6. Intellectual Property Rights</h2>
+
+      <h3>6.1 ReactLog App Ownership</h3>
+      <p>ReactLog is owned by Kriastik and protected by copyright and trademark law. We grant you a limited, non-exclusive, non-transferable license to use the App for personal, non-commercial purposes only.</p>
+
+      <h3>6.2 Your Data Ownership</h3>
+      <p>You own all health data and personal information you enter or authorize the App to read:</p>
+      <ul>
+        <li>You retain complete ownership of all your health data</li>
+        <li>You control how your data is used (on-device processing only)</li>
+        <li>You can export your data as PDF, JSON, or CSV at any time</li>
+        <li>You can delete your data at any time</li>
+      </ul>
+
+      <h3>6.3 App Restrictions</h3>
+      <p>You agree not to:</p>
+      <ul>
+        <li>Modify, copy, distribute, or sell the App or any part of it</li>
+        <li>Reverse-engineer, decompile, or attempt to access the source code</li>
+        <li>Create derivative works based on the App</li>
+        <li>Use the App for commercial purposes</li>
+      </ul>
+
+      <h3>6.4 Trademarks</h3>
+      <p>"ReactLog" and the ReactLog logo are trademarks of Kriastik. Do not use these trademarks without written permission.</p>
+    </section>
+
+    <!-- ====== MEDICAL DISCLAIMER ====== -->
+    <section class="legal-section">
+      <h2>7. CRITICAL: Not Medical Advice or a Medical Device</h2>
+
+      <h3>7.1 NOT a Medical Device</h3>
+      <p><strong>ReactLog is NOT a medical device, is not FDA-approved, and does not provide medical diagnosis, treatment, or medical advice.</strong></p>
+      <p>The App is designed solely for personal health tracking and wellness monitoring. Do not use ReactLog for:</p>
+      <ul>
+        <li>Diagnosing any medical condition or disease</li>
+        <li>Treating, curing, or preventing any disease</li>
+        <li>Making decisions about medication or treatment</li>
+        <li>Replacing professional medical advice</li>
+        <li>Emergency medical guidance</li>
+      </ul>
+
+      <h3>7.2 Consult Healthcare Professionals</h3>
+      <p><strong>If you have health concerns, consult a qualified healthcare provider.</strong> Do not rely on ReactLog insights for medical decisions. ReactLog is a personal tracking tool, not medical advice.</p>
+
+      <h3>7.3 Medical Emergencies</h3>
+      <p>If you experience a medical emergency, call 911 (or your local emergency number) immediately. Do not rely on ReactLog for emergency guidance.</p>
+
+      <h3>7.4 Data Accuracy Limitations</h3>
+      <p>Health data from Apple Health or other sources may contain errors. You are responsible for verifying critical health information with healthcare professionals.</p>
+
+      <h3>7.5 No Health Claims</h3>
+      <p>Insights from ReactLog are for personal awareness only and make no claims about your actual health status.</p>
+    </section>
+
+    <!-- ====== DISCLAIMERS AND LIMITATIONS ====== -->
+    <section class="legal-section">
+      <h2>8. Disclaimers and Limitations</h2>
+
+      <h3>8.1 As-Is Disclaimer</h3>
+      <p>ReactLog is provided on an "as-is" and "as-available" basis without warranties. Kriastik disclaims all warranties, including:</p>
+      <ul>
+        <li>Warranties of accuracy, reliability, or completeness</li>
+        <li>Warranties of merchantability and fitness for a particular purpose</li>
+        <li>Warranties that the app will be error-free or uninterrupted</li>
+      </ul>
+
+      <h3>8.2 Data Loss and Device Issues</h3>
+      <p>We are not responsible for:</p>
+      <ul>
+        <li>Data loss due to device failure, loss, or theft</li>
+        <li>Data loss if you uninstall the app without backing up</li>
+        <li>Technical errors or bugs in the app</li>
+        <li>App crashes or performance issues</li>
+        <li>Any actions or failures on your device</li>
+      </ul>
+
+      <h3>8.3 Third-Party Services</h3>
+      <p>ReactLog integrates with third-party services (Apple Health, USDA API). We are not responsible for:</p>
+      <ul>
+        <li>Changes to third-party platforms or APIs</li>
+        <li>Third-party service interruptions or outages</li>
+        <li>Data accuracy or availability from third-party sources</li>
+        <li>Privacy practices or security of third-party services</li>
+      </ul>
+
+      <h3>8.4 No Health or Wellness Guarantees</h3>
+      <p>Kriastik makes no claims about health outcomes. ReactLog cannot and does not:</p>
+      <ul>
+        <li>Guarantee any health benefits</li>
+        <li>Treat or prevent any condition</li>
+        <li>Provide medically accurate diagnosis</li>
+        <li>Replace professional medical advice</li>
+      </ul>
+    </section>
+
+    <!-- ====== LIMITATION OF LIABILITY ====== -->
+    <section class="legal-section">
+      <h2>9. Limitation of Liability</h2>
+
+      <h3>9.1 Limited Liability</h3>
+      <p>To the maximum extent permitted by law, Kriastik is not liable for:</p>
+      <ul>
+        <li>Any indirect, incidental, consequential, or punitive damages</li>
+        <li>Loss of data, profits, or business opportunity</li>
+        <li>Errors or inaccuracies in health insights</li>
+        <li>Any health outcomes or lack thereof</li>
+        <li>Data loss, device theft, or device failure</li>
+      </ul>
+
+      <h3>9.2 Cap on Damages</h3>
+      <p>Kriastik's total liability shall not exceed the amount you paid for the app in the past 12 months, or $100, whichever is less.</p>
+
+      <h3>9.3 Your Assumption of Risk</h3>
+      <p>You use ReactLog at your own risk. You assume all risks associated with:</p>
+      <ul>
+        <li>Health decisions based on app insights</li>
+        <li>Data storage and loss</li>
+        <li>Device security and biometric authentication</li>
+      </ul>
+    </section>
+
+    <!-- ====== INDEMNIFICATION ====== -->
+    <section class="legal-section">
+      <h2>10. Indemnification</h2>
+      <p>You agree to indemnify, defend, and hold harmless Kriastik from any claims arising from:</p>
+      <ul>
+        <li>Your violation of this Agreement</li>
+        <li>Your violation of any applicable laws</li>
+        <li>Your misuse of the App</li>
+        <li>Health decisions or outcomes based on app insights</li>
+        <li>Your infringement of third-party rights</li>
+      </ul>
+    </section>
+
+    <!-- ====== TERMINATION ====== -->
+    <section class="legal-section">
+      <h2>11. Termination and Data Deletion</h2>
+
+      <h3>11.1 Termination by You</h3>
+      <p>You can delete your account and all your data at any time:</p>
+      <ul>
+        <li><strong>In-app deletion:</strong> Go to App settings and delete your account</li>
+        <li><strong>App uninstall:</strong> Uninstalling the app deletes all your data from your device</li>
+        <li><strong>Contact support:</strong> Email support@reactlog.com if you need assistance</li>
+      </ul>
+
+      <h3>11.2 What Happens to Your Data</h3>
+      <p>When you delete your account or uninstall the app:</p>
+      <ul>
+        <li>Your local data is deleted from your device</li>
+        <li>Kriastik has no server data to delete (all data is on your device)</li>
+        <li>iCloud backup may still contain data if you enabled it; manage that through your device settings</li>
+      </ul>
+
+      <h3>11.3 Termination by Kriastik</h3>
+      <p>We may terminate your access to the App if you:</p>
+      <ul>
+        <li>Violate this Agreement or laws</li>
+        <li>Engage in fraudulent or harmful activity</li>
+        <li>Repeatedly misuse the App</li>
+      </ul>
+
+      <h3>11.4 Effect of Termination</h3>
+      <p>Upon termination, your access to ReactLog ceases. Your data remains on your device and is under your control.</p>
+    </section>
+
+    <!-- ====== GOVERNING LAW ====== -->
+    <section class="legal-section">
+      <h2>12. Governing Law and Jurisdiction</h2>
+      <p>This Agreement is governed by and construed in accordance with the laws of the United States, without regard to its conflict of law principles. You agree to submit to the exclusive jurisdiction of the state and federal courts located in the United States for the resolution of any disputes.</p>
+      <p>If you are located in the European Union, you may have additional rights under EU law, and disputes may be subject to mandatory arbitration or small claims procedures.</p>
+    </section>
+
+    <!-- ====== DISPUTE RESOLUTION ====== -->
+    <section class="legal-section">
+      <h2>13. Dispute Resolution</h2>
+
+      <h3>13.1 Informal Resolution First</h3>
+      <p>Before taking formal action, contact support@reactlog.com to attempt to resolve any dispute. We will respond within 30 days.</p>
+
+      <h3>13.2 Arbitration</h3>
+      <p>Any remaining disputes shall be resolved through binding arbitration (not court litigation) under American Arbitration Association (AAA) rules. Each party bears its own costs.</p>
+
+      <h3>13.3 No Class Actions</h3>
+      <p>You waive the right to pursue class action litigation. Disputes must be handled individually.</p>
+    </section>
+
+    <!-- ====== CHANGES TO TERMS ====== -->
+    <section class="legal-section">
+      <h2>14. Changes to Terms of Service</h2>
+      <p>We may update this Agreement at any time by posting the revised version in the App or on our website. We will notify you of material changes by:</p>
+      <ul>
+        <li>Updating the "Effective Date" at the top of this Agreement</li>
+        <li>Posting a notice in the App or sending an email</li>
+        <li>Requiring your affirmative acceptance of changes (for significant modifications)</li>
+      </ul>
+      <p>Your continued use of ReactLog after changes become effective constitutes your acceptance of the updated terms. We encourage you to review this Agreement periodically.</p>
+    </section>
+
+    <!-- ====== CONTACT INFORMATION ====== -->
+    <section class="legal-section">
+      <h2>15. Contact Information</h2>
+      <p>If you have questions about these Terms of Service, complaints, or wish to report a violation, please contact us:</p>
+      <ul>
+        <li><strong>Email:</strong> support@reactlog.com</li>
+        <li><strong>Company:</strong> Kriastik</li>
+        <li><strong>Website:</strong> reactlog.com</li>
+      </ul>
+      <p>We will respond to your inquiry within 30 days.</p>
+    </section>
+
+    <!-- ====== ENTIRE AGREEMENT ====== -->
+    <section class="legal-section">
+      <h2>16. Entire Agreement</h2>
+      <p>This Terms of Service, together with our Privacy Policy, is the complete agreement between you and Kriastik regarding ReactLog. These terms supersede all prior agreements.</p>
+    </section>
+
+    <!-- ====== KEY POINTS SUMMARY ====== -->
+    <section class="legal-section">
+      <h2>17. Key Points Summary</h2>
+      <p><strong>By using ReactLog, you acknowledge:</strong></p>
+      <ul>
+        <li>ReactLog is NOT a medical device and does NOT provide medical advice</li>
+        <li>All your health data is stored exclusively on your device</li>
+        <li>You own your data completely and can delete it anytime</li>
+        <li>ReactLog is currently free during early access; paid plans may be introduced in the future</li>
+        <li>Kriastik cannot access, share, or sell your health data</li>
+        <li>You assume all health-related risks and should consult healthcare providers</li>
+        <li>You are responsible for your device security</li>
+      </ul>
+    </section>
+
+    <!-- ====== ACKNOWLEDGMENT ====== -->
+    <section class="legal-section">
+      <h2>18. Acknowledgment</h2>
+      <p>By downloading and using ReactLog, you acknowledge that you have read and understood these Terms of Service and agree to be bound by them. If you do not agree, do not use the App.</p>
+    </section>
+
+  </div>
+</main>
+
+<!-- ====== FOOTER ====== -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <h3>
+        <span style="width:28px;height:28px;border-radius:8px;background:var(--gradient-primary);display:inline-grid;place-items:center">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#080d17" stroke-width="2.5" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </span>
+        ReactLog
+      </h3>
+      <p>Biofeedback and self-tracking intelligence. Track mood, health metrics, and lifestyle inputs to discover correlations and optimize your wellbeing.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Product</h4>
+      <a href="index.html#features">Features</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="index.html#how-it-works">How It Works</a>
+      <a href="index.html#download">Download</a>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#">Kriastik</a>
+      <a href="mailto:support@reactlog.com">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Kriastik. All rights reserved.</span>
+    <span>Made with care for your wellbeing.</span>
+  </div>
+</footer>
+
+</body>
+</html>

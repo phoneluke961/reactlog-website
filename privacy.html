@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — ReactLog</title>
+  <meta name="description" content="Privacy Policy for ReactLog, a biofeedback and health tracking app by Kriastik.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ======== CSS CUSTOM PROPERTIES ======== */
+    :root {
+      --accent: #33ebe0;
+      --accent-secondary: #57b8ff;
+      --glow: #40f2e6;
+      --bg-top: #0f1f2e;
+      --bg-bottom: #080d17;
+      --bg-primary: #0a1420;
+      --bg-card: rgba(12, 22, 35, 0.75);
+      --border: rgba(51, 235, 224, 0.18);
+      --border-hover: rgba(51, 235, 224, 0.38);
+      --text-primary: #eaf6ff;
+      --text-secondary: rgba(234, 246, 255, 0.72);
+      --text-dim: rgba(234, 246, 255, 0.48);
+      --surface: rgba(14, 26, 42, 0.6);
+      --gradient-primary: linear-gradient(135deg, #33ebe0, #57b8ff);
+      --gradient-accent: linear-gradient(135deg, #33ebe0 0%, #40f2e6 50%, #57b8ff 100%);
+
+      --text-xs: clamp(0.75rem, 1.5vw, 0.875rem);
+      --text-sm: clamp(0.875rem, 2vw, 1rem);
+      --text-base: clamp(1rem, 2.25vw, 1.125rem);
+      --text-lg: clamp(1.125rem, 2.5vw, 1.25rem);
+      --text-xl: clamp(1.25rem, 2.75vw, 1.5rem);
+      --text-2xl: clamp(1.5rem, 3.5vw, 1.875rem);
+      --text-3xl: clamp(1.875rem, 4vw, 2.25rem);
+    }
+
+    /* ======== RESET ======== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: 'Work Sans', system-ui, sans-serif;
+      background: linear-gradient(135deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: var(--accent); text-decoration: none; transition: color 0.3s; }
+    a:hover { color: var(--accent-secondary); }
+
+    /* ======== NAV ======== */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(20px, 4vw, 48px);
+      background: rgba(10, 20, 32, 0.88);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--text-primary);
+    }
+    .nav-logo-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--gradient-primary);
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+    .nav-logo-icon svg { width: 20px; height: 20px; }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      font-size: var(--text-sm);
+      font-weight: 500;
+      transition: color 0.3s;
+      position: relative;
+    }
+    .nav-links a:hover { color: var(--text-primary); }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--gradient-primary);
+      transition: width 0.3s;
+    }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta {
+      padding: 10px 24px;
+      border-radius: 12px;
+      background: rgba(51, 235, 224, 0.12);
+      border: 1px solid rgba(51, 235, 224, 0.35);
+      color: var(--accent) !important;
+      font-weight: 600;
+      font-size: var(--text-sm);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .nav-cta:hover {
+      background: rgba(51, 235, 224, 0.22);
+      border-color: rgba(51, 235, 224, 0.6);
+      box-shadow: 0 0 24px rgba(51, 235, 224, 0.15);
+      transform: translateY(-1px);
+    }
+    .nav-cta::after { display: none; }
+    .mobile-menu-btn { display: none; }
+
+    /* ======== CONTENT ======== */
+    .page-container {
+      position: relative;
+      z-index: 2;
+      padding: 120px clamp(20px, 4vw, 40px) 80px;
+      min-height: 100vh;
+    }
+    .content-wrapper {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    /* ======== HEADERS ======== */
+    .page-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: var(--text-3xl);
+      font-weight: 700;
+      margin-bottom: 16px;
+      background: var(--gradient-accent);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .page-meta {
+      font-size: var(--text-sm);
+      color: var(--text-dim);
+      margin-bottom: 48px;
+    }
+
+    /* ======== SECTION CARDS ======== */
+    .legal-section {
+      margin-bottom: 48px;
+      padding: 32px;
+      border-radius: 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .legal-section:hover {
+      border-color: var(--border-hover);
+      background: rgba(12, 22, 35, 0.85);
+    }
+    .legal-section h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--text-primary);
+    }
+    .legal-section h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: var(--text-lg);
+      font-weight: 600;
+      margin-top: 24px;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+    .legal-section p {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      line-height: 1.8;
+    }
+    .legal-section ul, .legal-section ol {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      margin-left: 20px;
+      margin-bottom: 16px;
+      line-height: 1.8;
+    }
+    .legal-section li {
+      margin-bottom: 12px;
+    }
+
+    /* ======== FOOTER ======== */
+    .footer {
+      position: relative;
+      z-index: 2;
+      border-top: 1px solid rgba(51, 235, 224, 0.08);
+      padding: 60px clamp(20px, 5vw, 60px) 36px;
+      background: rgba(6, 10, 18, 0.6);
+    }
+    .footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+    }
+    .footer-brand h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: var(--text-xl);
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .footer-brand p {
+      font-size: var(--text-sm);
+      color: var(--text-dim);
+      line-height: 1.6;
+      max-width: 320px;
+    }
+    .footer-col h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: var(--text-sm);
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .footer-col a {
+      display: block;
+      font-size: var(--text-sm);
+      color: var(--text-dim);
+      padding: 6px 0;
+      transition: color 0.3s;
+    }
+    .footer-col a:hover { color: var(--accent); }
+    .footer-bottom {
+      max-width: 1280px;
+      margin: 40px auto 0;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: var(--text-xs);
+      color: var(--text-dim);
+    }
+
+    /* ======== RESPONSIVE ======== */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+      .page-title {
+        font-size: var(--text-2xl);
+      }
+      .legal-section {
+        padding: 24px;
+        margin-bottom: 32px;
+      }
+      .legal-section h2 {
+        font-size: var(--text-xl);
+      }
+      .footer-inner {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .footer-bottom {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ====== NAV ====== -->
+<nav class="nav">
+  <a href="index.html" class="nav-logo">
+    <span class="nav-logo-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+    </span>
+    ReactLog
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#features">Features</a></li>
+    <li><a href="privacy.html" style="color: var(--accent);">Privacy</a></li>
+    <li><a href="terms.html">Terms</a></li>
+  </ul>
+  <a href="index.html#download" class="nav-cta">Download App</a>
+  <button class="mobile-menu-btn">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<!-- ====== MAIN CONTENT ====== -->
+<main class="page-container">
+  <div class="content-wrapper">
+
+    <h1 class="page-title">Privacy Policy</h1>
+    <div class="page-meta">Effective Date: March 28, 2026</div>
+
+    <!-- ====== INTRODUCTION ====== -->
+    <section class="legal-section">
+      <h2>1. Introduction</h2>
+      <p>Kriastik ("we," "us," "our," or "Company") is committed to protecting your privacy. This Privacy Policy explains how ReactLog ("the App" or "Service") handles your personal information and health data.</p>
+      <p>ReactLog is a biofeedback and health self-tracking application designed for on-device data processing. All of your health data, mood logs, supplement records, and personal information are stored exclusively on your device. We do not collect, store, or process your personal health information on any server or cloud system.</p>
+      <p>Please read this Privacy Policy carefully. By accessing or using ReactLog, you acknowledge that you have read, understood, and agree to be bound by all the terms of this Privacy Policy. If you do not agree with our practices, please do not use the App.</p>
+    </section>
+
+    <!-- ====== DATA COLLECTION ====== -->
+    <section class="legal-section">
+      <h2>2. On-Device Data Storage</h2>
+      <p><strong>All data in ReactLog is stored exclusively on your device.</strong> We do not collect, transmit, or store your personal health information on any server, cloud system, or backend database. Your device is the sole repository for your data.</p>
+
+      <h3>2.1 Health and Wellness Data (On-Device Only)</h3>
+      <p>You may authorize ReactLog to read health metrics from Apple Health with your explicit permission. This data is:</p>
+      <ul>
+        <li>Read directly from Apple Health on your device</li>
+        <li>Processed and analyzed on your device only</li>
+        <li>Stored in encrypted local storage (CoreData/SQLite) on your device</li>
+        <li>Never transmitted to any Kriastik server</li>
+      </ul>
+      <p>Data types include: heart rate, HRV, blood pressure, sleep, VO2 Max, weight, respiratory rate, SpO2, activity metrics, and distance/stairs data.</p>
+
+      <h3>2.2 User-Entered Data (On-Device Only)</h3>
+      <p>Data you manually enter into the app is stored exclusively on your device:</p>
+      <ul>
+        <li><strong>Mood logs:</strong> Your mood entries and notes stay on your device</li>
+        <li><strong>Supplement logs:</strong> Your supplement records stay on your device</li>
+        <li><strong>Food and nutrition logs:</strong> Your food entries stay on your device</li>
+        <li><strong>Medication logs:</strong> Your medication records stay on your device</li>
+      </ul>
+
+      <h3>2.3 Biometric Authentication (Local-Only)</h3>
+      <ul>
+        <li>Face ID and Touch ID authentication data is stored in your device's Secure Enclave</li>
+        <li>Biometric data is used only for local app access control</li>
+        <li>No biometric data is transmitted or stored remotely</li>
+      </ul>
+
+      <h3>2.4 Subscription Data (Handled by Apple Only)</h3>
+      <p>ReactLog is currently free during early access. When paid subscriptions are introduced, all billing will be managed exclusively by Apple through StoreKit 2:</p>
+      <ul>
+        <li>We do not receive or store your payment credentials</li>
+        <li>We do not have access to your billing or payment information</li>
+        <li>Apple handles all subscription management and billing</li>
+        <li>Subscription status is synced locally on your device</li>
+      </ul>
+
+      <h3>2.5 Network Requests - Limited and Minimal</h3>
+      <p>ReactLog makes only two categories of external network requests, neither involving your personal data:</p>
+      <ul>
+        <li><strong>USDA Food API:</strong> Only when you search for food items. We send your search query (e.g., "apple", "chicken breast") and receive nutritional data. No personal or health data is transmitted.</li>
+        <li><strong>Apple App Store:</strong> For subscription verification and app updates. Apple's Privacy Policy governs this data.</li>
+      </ul>
+    </section>
+
+    <!-- ====== HOW WE USE DATA ====== -->
+    <section class="legal-section">
+      <h2>3. How We Use Your Information</h2>
+      <p>Since all your data is stored on your device, Kriastik has no access to your personal health information. Here is how ReactLog processes your data:</p>
+      <ul>
+        <li><strong>On-Device Processing:</strong> All health insights, mood pattern analysis, and correlation detection occur on your device using local processing</li>
+        <li><strong>Local Storage:</strong> Your data is encrypted and stored in CoreData/SQLite on your device only</li>
+        <li><strong>Local Authentication:</strong> Biometric and password authentication happen entirely on your device</li>
+        <li><strong>Subscription Management:</strong> Handled by Apple through StoreKit 2; Kriastik never accesses billing information</li>
+        <li><strong>Data Export:</strong> You can export your data as PDF, JSON, or CSV files stored locally on your device only</li>
+        <li><strong>Optional iCloud Backup:</strong> If you enable iCloud backup on your device settings, Apple may include app data in device backups per Apple's standard backup practices</li>
+      </ul>
+    </section>
+
+    <!-- ====== DATA PROCESSING ====== -->
+    <section class="legal-section">
+      <h2>4. Architecture: 100% On-Device</h2>
+      <p>ReactLog is architected for complete on-device processing and storage:</p>
+      <ul>
+        <li><strong>No Cloud Backend:</strong> ReactLog does not have a backend server, cloud database, or cloud storage system for user data</li>
+        <li><strong>All Processing Local:</strong> Health insights, mood pattern analysis, correlations, and trend detection all occur on your device</li>
+        <li><strong>All Storage Local:</strong> Health data, mood logs, supplement records, and food logs are stored in encrypted local storage (CoreData SQLite with file protection) on your device only</li>
+        <li><strong>Complete User Control:</strong> You have full control over your data. No data leaves your device without your explicit action (like exporting or optional backup)</li>
+        <li><strong>No Third-Party Data Sharing:</strong> Because data never leaves your device, there is nothing to share with third parties</li>
+      </ul>
+    </section>
+
+    <!-- ====== DATA STORAGE AND SECURITY ====== -->
+    <section class="legal-section">
+      <h2>5. Data Storage and Security</h2>
+
+      <h3>5.1 On-Device Storage Security</h3>
+      <ul>
+        <li><strong>CoreData/SQLite Storage:</strong> Health data is stored in encrypted local storage using iOS/Android file protection</li>
+        <li><strong>Encryption at Rest:</strong> All local data files are encrypted using platform-standard encryption</li>
+        <li><strong>Secure Enclave:</strong> Biometric authentication references and credentials are stored in your device's Secure Enclave (Keychain on iOS, KeyStore on Android)</li>
+        <li><strong>No Network Encryption Needed:</strong> Since data never leaves your device, it is not transmitted over the network</li>
+      </ul>
+
+      <h3>5.2 Data Retention and Deletion</h3>
+      <ul>
+        <li><strong>Retention:</strong> Your health data is retained on your device for as long as you keep the app installed</li>
+        <li><strong>User-Controlled Deletion:</strong> You can delete individual entries or all data at any time through the app settings</li>
+        <li><strong>App Deletion:</strong> Uninstalling ReactLog removes all your data from your device</li>
+        <li><strong>iCloud Backups:</strong> If you enable iCloud backup on your device settings, Apple may include app data in device backups. You can disable iCloud backup for ReactLog in your device settings</li>
+      </ul>
+
+      <h3>5.3 Kriastik Access and Control</h3>
+      <ul>
+        <li><strong>Kriastik Cannot Access Your Data:</strong> Kriastik has no backend systems, no servers, and no way to access your health data</li>
+        <li><strong>No Remote Access:</strong> Kriastik cannot view, download, or retrieve your personal health information</li>
+        <li><strong>Complete User Ownership:</strong> Your health data is your exclusive property, stored only on your device</li>
+      </ul>
+
+      <h3>5.4 Third-Party Security</h3>
+      <ul>
+        <li><strong>Apple Health:</strong> If you authorize data access from Apple Health, Apple's security standards apply to that platform</li>
+        <li><strong>USDA Food API:</strong> When you search for foods, only your search query is transmitted. USDA's privacy policy applies to their services</li>
+        <li><strong>Apple Subscriptions:</strong> Apple handles all subscription and payment data per Apple's security standards</li>
+      </ul>
+    </section>
+
+    <!-- ====== THIRD-PARTY SERVICES ====== -->
+    <section class="legal-section">
+      <h2>6. Third-Party Services and Integrations</h2>
+
+      <h3>6.1 Apple Health (iOS Only)</h3>
+      <p>ReactLog can read health data from Apple Health with your explicit permission. Apple Health data is:</p>
+      <ul>
+        <li>Read directly from your device's Apple Health app</li>
+        <li>Processed and stored locally on your device only</li>
+        <li>Governed by Apple's privacy policies</li>
+        <li>Fully under your control; you can revoke access at any time in your device settings</li>
+      </ul>
+      <p>Kriastik does not access Apple Health servers or transmit your health data to Apple or any other party.</p>
+
+      <h3>6.2 USDA Food Data Central API</h3>
+      <p>When you search for food items in the app:</p>
+      <ul>
+        <li>Only your food search query is sent to the USDA (e.g., "apple" or "chicken breast")</li>
+        <li>No personal health data, mood data, or supplement records are transmitted</li>
+        <li>Nutritional information is returned and stored locally on your device</li>
+        <li>USDA's privacy policy applies to their API service</li>
+      </ul>
+
+      <h3>6.3 Optional iCloud Backup</h3>
+      <p>iCloud backup is completely optional and controlled by your device settings:</p>
+      <ul>
+        <li>If you enable iCloud backup in your device settings, Apple may include app data in device backups</li>
+        <li>You can disable iCloud backup for ReactLog in your device settings at any time</li>
+        <li>You can also turn off iCloud backup entirely for your device in iOS Settings</li>
+        <li>Apple's privacy policy governs iCloud backup data</li>
+        <li>Kriastik does not control, access, or manage your iCloud backups</li>
+      </ul>
+
+      <h3>6.4 Apple StoreKit 2 (Subscriptions Only)</h3>
+      <p>Subscription management is handled exclusively by Apple:</p>
+      <ul>
+        <li>Kriastik does not receive, store, or process payment credentials</li>
+        <li>Kriastik does not have access to your billing information</li>
+        <li>Apple handles all subscription renewals, cancellations, and refunds</li>
+        <li>Subscription status is synced locally on your device through StoreKit 2</li>
+        <li>Apple's privacy policy governs payment data</li>
+      </ul>
+
+      <h3>6.5 No Analytics, No Tracking, No SDKs</h3>
+      <p>ReactLog does NOT use:</p>
+      <ul>
+        <li>Firebase, Google Analytics, or any Firebase products</li>
+        <li>Amplitude, Mixpanel, or other analytics SDKs</li>
+        <li>Crashlytics or crash reporting services</li>
+        <li>Advertising SDKs or tracking pixels</li>
+        <li>Any third-party analytics or behavioral tracking</li>
+      </ul>
+    </section>
+
+    <!-- ====== DATA SHARING ====== -->
+    <section class="legal-section">
+      <h2>7. Data Sharing and Disclosure</h2>
+
+      <h3>7.1 Your Data Is Not Shared</h3>
+      <p>Since your health data never leaves your device, Kriastik cannot share it with anyone:</p>
+      <ul>
+        <li>We do NOT sell your health data</li>
+        <li>We do NOT share your health data with third parties</li>
+        <li>We do NOT share your health data with advertisers or data brokers</li>
+        <li>We do NOT use your health data for marketing purposes</li>
+        <li>We do NOT have access to your health data to share</li>
+      </ul>
+
+      <h3>7.2 What About Legal Requests?</h3>
+      <p>If we receive a legal request (court order, subpoena, law enforcement) for your personal health data:</p>
+      <ul>
+        <li>Kriastik cannot provide data we do not have access to or possess</li>
+        <li>Your health data is stored exclusively on your device</li>
+        <li>You would need to provide your device and credentials to law enforcement if they seek your data</li>
+        <li>We maintain minimal non-health information on our servers (none, since we have no backend)</li>
+      </ul>
+
+      <h3>7.3 iCloud and Apple Backup</h3>
+      <p>The only way your data could be stored off-device is through:</p>
+      <ul>
+        <li><strong>iCloud Backup:</strong> If you enable iCloud backup on your device, Apple may include app data in their backups. This is optional and under your control.</li>
+        <li><strong>You can disable iCloud backup for ReactLog</strong> in your device settings at any time</li>
+      </ul>
+    </section>
+
+    <!-- ====== USER RIGHTS ====== -->
+    <section class="legal-section">
+      <h2>8. Your Privacy Rights (GDPR, CCPA, and Others)</h2>
+
+      <h3>8.1 Since Your Data Is On Your Device...</h3>
+      <p>Because ReactLog stores all data exclusively on your device, here's how privacy regulations apply:</p>
+
+      <h3>8.2 GDPR Rights (European Residents)</h3>
+      <p>GDPR gives you rights over personal data held by organizations. Since Kriastik does not hold your health data:</p>
+      <ul>
+        <li><strong>Right of Access:</strong> Your data is on your device; you have direct access to it at all times</li>
+        <li><strong>Right of Rectification:</strong> You can edit or correct your data directly in the app</li>
+        <li><strong>Right to Erasure:</strong> You can delete any or all of your data by deleting it in the app or uninstalling the app</li>
+        <li><strong>Right to Data Portability:</strong> You can export your data as PDF, JSON, or CSV through the app's export feature</li>
+        <li><strong>Right to Object:</strong> Since we don't process your data on servers, there is nothing to object to</li>
+      </ul>
+
+      <h3>8.3 CCPA Rights (California Residents)</h3>
+      <p>CCPA gives you rights over personal information collected by organizations. Since Kriastik doesn't collect or hold your health data:</p>
+      <ul>
+        <li><strong>Right to Know:</strong> Your data is stored on your device; you have complete knowledge and access</li>
+        <li><strong>Right to Delete:</strong> You can permanently delete your data by deleting entries or uninstalling the app</li>
+        <li><strong>Right to Opt-Out of Sales:</strong> Your data is not sold because it never leaves your device</li>
+        <li><strong>Right to Non-Discrimination:</strong> We do not discriminate for exercising your rights</li>
+      </ul>
+
+      <h3>8.4 Your Data, Your Control</h3>
+      <ul>
+        <li><strong>Complete Ownership:</strong> You own all your health data</li>
+        <li><strong>Complete Access:</strong> You can access and view all your data in the app at any time</li>
+        <li><strong>Complete Control:</strong> You can modify, export, or delete your data at any time</li>
+        <li><strong>Easy Deletion:</strong> Uninstall the app to delete all data from your device</li>
+      </ul>
+
+      <h3>8.5 Contact Us</h3>
+      <p>If you have questions about your rights or need assistance with accessing, modifying, or deleting your data, contact support@reactlog.com.</p>
+    </section>
+
+    <!-- ====== CHILDREN'S PRIVACY ====== -->
+    <section class="legal-section">
+      <h2>9. Children's Privacy</h2>
+      <p>ReactLog is not intended for children under the age of 13 (or the applicable age of digital consent in your jurisdiction). We do not knowingly collect personal information from children under 13. If we become aware that we have collected data from a child under 13, we will immediately delete such information and terminate the child's account.</p>
+      <p>For users between 13 and 18 (or the age of majority in your jurisdiction), we provide additional privacy protections. Parental consent may be required depending on your jurisdiction. Please contact us if you have concerns about a minor's use of ReactLog.</p>
+    </section>
+
+    <!-- ====== COOKIES AND TRACKING ====== -->
+    <section class="legal-section">
+      <h2>10. Cookies and Tracking</h2>
+      <p><strong>ReactLog does not use cookies, tracking pixels, or analytics SDKs.</strong></p>
+      <ul>
+        <li>No cookies are used</li>
+        <li>No tracking pixels are used</li>
+        <li>No analytics SDKs (Firebase, Amplitude, Mixpanel) are used</li>
+        <li>No behavioral tracking occurs</li>
+        <li>No user data is sent to analytics platforms</li>
+      </ul>
+      <p>Your app settings and preferences are stored locally on your device only.</p>
+    </section>
+
+    <!-- ====== DATA TRANSFERS ====== -->
+    <section class="legal-section">
+      <h2>11. International Data Transfers</h2>
+      <p><strong>No International Data Transfers Occur</strong></p>
+      <p>Since all your health data is stored on your device, no international transfers of your personal health data occur. Your data never leaves your device (unless you choose to use iCloud backup, in which case Apple's data transfer policies apply).</p>
+      <p>The only international data transfer is optional and controlled by you through your device settings (iCloud backup).</p>
+    </section>
+
+    <!-- ====== SECURITY NOTICE ====== -->
+    <section class="legal-section">
+      <h2>12. Security Notice</h2>
+      <p>Your health data is protected by your device's built-in security:</p>
+      <ul>
+        <li>Local encryption through iOS/Android file protection</li>
+        <li>Biometric authentication (Face ID/Touch ID) protects app access</li>
+        <li>No network transmission means no risk of data interception during transfer</li>
+      </ul>
+      <p>The security of your device itself (passcode, biometrics, OS updates) is your responsibility. If you believe your device is compromised, please secure it immediately.</p>
+    </section>
+
+    <!-- ====== CONTACT INFORMATION ====== -->
+    <section class="legal-section">
+      <h2>13. Contact Information</h2>
+      <p>If you have questions about this Privacy Policy, wish to exercise your privacy rights, or have concerns about your data, please contact us:</p>
+      <ul>
+        <li><strong>Email:</strong> support@reactlog.com</li>
+        <li><strong>Company:</strong> Kriastik</li>
+        <li><strong>Website:</strong> reactlog.com</li>
+      </ul>
+      <p>We will respond to your inquiry within 30 days.</p>
+    </section>
+
+    <!-- ====== POLICY CHANGES ====== -->
+    <section class="legal-section">
+      <h2>14. Changes to This Privacy Policy</h2>
+      <p>We may update this Privacy Policy to reflect changes in our practices, technology, or legal requirements. We will notify you of material changes by:</p>
+      <ul>
+        <li>Updating the "Effective Date" at the top of this policy</li>
+        <li>Posting the revised policy in the App and on our website</li>
+        <li>Sending you a notification email if changes significantly affect your privacy</li>
+      </ul>
+      <p>Your continued use of ReactLog constitutes acceptance of the updated Privacy Policy. We encourage you to review this policy periodically.</p>
+    </section>
+
+    <!-- ====== ACKNOWLEDGMENT ====== -->
+    <section class="legal-section">
+      <h2>15. The Bottom Line</h2>
+      <p><strong>ReactLog respects your privacy by design:</strong></p>
+      <ul>
+        <li>All your health data stays on your device</li>
+        <li>We cannot access your health data</li>
+        <li>We cannot sell or share your health data</li>
+        <li>We do not use analytics SDKs or behavioral tracking</li>
+        <li>The only external connections are: (1) optional USDA food searches, and (2) Apple App Store for updates</li>
+        <li>You own your data completely</li>
+      </ul>
+      <p>By using ReactLog, you acknowledge that you have read and understood this Privacy Policy. If you have any questions or concerns, please contact support@reactlog.com.</p>
+    </section>
+
+  </div>
+</main>
+
+<!-- ====== FOOTER ====== -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <h3>
+        <span style="width:28px;height:28px;border-radius:8px;background:var(--gradient-primary);display:inline-grid;place-items:center">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#080d17" stroke-width="2.5" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </span>
+        ReactLog
+      </h3>
+      <p>Biofeedback and self-tracking intelligence. Track mood, health metrics, and lifestyle inputs to discover correlations and optimize your wellbeing.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Product</h4>
+      <a href="index.html#features">Features</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="index.html#how-it-works">How It Works</a>
+      <a href="index.html#download">Download</a>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#">Kriastik</a>
+      <a href="mailto:support@reactlog.com">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Kriastik. All rights reserved.</span>
+    <span>Made with care for your wellbeing.</span>
+  </div>
+</footer>
+
+</body>
+</html>
