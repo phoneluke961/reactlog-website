@@ -210,6 +210,17 @@
             color: #33ebe0;
         }
 
+        /* Dropdown Nav */
+        .nav-dropdown { position: relative; }
+        .nav-dropdown > a { display: flex; align-items: center; gap: 4px; }
+        .dropdown-arrow { display: inline-block; width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 5px solid currentColor; transition: transform 0.3s; margin-left: 2px; }
+        .nav-dropdown:hover > a .dropdown-arrow { transform: rotate(180deg); }
+        .nav-dropdown-menu { display: none; position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%); min-width: 220px; background: rgba(10,20,32,0.96); backdrop-filter: blur(24px); border: 1px solid rgba(51,235,224,0.18); border-radius: 14px; padding: 10px; z-index: 1001; box-shadow: 0 16px 48px rgba(0,0,0,0.4); }
+        .nav-dropdown:hover .nav-dropdown-menu { display: block; }
+        .nav-dropdown-menu a { display: block; padding: 10px 14px; color: rgba(234,246,255,0.72) !important; font-size: 0.85rem; border-radius: 8px; white-space: nowrap; }
+        .nav-dropdown-menu a:hover { background: rgba(51,235,224,0.08); color: #33ebe0 !important; }
+        .nav-dropdown-menu a::after { display: none; }
+
         .cta-button {
             background: linear-gradient(135deg, #33ebe0, #57b8ff);
             color: #0a1420;
@@ -791,12 +802,25 @@
         <!-- Navigation -->
         <nav>
             <div class="container">
-                <a href="/" class="logo">ReactLog</a>
+                <a href="/" class="logo" style="display:flex;align-items:center;gap:12px;">
+                    <img src="screens/logo.jpg" alt="ReactLog" style="width:36px;height:36px;border-radius:10px;object-fit:cover;">
+                    ReactLog
+                </a>
                 <ul>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#how-it-works">How It Works</a></li>
-                    <li><a href="#privacy">Privacy</a></li>
-                    <li><a href="#download" class="cta-button">Download</a></li>
+                    <li><a href="/#features">Features</a></li>
+                    <li class="nav-dropdown">
+                        <a href="#">Use Cases <span class="dropdown-arrow"></span></a>
+                        <div class="nav-dropdown-menu">
+                            <a href="/supplement-tracker">Supplement Tracker</a>
+                            <a href="/brain-fog-tracker">Brain Fog Tracker</a>
+                            <a href="/energy-tracker">Energy Tracker</a>
+                            <a href="/medication-tracker">Medication Tracker</a>
+                            <a href="/private-health-tracker">Private Health Tracker</a>
+                        </div>
+                    </li>
+                    <li><a href="/#how-it-works">How It Works</a></li>
+                    <li><a href="/#privacy">Privacy</a></li>
+                    <li><a href="/#download" class="cta-button">Download</a></li>
                 </ul>
             </div>
         </nav>
@@ -828,7 +852,7 @@
                     </div>
                 </div>
 
-                <a href="#download" class="cta-button">Download Free</a>
+                <a href="#download" class="cta-button">Download</a>
             </div>
 
             <div class="hero-image">
@@ -841,7 +865,7 @@
             <div class="container">
                 <h2>Your Health App Is Probably Selling Your Data</h2>
 
-                <p>Health apps routinely share data with advertisers, insurers, and data brokers. In 2024, the FTC fined multiple health apps for sharing sensitive health data without explicit user consent. Period tracking apps were scrutinized following the Dobbs decision for potential data subpoenas in jurisdictions with abortion restrictions. Mental health apps have been caught sharing therapy session data with third-party analytics providers. Even apps that claim "we don't sell your data" often use analytics SDKs — Firebase, Mixpanel, Amplitude — that send detailed usage data to third parties.</p>
+                <p>Health apps routinely share data with advertisers, insurers, and data brokers. In 2024, the FTC fined multiple health apps for sharing sensitive health data without explicit user consent. Period tracking apps were scrutinized following the Dobbs decision for potential data subpoenas in jurisdictions with abortion restrictions. Mental health apps have been caught sharing therapy session data with third-party analytics providers. Even apps that claim "we don't sell your data" often use analytics SDKs that send detailed usage data to third parties.</p>
 
                 <p>Here's what gets collected and shared:</p>
 
@@ -884,7 +908,7 @@
                     </div>
                     <div class="comparison-row">
                         <div class="comparison-label">Analytics SDKs</div>
-                        <div class="comparison-other">Firebase, Mixpanel, Amplitude</div>
+                        <div class="comparison-other">Third-party analytics SDKs</div>
                         <div class="comparison-reactlog">None</div>
                     </div>
                     <div class="comparison-row">
@@ -1105,7 +1129,7 @@
                 <div class="faq-container">
                     <div class="faq-item">
                         <div class="faq-question">Does ReactLog really not collect any data?</div>
-                        <div class="faq-answer">Correct. There are no backend servers. No analytics SDKs like Firebase, Mixpanel, or Amplitude. No cloud infrastructure. Your data exists only on your iPhone. We cannot collect data we have no access to. Every query, calculation, and analysis happens on your device.</div>
+                        <div class="faq-answer">Correct. There are no backend servers. No analytics SDKs of any kind. No cloud infrastructure. Your data exists only on your iPhone. We cannot collect data we have no access to. Every query, calculation, and analysis happens on your device.</div>
                     </div>
 
                     <div class="faq-item">
@@ -1188,10 +1212,10 @@
                 <div class="footer-section">
                     <h4>Connect</h4>
                     <ul>
-                        <li><a href="https://twitter.com/reactlog" target="_blank" rel="noopener noreferrer">Twitter</a></li>
+                        <li><a href="https://twitter.com/reactlogapp" target="_blank" rel="noopener noreferrer">Twitter</a></li>
                         <li><a href="https://github.com/reactlog" target="_blank" rel="noopener noreferrer">GitHub</a></li>
                         <li><a href="https://instagram.com/reactlog" target="_blank" rel="noopener noreferrer">Instagram</a></li>
-                        <li><a href="mailto:hello@reactlog.com">Email</a></li>
+                        <li><a href="mailto:support@reactlog.com">Email</a></li>
                     </ul>
                 </div>
             </div>
