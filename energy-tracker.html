@@ -5,1111 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Discover why you're always tired with ReactLog's energy tracker app. Track your energy levels, sleep quality, and daily factors that affect fatigue. Find your personal energy equation. Free, on-device, zero data collection.">
     <meta name="keywords" content="energy tracker app, energy level tracker, fatigue tracker, why am I always tired, chronic fatigue tracker, track energy levels, sleep tracking">
-    <meta name="theme-color" content="#0a1420">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
-    <link rel="canonical" href="https://reactlog.com/energy-tracker">
+    <meta name="author" content="ReactLog">
+    <meta name="canonical" content="https://reactlog.com/energy-tracker">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Energy Tracker — Find Out Why You're Always Tired | ReactLog">
-    <meta property="og:description" content="Track your energy levels and discover the hidden patterns affecting your fatigue. Systematic tracking reveals what actually gives you energy.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://reactlog.com/energy-tracker">
-    <meta property="og:image" content="https://reactlog.com/screens/energy-tracker-og.jpg">
+    <meta property="og:title" content="Energy Tracker — Find Out Why You're Always Tired | ReactLog">
+    <meta property="og:description" content="Track your energy levels and discover the hidden patterns affecting your fatigue. Systematic tracking reveals what actually gives you energy.">
+    <meta property="og:image" content="https://reactlog.com/screens/dashboard.jpg">
     <meta property="og:site_name" content="ReactLog">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://reactlog.com/energy-tracker">
     <meta name="twitter:title" content="Energy Tracker — Find Out Why You're Always Tired | ReactLog">
     <meta name="twitter:description" content="Track your energy levels and discover the hidden patterns affecting your fatigue. Systematic tracking reveals what actually gives you energy.">
-    <meta name="twitter:image" content="https://reactlog.com/screens/energy-tracker-og.jpg">
+    <meta name="twitter:image" content="https://reactlog.com/screens/dashboard.jpg">
 
-    <title>Energy Tracker — Find Out Why You're Always Tired | ReactLog</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --accent: #33ebe0;
-            --accent-secondary: #57b8ff;
-            --glow: #40f2e6;
-            --bg-top: #0f1f2e;
-            --bg-bottom: #080d17;
-            --bg-primary: #0a1420;
-            --text-primary: #ffffff;
-            --text-secondary: #b8c5d6;
-            --border-light: rgba(51, 235, 224, 0.2);
-            --border-dark: rgba(51, 235, 224, 0.1);
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Work Sans', sans-serif;
-            background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Animated Canvas Background */
-        canvas#particleCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .content-wrapper {
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Navigation */
-        nav {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 1.5rem 2rem;
-            background: rgba(10, 20, 32, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-dark);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .nav-logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            text-decoration: none;
-            color: var(--accent);
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 700;
-            font-size: 1.25rem;
-        }
-
-        .nav-logo-img {
-            width: 32px;
-            height: 32px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: color 0.3s ease;
-            border-bottom: 2px solid transparent;
-            padding-bottom: 0.25rem;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent);
-            border-bottom-color: var(--accent);
-        }
-
-        @media (max-width: 768px) {
-            nav {
-                padding: 1rem 1.5rem;
-            }
-            .nav-links {
-                gap: 1rem;
-                font-size: 0.85rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            nav {
-                flex-direction: column;
-                gap: 1rem;
-                padding: 1rem;
-            }
-            .nav-links {
-                gap: 0.75rem;
-            }
-        }
-
-        /* Dropdown Nav */
-        .nav-dropdown { position: relative; }
-        .nav-dropdown > a { display: flex; align-items: center; gap: 4px; }
-        .dropdown-arrow { display: inline-block; width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 5px solid currentColor; transition: transform 0.3s; margin-left: 2px; }
-        .nav-dropdown:hover > a .dropdown-arrow { transform: rotate(180deg); }
-        .nav-dropdown-menu { display: none; position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%); min-width: 220px; background: rgba(10,20,32,0.96); backdrop-filter: blur(24px); border: 1px solid rgba(51,235,224,0.18); border-radius: 14px; padding: 10px; z-index: 1001; box-shadow: 0 16px 48px rgba(0,0,0,0.4); }
-        .nav-dropdown-menu::before { content: ''; position: absolute; top: -16px; left: 0; right: 0; height: 16px; }
-        .nav-dropdown:hover .nav-dropdown-menu { display: block; }
-        .nav-dropdown-menu a { display: block; padding: 10px 14px; color: rgba(234,246,255,0.72) !important; font-size: 0.85rem; border-radius: 8px; white-space: nowrap; }
-        .nav-dropdown-menu a:hover { background: rgba(51,235,224,0.08); color: #33ebe0 !important; }
-        .nav-dropdown-menu a::after { display: none; }
-
-        /* Hero Section */
-        .hero {
-            padding: 4rem 2rem;
-            text-align: center;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .hero-content {
-            text-align: left;
-        }
-
-        .hero h1 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-subtitle {
-            font-size: 1.15rem;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            line-height: 1.7;
-        }
-
-        .trust-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 1rem;
-            background: rgba(51, 235, 224, 0.1);
-            border: 1px solid var(--border-light);
-            border-radius: 50px;
-            padding: 0.75rem 1.5rem;
-            margin-bottom: 2rem;
-            font-size: 0.9rem;
-            color: var(--accent);
-            backdrop-filter: blur(10px);
-        }
-
-        .trust-badge svg {
-            width: 20px;
-            height: 20px;
-        }
-
-        .hero-cta {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--accent), var(--glow));
-            color: #000;
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1.05rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 0 30px rgba(51, 235, 224, 0.3);
-        }
-
-        .hero-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 50px rgba(51, 235, 224, 0.5);
-        }
-
-        .hero-image {
-            position: relative;
-        }
-
-        .hero-image img {
-            width: 100%;
-            max-width: 400px;
-            border-radius: 20px;
-            border: 1px solid var(--border-light);
-            box-shadow: 0 20px 60px rgba(51, 235, 224, 0.2);
-        }
-
-        @media (max-width: 1200px) {
-            .hero {
-                grid-template-columns: 1fr;
-            }
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero {
-                padding: 3rem 1.5rem;
-                gap: 2rem;
-            }
-            .hero h1 {
-                font-size: 2rem;
-            }
-            .hero-content {
-                text-align: center;
-            }
-            .trust-badge {
-                justify-content: center;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero {
-                padding: 2rem 1rem;
-                gap: 1.5rem;
-            }
-            .hero h1 {
-                font-size: 1.5rem;
-            }
-            .hero-subtitle {
-                font-size: 1rem;
-            }
-        }
-
-        /* Section Styling */
-        section {
-            padding: 5rem 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-            animation: fadeInUp 0.8s ease-out forwards;
-            opacity: 0;
-        }
-
-        section:nth-child(3) {
-            animation-delay: 0.2s;
-        }
-        section:nth-child(4) {
-            animation-delay: 0.4s;
-        }
-        section:nth-child(5) {
-            animation-delay: 0.6s;
-        }
-        section:nth-child(6) {
-            animation-delay: 0.8s;
-        }
-        section:nth-child(7) {
-            animation-delay: 1s;
-        }
-        section:nth-child(8) {
-            animation-delay: 1.2s;
-        }
-        section:nth-child(9) {
-            animation-delay: 1.4s;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation: none !important;
-                transition: none !important;
-            }
-            html {
-                scroll-behavior: auto;
-            }
-        }
-
-        h2 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 2rem;
-            color: var(--text-primary);
-        }
-
-        @media (max-width: 768px) {
-            section {
-                padding: 3rem 1.5rem;
-            }
-            h2 {
-                font-size: 1.75rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            section {
-                padding: 2rem 1rem;
-            }
-            h2 {
-                font-size: 1.5rem;
-            }
-        }
-
-        /* Problem Section */
-        .problem-content {
-            background: rgba(15, 31, 46, 0.6);
-            border: 1px solid var(--border-dark);
-            border-radius: 20px;
-            padding: 2.5rem;
-            backdrop-filter: blur(10px);
-        }
-
-        .problem-content p {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-        }
-
-        .problem-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .stat-item {
-            padding: 1.5rem;
-            background: rgba(51, 235, 224, 0.05);
-            border-left: 3px solid var(--accent);
-            border-radius: 10px;
-        }
-
-        .stat-item strong {
-            color: var(--accent);
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Energy Factors Grid */
-        .factors-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .factor-card {
-            background: rgba(15, 31, 46, 0.8);
-            border: 1px solid var(--border-dark);
-            border-radius: 16px;
-            padding: 2rem;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-        }
-
-        .factor-card:hover {
-            border-color: var(--border-light);
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(51, 235, 224, 0.15);
-        }
-
-        .factor-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1rem;
-        }
-
-        .factor-card h3 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.2rem;
-            margin-bottom: 0.75rem;
-            color: var(--text-primary);
-        }
-
-        .factor-card p {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        /* How It Works Section */
-        .steps-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .step {
-            background: rgba(15, 31, 46, 0.6);
-            border: 1px solid var(--border-dark);
-            border-radius: 16px;
-            padding: 2.5rem;
-            backdrop-filter: blur(10px);
-            position: relative;
-        }
-
-        .step-number {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 3rem;
-            font-weight: 700;
-            color: var(--accent);
-            margin-bottom: 1rem;
-            opacity: 0.3;
-        }
-
-        .step h3 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-        }
-
-        .step p {
-            color: var(--text-secondary);
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-        }
-
-        .step-image {
-            margin-top: 1.5rem;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid var(--border-dark);
-        }
-
-        .step-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        /* Real Patterns Section */
-        .patterns-list {
-            display: grid;
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .pattern-item {
-            background: rgba(15, 31, 46, 0.6);
-            border-left: 4px solid var(--accent);
-            border-radius: 12px;
-            padding: 1.5rem;
-            backdrop-filter: blur(10px);
-        }
-
-        .pattern-item p {
-            color: var(--text-secondary);
-            font-size: 1rem;
-            line-height: 1.7;
-        }
-
-        .pattern-highlight {
-            color: var(--accent);
-            font-weight: 600;
-        }
-
-        /* Privacy Section */
-        .privacy-box {
-            background: rgba(15, 31, 46, 0.8);
-            border: 1px solid var(--accent-secondary);
-            border-radius: 16px;
-            padding: 2.5rem;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .privacy-box p {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            line-height: 1.8;
-        }
-
-        /* FAQ Section */
-        .faq-container {
-            display: grid;
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .faq-item {
-            background: rgba(15, 31, 46, 0.6);
-            border: 1px solid var(--border-dark);
-            border-radius: 12px;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-        }
-
-        .faq-question {
-            padding: 1.5rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
-            font-size: 1.05rem;
-            transition: background 0.3s ease;
-        }
-
-        .faq-question:hover {
-            background: rgba(51, 235, 224, 0.08);
-        }
-
-        .faq-toggle {
-            font-size: 1.5rem;
-            color: var(--accent);
-            transition: transform 0.3s ease;
-        }
-
-        .faq-item.active .faq-toggle {
-            transform: rotate(180deg);
-        }
-
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-
-        .faq-item.active .faq-answer {
-            max-height: 500px;
-        }
-
-        .faq-answer-content {
-            padding: 0 1.5rem 1.5rem;
-            color: var(--text-secondary);
-            line-height: 1.7;
-        }
-
-        /* Related Pages */
-        .related-pages {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .related-link {
-            background: rgba(15, 31, 46, 0.6);
-            border: 1px solid var(--border-dark);
-            border-radius: 12px;
-            padding: 1.5rem;
-            text-decoration: none;
-            color: var(--accent);
-            font-weight: 600;
-            transition: all 0.3s ease;
-            text-align: center;
-            backdrop-filter: blur(10px);
-        }
-
-        .related-link:hover {
-            border-color: var(--accent);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(51, 235, 224, 0.2);
-        }
-
-        /* CTA Section */
-        .final-cta {
-            text-align: center;
-            padding: 4rem 2rem;
-            background: linear-gradient(135deg, rgba(51, 235, 224, 0.1), rgba(87, 184, 255, 0.1));
-            border: 1px solid var(--border-light);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-        }
-
-        .final-cta h2 {
-            margin-bottom: 2rem;
-        }
-
-        .final-cta .hero-cta {
-            font-size: 1.2rem;
-            padding: 1.2rem 3rem;
-        }
-
-        /* Footer */
-        footer {
-            background: rgba(10, 20, 32, 0.8);
-            border-top: 1px solid var(--border-dark);
-            padding: 3rem 2rem;
-            text-align: center;
-            color: var(--text-secondary);
-            margin-top: 5rem;
-        }
-
-        footer p {
-            margin-bottom: 1rem;
-        }
-
-        footer a {
-            color: var(--accent);
-            text-decoration: none;
-            margin: 0 0.5rem;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* Lazy Loading */
-        img {
-            loading="lazy";
-        }
-
-        /* Utility Classes */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        /* Accessibility */
-        @media (prefers-reduced-motion: reduce) {
-            section {
-                animation: none;
-            }
-            .factor-card:hover,
-            .related-link:hover,
-            .hero-cta:hover {
-                transform: none;
-            }
-        }
-
-        /* Print Styles */
-        @media print {
-            canvas#particleCanvas,
-            nav {
-                display: none;
-            }
-        }
-    </style>
-</head>
-<body>
-    <canvas id="particleCanvas"></canvas>
-
-    <div class="content-wrapper">
-        <!-- Navigation -->
-        <nav>
-            <a href="/" class="nav-logo">
-                <img src="screens/logo.jpg" alt="ReactLog" style="width:36px;height:36px;border-radius:10px;object-fit:cover;">
-                ReactLog
-            </a>
-            <ul class="nav-links">
-                <li><a href="/#features">Features</a></li>
-                <li class="nav-dropdown">
-                    <a href="#">Use Cases <span class="dropdown-arrow"></span></a>
-                    <div class="nav-dropdown-menu">
-                        <a href="/supplement-tracker">Supplement Tracker</a>
-                        <a href="/brain-fog-tracker">Brain Fog Tracker</a>
-                        <a href="/energy-tracker">Energy Tracker</a>
-                        <a href="/medication-tracker">Medication Tracker</a>
-                        <a href="/private-health-tracker">Private Health Tracker</a>
-                    </div>
-                </li>
-                <li><a href="/#how-it-works">How It Works</a></li>
-                <li><a href="/#privacy">Privacy</a></li>
-                <li><a href="/#download" class="nav-download">Download</a></li>
-            </ul>
-        </nav>
-
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero-content">
-                <h1>Track Your Energy. Find Out Why You're Tired.</h1>
-                <p class="hero-subtitle">You're tired but you don't know why. Is it sleep? Diet? Stress? A supplement you're taking? Your exercise routine — or lack of one? Stop guessing and start tracking. ReactLog finds the patterns your brain can't see.</p>
-
-                <div class="trust-badge">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                    </svg>
-                    100% on-device • Zero data collection • No backend servers
-                </div>
-
-                <a href="#download" class="hero-cta">Download</a>
-            </div>
-            <div class="hero-image">
-                <img src="screens/health-metrics.jpg" alt="ReactLog energy tracking interface showing daily energy levels and metrics" width="400" height="600">
-            </div>
-        </section>
-
-        <!-- Problem Section -->
-        <section id="problem">
-            <h2>You've tried everything and you're still exhausted</h2>
-            <div class="problem-content">
-                <p>Persistent fatigue affects 1 in 3 adults worldwide, yet "why am I always tired" remains one of the most searched health questions on Google. The reason most people stay stuck is simple: they try solutions randomly instead of tracking systematically.</p>
-
-                <p>You've probably experimented with solutions one at a time. More sleep. Better diet. New supplements. More exercise. But without systematic tracking, you never discover what actually correlates with your higher energy levels.</p>
-
-                <p>Here's the truth: energy is affected by <strong>dozens of variables simultaneously</strong>. Sleep duration, sleep consistency, food choices, blood sugar timing, caffeine consumption, hydration, exercise type and timing, stress levels, supplements, medications, screen time exposure, social activity, weather, and sunlight all interact in complex ways. Your brain cannot process all these correlations. But data can.</p>
-
-                <p>When you systematically track your energy alongside the factors that might influence it, patterns emerge within 2-3 weeks. Suddenly you see exactly what gives you energy and what drains it—your personal energy equation, unique to your body and lifestyle.</p>
-
-                <div class="problem-stats">
-                    <div class="stat-item">
-                        <strong>1 in 3 adults</strong>
-                        <span>Report persistent fatigue despite trying multiple solutions</span>
-                    </div>
-                    <div class="stat-item">
-                        <strong>2-3 weeks</strong>
-                        <span>Typical timeline for meaningful patterns to emerge through consistent tracking</span>
-                    </div>
-                    <div class="stat-item">
-                        <strong>Dozens of factors</strong>
-                        <span>Affect your energy simultaneously—your brain can't process them all</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Energy Factors Section -->
-        <section id="factors">
-            <h2>The hidden factors affecting your energy</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.05rem;">Energy levels depend on more than just sleep. Here's what actually influences your fatigue throughout the day:</p>
-
-            <div class="factors-grid">
-                <div class="factor-card">
-                    <div class="factor-icon">
-                        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-                            <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                    </div>
-                    <h3>Sleep Duration</h3>
-                    <p>Most adults need 7-9 hours. Too little sleep creates cumulative sleep debt. Too much can indicate depression or other health issues. Track duration to find your optimal range.</p>
-                </div>
-
-                <div class="factor-card">
-                    <div class="factor-icon">
-                        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11z"/>
-                        </svg>
-                    </div>
-                    <h3>Sleep Consistency</h3>
-                    <p>Timing matters more than duration. Going to bed and waking at the same time ±30 minutes trains your body's natural rhythms. Irregular sleep patterns destroy energy even with adequate total sleep.</p>
-                </div>
-
-                <div class="factor-card">
-                    <div class="factor-icon">
-                        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54 3.96 4.55c.1.13.25.2.4.2.15 0 .29-.07.4-.2l7.12-8.15c.1-.12.15-.29.12-.45-.03-.15-.13-.27-.26-.33-.13-.07-.29-.05-.39.03L12.5 13.5l-3.54-4.21c-.1-.13-.25-.2-.4-.2-.15 0-.29.07-.4.2-.1.12-.15.29-.12.45.03.15.13.27.26.33l4.04 4.22z"/>
-                        </svg>
-                    </div>
-                    <h3>Food & Blood Sugar</h3>
-                    <p>Blood sugar swings cause afternoon crashes. High-glycemic foods spike then plummet. Stable combinations of protein, healthy fats, and complex carbs maintain steady energy throughout the day.</p>
-                </div>
-
-                <div class="factor-card">
-                    <div class="factor-icon">
-                        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-13c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5z"/>
-                        </svg>
-                    </div>
-                    <h3>Caffeine Timing</h3>
-                    <p>Caffeine has a 5-6 hour half-life. Morning caffeine provides lift. Afternoon caffeine can disrupt sleep that night, causing next-day fatigue. Timing matters as much as quantity.</p>
-                </div>
-
-                <div class="factor-card">
-                    <div class="factor-icon">
-                        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                        </svg>
-                    </div>
-                    <h3>Hydration</h3>
-                    <p>Dehydration is one of the most overlooked fatigue causes. As little as 2% dehydration reduces physical and mental performance. Most people are chronically mildly dehydrated.</p>
-                </div>
-
-                <div class="factor-card">
-                    <div class="factor-icon">
-                        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-                            <path d="M13.49 5.48c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-3.6 13.9L7 19c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2v-2l-3.6-2.4c-.4-.3-1-.3-1.4 0L9.9 19.4z"/>
-                        </svg>
-                    </div>
-                    <h3>Exercise Type & Timing</h3>
-                    <p>Morning exercise energizes throughout the day. Intense evening exercise can disrupt sleep. Type matters—strength training, cardio, and stretching have different energy effects.</p>
-                </div>
-
-                <div class="factor-card">
-                    <div class="factor-icon">
-                        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-                        </svg>
-                    </div>
-                    <h3>Stress Levels</h3>
-                    <p>Chronic stress elevates cortisol, disrupting sleep quality and depleting energy reserves. High-stress days predict lower energy and poorer sleep the following night.</p>
-                </div>
-
-                <div class="factor-card">
-                    <div class="factor-icon">
-                        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54 3.96 4.55c.1.13.25.2.4.2.15 0 .29-.07.4-.2l7.12-8.15c.1-.12.15-.29.12-.45-.03-.15-.13-.27-.26-.33-.13-.07-.29-.05-.39.03L12.5 13.5l-3.54-4.21c-.1-.13-.25-.2-.4-.2-.15 0-.29.07-.4.2-.1.12-.15.29-.12.45.03.15.13.27.26.33l4.04 4.22z"/>
-                        </svg>
-                    </div>
-                    <h3>Supplements & Medications</h3>
-                    <p>Some supplements boost energy; others induce fatigue. Medication side effects often include fatigue. Timing matters—magnesium at night helps sleep, but timing relative to meals affects absorption.</p>
-                </div>
-
-                <div class="factor-card">
-                    <div class="factor-icon">
-                        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
-                        </svg>
-                    </div>
-                    <h3>Screen Time</h3>
-                    <p>Blue light from screens suppresses melatonin production, delaying sleep onset and reducing sleep quality. Evening screen use causes next-day fatigue even if total sleep hours seem adequate.</p>
-                </div>
-
-                <div class="factor-card">
-                    <div class="factor-icon">
-                        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-                            <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
-                        </svg>
-                    </div>
-                    <h3>Social Activity</h3>
-                    <p>Social connection energizes many people. Isolation drains energy. But for some, too much social activity causes stress fatigue. Track your personal pattern.</p>
-                </div>
-
-                <div class="factor-card">
-                    <div class="factor-icon">
-                        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-                            <path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l1.41-1.41L19.24 4.84l-1.41-1.41-1.79 1.79zm2.79 5.54h3v-2h-3v2zM20.57 17.17l1.79-1.79-1.41-1.41-1.79 1.79 1.41 1.41zM17.5 16.5h2v3h-2v-3zm-5-2.5c2.33 0 4-1.67 4-4s-1.67-4-4-4-4 1.67-4 4 1.67 4 4 4zm-7-4.5H1v2h3v-2zm13.45-3.5l1.41 1.41 1.79-1.79-1.41-1.41-1.79 1.79z"/>
-                        </svg>
-                    </div>
-                    <h3>Weather & Sunlight</h3>
-                    <p>Seasonal changes and light exposure regulate circadian rhythms and vitamin D production. Lower sunlight exposure decreases energy and can trigger Seasonal Affective Disorder (SAD).</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- How It Works Section -->
-        <section id="how-it-works">
-            <h2>How it works in 3 steps</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.05rem;">ReactLog's simple approach reveals your personal energy patterns without complexity.</p>
-
-            <div class="steps-container">
-                <div class="step">
-                    <div class="step-number">01</div>
-                    <h3>Rate your energy daily</h3>
-                    <p>Quick check-ins, 1-3 times per day. Rate your energy level from 1-10. Morning, afternoon, evening—whatever works for your routine. Takes 10 seconds.</p>
-                    <p>Simple ratings build the foundation. You're not writing essays. You're creating data points ReactLog learns from.</p>
-                    <div class="step-image">
-                        <img src="screens/mood-intelligence.jpg" alt="Energy rating interface showing simple 1-10 scale for tracking daily energy levels" width="300" height="400">
-                    </div>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">02</div>
-                    <h3>Log your inputs</h3>
-                    <p>Whenever you rate your energy, log what might affect it. Sleep hours, food eaten, supplements taken, exercise done, coffee consumed, stress level, time outdoors.</p>
-                    <p>You don't need to log everything every time. ReactLog learns from the patterns in what you do track consistently.</p>
-                    <div class="step-image">
-                        <img src="screens/health-metrics.jpg" alt="Input logging interface showing options to track sleep, food, exercise, supplements, and other lifestyle factors" width="300" height="400">
-                    </div>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">03</div>
-                    <h3>Discover your equation</h3>
-                    <p>After 2-3 weeks of consistent tracking, ReactLog reveals your personal energy equation. Which specific factors most strongly correlate with your energy? What gives you energy? What drains you?</p>
-                    <p>See exact correlations: Morning exercise raises your afternoon energy by 35%. Late-night caffeine reduces next-day morning energy by 2 points.</p>
-                    <div class="step-image">
-                        <img src="screens/insights.jpg" alt="Analytics dashboard showing personalized energy patterns and correlations with tracked factors" width="300" height="400">
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Real Patterns Section -->
-        <section id="patterns">
-            <h2>Patterns ReactLog users discover</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.05rem;">These are real patterns users uncover through tracking. Your personal patterns may differ—that's the point.</p>
-
-            <div class="patterns-list">
-                <div class="pattern-item">
-                    <p><span class="pattern-highlight">Morning exercise before 10am</span> correlates with 25% higher afternoon energy levels. Exercise timing matters as much as frequency. Afternoon exercise doesn't produce the same next-day boost.</p>
-                </div>
-
-                <div class="pattern-item">
-                    <p><span class="pattern-highlight">Sleep consistency (same bedtime ±30 minutes)</span> matters more than total sleep hours. Someone sleeping 6 hours consistently has better energy than someone sleeping 7-9 hours inconsistently.</p>
-                </div>
-
-                <div class="pattern-item">
-                    <p><span class="pattern-highlight">Magnesium glycinate at night</span> correlates with better next-day energy—but only when taken 2+ hours before bed. Taken right before sleep, it increases next-day grogginess.</p>
-                </div>
-
-                <div class="pattern-item">
-                    <p><span class="pattern-highlight">Afternoon energy crashes correlate with high-carb lunches</span> without protein or fat. A carb-only lunch spikes then crashes blood sugar. Adding protein and fat stabilizes afternoon energy.</p>
-                </div>
-
-                <div class="pattern-item">
-                    <p><span class="pattern-highlight">Screen time after 8pm</span> reduces next-day energy by an average of 1.5 points on a 10-point scale. This effect compounds with multiple nights of late-night screen use.</p>
-                </div>
-
-                <div class="pattern-item">
-                    <p><span class="pattern-highlight">Hydration is a hidden energy driver</span> most people underestimate. Drinking 2 liters of water daily correlates with 15% higher baseline energy. Dehydration sneaks in without awareness.</p>
-                </div>
-
-                <div class="pattern-item">
-                    <p><span class="pattern-highlight">Stress levels two days prior</span> predict current energy more reliably than immediate stress. High stress disrupts sleep quality that night, depleting energy reserves the following day.</p>
-                </div>
-
-                <div class="pattern-item">
-                    <p><span class="pattern-highlight">Social activity energizes some, drains others</span>. Tracking reveals your personal pattern. For introverts, solitude restores energy; social events deplete it. For extroverts, the opposite.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Privacy Section -->
-        <section id="privacy">
-            <h2>Your data stays yours</h2>
-            <div class="privacy-box">
-                <p>Your energy and health data stays on your phone. Period. No servers, no cloud, no data collection. ReactLog analyzes patterns entirely on-device. We never see your data, never share it, never sell it.</p>
-                <p style="margin-top: 1rem;">This is core to ReactLog. You're tracking intimate health information. It should never leave your device.</p>
-            </div>
-        </section>
-
-        <!-- FAQ Section -->
-        <section id="faq">
-            <h2>Frequently asked questions</h2>
-            <div class="faq-container">
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>Why am I always tired?</span>
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <div class="faq-answer-content">
-                            <p>Persistent fatigue has many causes: poor sleep quality, sleep inconsistency, blood sugar swings, dehydration, vitamin deficiencies, stress, sedentary lifestyle, medication side effects, hormonal imbalances, or underlying health conditions.</p>
-                            <p style="margin-top: 1rem;">The key is systematic tracking. Most people try one solution at a time, never discovering what actually correlates with higher energy in their specific situation. Your fatigue might stem from sleep inconsistency. Your colleague's from blood sugar swings. Another person's from vitamin D deficiency. The only way to know is to track consistently and look for your personal patterns.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>How do I track my energy levels?</span>
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <div class="faq-answer-content">
-                            <p>Rate your energy 1-3 times daily on a simple scale (1-10 works well). Morning, afternoon, and evening captures daily variation. Each rating takes about 10 seconds.</p>
-                            <p style="margin-top: 1rem;">Simultaneously, log the factors that might influence your energy: hours slept, quality of sleep, meals eaten, supplements taken, exercise completed, caffeine consumed, stress level, time outdoors. You don't need perfect logging. Consistent tracking of a few key factors reveals patterns quickly. After 2-3 weeks, patterns emerge showing exactly what affects your energy.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>Can tracking energy actually help?</span>
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <div class="faq-answer-content">
-                            <p>Yes. Data shows that most people discover 2-3 specific factors that significantly affect their energy once they track consistently. Someone discovers that morning light exposure raises afternoon energy by 20%. Another finds that magnesium at specific times eliminates afternoon crashes. A third discovers that sleep consistency matters far more than sleep duration for their energy levels.</p>
-                            <p style="margin-top: 1rem;">These discoveries can't happen without systematic tracking. Your brain detects obvious patterns, but misses subtle correlations and delayed effects. Data reveals what intuition cannot. Within weeks of tracking, most people identify 2-3 high-impact interventions unique to their body and lifestyle.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>What's the best time to track energy?</span>
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <div class="faq-answer-content">
-                            <p>Consistency matters more than frequency or specific times. Morning, mid-afternoon, and evening works well for most people—it captures your energy across the full day and shows how different times vary.</p>
-                            <p style="margin-top: 1rem;">But if you prefer different times, pick consistent times and stick to them. 7am, 1pm, and 7pm. Or 8am and 4pm. Or even just morning and evening. As long as you're consistent, ReactLog finds patterns. The frequency is less important than consistency. Daily tracking at consistent times trains your awareness and gives ReactLog the data it needs to find correlations.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>Is ReactLog free?</span>
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <div class="faq-answer-content">
-                            <p>Yes. ReactLog is free during Early Access. Create unlimited energy trackers, track as much as you want, access all analysis features—no paywalls, no premium tier, no hidden charges.</p>
-                            <p style="margin-top: 1rem;">No account is required. Everything stays on your phone. Download it and start tracking today.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Related Pages Section -->
-        <section>
-            <h2>Related health trackers</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.05rem;">Track other aspects of your health with ReactLog:</p>
-            <div class="related-pages">
-                <a href="/supplement-tracker" class="related-link">Supplement Tracker</a>
-                <a href="/brain-fog-tracker" class="related-link">Brain Fog Tracker</a>
-                <a href="/mood-and-sleep-tracker" class="related-link">Mood & Sleep Tracker</a>
-                <a href="/cortisol-and-stress-tracker" class="related-link">Cortisol & Stress Tracker</a>
-            </div>
-        </section>
-
-        <!-- Final CTA Section -->
-        <section id="download" class="final-cta">
-            <h2>Find your energy equation. Start tracking today.</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 2rem;">Track your energy, discover what affects it, and feel better every day.</p>
-            <a href="#download" class="hero-cta">Download ReactLog</a>
-        </section>
-
-        <!-- Footer -->
-        <footer>
-            <p>&copy; 2026 ReactLog. All rights reserved.</p>
-            <p>
-                <a href="/privacy">Privacy Policy</a> •
-                <a href="/terms">Terms of Service</a> •
-                <a href="/contact">Contact</a>
-            </p>
-            <p style="margin-top: 1rem; font-size: 0.9rem;">Built for people who want to understand their health through data.</p>
-        </footer>
-    </div>
-
-    <!-- Structured Data -->
+    <!-- Schema.org SoftwareApplication -->
     <script type="application/ld+json">
     {
-        "@context": "https://schema.org",
+        "@context": "https://schema.org/",
         "@type": "SoftwareApplication",
-        "name": "ReactLog Energy Tracker",
-        "description": "Track your energy levels and discover the hidden patterns affecting your fatigue. Systematic tracking reveals what actually gives you energy.",
-        "applicationCategory": "HealthAndFitnessApplication",
+        "name": "ReactLog",
+        "description": "A private health tracking app that tracks energy levels and correlates them with daily factors. 100% on-device, zero data collection.",
+        "url": "https://reactlog.com",
+        "image": "https://reactlog.com/screens/dashboard.jpg",
+        "applicationCategory": "HealthApplication",
         "operatingSystem": "iOS",
         "offers": {
             "@type": "Offer",
             "price": "0",
-            "priceCurrency": "USD"
+            "priceCurrency": "USD",
+            "description": "Free during Early Access"
         },
         "aggregateRating": {
             "@type": "AggregateRating",
             "ratingValue": "4.8",
             "ratingCount": "1200"
-        }
+        },
+        "featureList": [
+            "Energy level tracking",
+            "Sleep quality tracking",
+            "Mood and energy logging",
+            "Exercise tracking",
+            "Food and diet logging",
+            "Supplement tracking",
+            "Correlation detection",
+            "On-device analytics",
+            "Face ID/Touch ID security",
+            "No data collection"
+        ]
     }
     </script>
 
+    <!-- FAQ Schema -->
     <script type="application/ld+json">
     {
-        "@context": "https://schema.org",
+        "@context": "https://schema.org/",
         "@type": "FAQPage",
         "mainEntity": [
             {
@@ -1156,55 +110,1281 @@
     }
     </script>
 
-    <!-- Particle Animation Script -->
+    <title>Energy Tracker — Find Out Why You're Always Tired | ReactLog</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --accent: #33ebe0;
+            --accent-secondary: #57b8ff;
+            --glow: #40f2e6;
+            --bg-top: #0f1f2e;
+            --bg-bottom: #080d17;
+            --bg-primary: #0a1420;
+            --text-primary: #ffffff;
+            --text-secondary: #b0c4de;
+            --text-tertiary: #7a8fa6;
+            --border-color: rgba(51, 235, 224, 0.15);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Work Sans', sans-serif;
+            background: linear-gradient(135deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Canvas background */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.5;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            background: rgba(10, 20, 32, 0.7);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-logo:hover {
+            color: var(--accent);
+        }
+
+        .nav-logo img {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--glow) 100%);
+            color: var(--bg-primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(51, 235, 224, 0.3);
+        }
+
+        .download-btn:hover {
+            box-shadow: 0 0 30px rgba(51, 235, 224, 0.5), 0 0 60px rgba(51, 235, 224, 0.2);
+            transform: translateY(-2px);
+        }
+        .nav-dropdown { position: relative; }
+        .nav-dropdown > a { display: flex; align-items: center; gap: 4px; }
+        .dropdown-arrow { display: inline-block; width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 5px solid currentColor; transition: transform 0.3s; margin-left: 2px; }
+        .nav-dropdown:hover > a .dropdown-arrow { transform: rotate(180deg); }
+        .nav-dropdown-menu { display: none; position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%); min-width: 220px; background: rgba(10,20,32,0.96); backdrop-filter: blur(24px); border: 1px solid rgba(51,235,224,0.18); border-radius: 14px; padding: 10px; z-index: 1001; box-shadow: 0 16px 48px rgba(0,0,0,0.4); }
+        .nav-dropdown-menu::before { content: ''; position: absolute; top: -16px; left: 0; right: 0; height: 16px; }
+        .nav-dropdown:hover .nav-dropdown-menu { display: block; }
+        .nav-dropdown-menu a { display: block; padding: 10px 14px; font-size: 0.85rem; border-radius: 8px; white-space: nowrap; }
+        .nav-dropdown-menu a:hover { background: rgba(51,235,224,0.08); color: #33ebe0 !important; }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                display: none;
+            }
+
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(10, 20, 32, 0.95);
+                padding: 1rem;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding: 5rem 1.5rem 3rem;
+                min-height: auto;
+                gap: 2.5rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .trust-badge {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .phone-mockup {
+                width: 220px;
+            }
+
+            .problem-content {
+                grid-template-columns: 1fr;
+            }
+
+            .problem-image .phone-mockup,
+            .privacy-image .phone-mockup {
+                width: 200px;
+            }
+
+            .how-it-works {
+                grid-template-columns: 1fr;
+            }
+
+            .trackable-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 8rem 2rem 5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            min-height: 90vh;
+        }
+
+        .hero-content h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero-content p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+            animation: fadeInUp 0.8s ease-out 0.1s backwards;
+        }
+
+        .trust-badge {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            color: var(--text-tertiary);
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        .trust-badge-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .trust-icon {
+            width: 20px;
+            height: 20px;
+            fill: var(--accent);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease-out 0.3s backwards;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--glow) 100%);
+            color: var(--bg-primary);
+            box-shadow: 0 0 20px rgba(51, 235, 224, 0.3);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 30px rgba(51, 235, 224, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(51, 235, 224, 0.1);
+        }
+
+        .hero-image {
+            position: relative;
+            animation: fadeIn 1s ease-out 0.2s backwards;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Phone Mockup Frame */
+        .phone-mockup {
+            width: 280px;
+            position: relative;
+            border-radius: 36px;
+            border: 3px solid rgba(255,255,255,0.08);
+            background: #0a0a0f;
+            overflow: hidden;
+            box-shadow:
+                0 0 0 1px rgba(255,255,255,0.04),
+                0 25px 60px rgba(0,0,0,0.5),
+                0 0 80px rgba(51, 235, 224, 0.06);
+            transform: perspective(1200px) rotateY(-5deg) rotateX(2deg);
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .phone-mockup:hover {
+            transform: perspective(1200px) rotateY(0deg) rotateX(0deg);
+        }
+
+        .phone-notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 28px;
+            background: #0a0a0f;
+            border-radius: 0 0 18px 18px;
+            z-index: 10;
+        }
+
+        .phone-mockup img {
+            width: 100%;
+            display: block;
+            border-radius: 0;
+            border: none;
+            box-shadow: none;
+        }
+
+        .hero-image img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 60px rgba(51, 235, 224, 0.15);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        /* Problem Section */
+        .problem-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .problem-text p {
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .problem-text strong {
+            color: var(--accent);
+        }
+
+        .problem-image {
+            display: flex;
+            justify-content: center;
+        }
+
+        .problem-image img {
+            width: 100%;
+            max-width: 450px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 60px rgba(51, 235, 224, 0.1);
+        }
+
+        .problem-image .phone-mockup {
+            width: 260px;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step-card {
+            background: rgba(15, 31, 46, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .step-card:hover {
+            background: rgba(15, 31, 46, 0.8);
+            border-color: var(--accent);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(51, 235, 224, 0.2);
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
+            border-radius: 50%;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--bg-primary);
+            margin-bottom: 1rem;
+        }
+
+        .step-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .step-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Trackable Items */
+        .trackable-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .trackable-item {
+            background: rgba(15, 31, 46, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .trackable-item:hover {
+            background: rgba(15, 31, 46, 0.8);
+            border-color: var(--accent);
+            transform: translateY(-4px);
+        }
+
+        .trackable-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 1rem;
+            fill: var(--accent);
+        }
+
+        .trackable-item h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .trackable-item p {
+            font-size: 0.9rem;
+            color: var(--text-tertiary);
+        }
+
+        /* Privacy Section */
+        .privacy-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .privacy-text ul {
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .privacy-text li {
+            padding: 1rem 0;
+            padding-left: 2.5rem;
+            position: relative;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .privacy-text li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+
+        .privacy-image {
+            display: flex;
+            justify-content: center;
+        }
+
+        .privacy-image img {
+            width: 100%;
+            max-width: 450px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 60px rgba(51, 235, 224, 0.1);
+        }
+
+        .privacy-image .phone-mockup {
+            width: 260px;
+        }
+
+        /* FAQ Section */
+        .faq-content {
+            margin-top: 3rem;
+        }
+
+        .faq-item {
+            background: rgba(15, 31, 46, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .faq-item:hover .faq-question {
+            background: rgba(15, 31, 46, 0.8);
+        }
+
+        .faq-question h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .faq-toggle {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0 2rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 0 2rem 2rem 2rem;
+            max-height: 500px;
+        }
+
+        /* CTA Section */
+        .cta {
+            text-align: center;
+            background: rgba(15, 31, 46, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 4rem 2rem;
+        }
+
+        .cta h2 {
+            margin-bottom: 1rem;
+        }
+
+        .cta .section-subtitle {
+            margin-bottom: 2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(10, 20, 32, 0.8);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border-color);
+            padding: 3rem 2rem;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 3rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .footer-brand-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--text-primary);
+        }
+
+        .footer-brand p {
+            font-size: 0.9rem;
+            color: var(--text-tertiary);
+        }
+
+        .footer-links {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .footer-links-col h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .footer-links-col ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .footer-links-col a {
+            color: var(--text-tertiary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links-col a:hover {
+            color: var(--accent);
+        }
+
+        .footer-legal {
+            text-align: right;
+            color: var(--text-tertiary);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .problem-content,
+            .privacy-content {
+                grid-template-columns: 1fr;
+            }
+
+            .how-it-works {
+                grid-template-columns: 1fr;
+            }
+
+            .trackable-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-legal {
+                text-align: left;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .trackable-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .hero {
+                padding: 2rem 1rem;
+                min-height: auto;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            .trust-badge {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+
+            h2 {
+                font-size: 1.75rem;
+            }
+
+            .step-card,
+            .trackable-item {
+                padding: 1.5rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .footer-links {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .trackable-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-content h1 {
+                font-size: 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .download-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+
+    <div class="content-wrapper">
+        <!-- Navigation -->
+        <nav>
+            <a href="/" class="nav-logo">
+                <img src="screens/logo.jpg" alt="ReactLog" style="width:36px;height:36px;border-radius:10px;object-fit:cover;">
+                ReactLog
+            </a>
+            <ul class="nav-links">
+                <li><a href="/#features">Features</a></li>
+                <li class="nav-dropdown">
+                    <a href="#">Use Cases <span class="dropdown-arrow"></span></a>
+                    <div class="nav-dropdown-menu">
+                        <a href="/supplement-tracker">Supplement Tracker</a>
+                        <a href="/brain-fog-tracker">Brain Fog Tracker</a>
+                        <a href="/energy-tracker">Energy Tracker</a>
+                        <a href="/medication-tracker">Medication Tracker</a>
+                        <a href="/private-health-tracker">Private Health Tracker</a>
+                    </div>
+                </li>
+                <li><a href="/#how-it-works">How It Works</a></li>
+                <li><a href="/#privacy">Privacy</a></li>
+                <li><a href="/#download" class="download-btn">Download</a></li>
+            </ul>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Track Your Energy. Find Out Why You're Tired.</h1>
+                <p>You're tired but you don't know why. Is it sleep? Diet? Stress? A supplement you're taking? Your exercise routine — or lack of one? Stop guessing and start tracking. ReactLog finds the patterns your brain can't see.</p>
+
+                <div class="trust-badge">
+                    <div class="trust-badge-item">
+                        <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+                            <path d="M9 12l2 2 4-4"/>
+                        </svg>
+                        <span>100% on-device</span>
+                    </div>
+                    <div class="trust-badge-item">
+                        <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+                            <path d="M9 12l2 2 4-4"/>
+                        </svg>
+                        <span>Zero data collection</span>
+                    </div>
+                    <div class="trust-badge-item">
+                        <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+                            <path d="M9 12l2 2 4-4"/>
+                        </svg>
+                        <span>No backend servers</span>
+                    </div>
+                </div>
+
+                <div class="hero-buttons">
+                    <button class="btn btn-primary">Download</button>
+                    <button class="btn btn-secondary">Learn More</button>
+                </div>
+            </div>
+
+            <div class="hero-image">
+                <div class="phone-mockup">
+                    <div class="phone-notch"></div>
+                    <img src="screens/dashboard.jpg" alt="ReactLog Dashboard showing energy tracking and insights" loading="lazy">
+                </div>
+            </div>
+        </section>
+
+        <!-- Problem Section -->
+        <section id="problem" class="reveal">
+            <h2>You've tried everything and you're still exhausted</h2>
+
+            <div class="problem-content">
+                <div class="problem-text">
+                    <p>Persistent fatigue affects <strong>1 in 3 adults worldwide</strong>, yet "why am I always tired" remains one of the most searched health questions on Google. The reason most people stay stuck is simple: they try solutions randomly instead of tracking systematically.</p>
+
+                    <p>You've probably experimented with solutions one at a time. More sleep. Better diet. New supplements. More exercise. But without systematic tracking, you never discover what actually correlates with your higher energy levels.</p>
+
+                    <p>Here's the truth: energy is affected by <strong>dozens of variables simultaneously</strong>. Sleep duration, sleep consistency, food choices, blood sugar timing, caffeine consumption, hydration, exercise type and timing, stress levels, supplements, medications, screen time exposure, social activity, weather, and sunlight all interact in complex ways. Your brain cannot process all these correlations. But data can.</p>
+
+                    <p><strong>The solution is data.</strong> Track what you take alongside how you feel. After 3-4 weeks, patterns emerge. You discover which supplements correlate with better sleep, more stable energy, clearer thinking, or fewer symptoms. You stop wasting money on supplements that don't work for you, and you double down on the ones that do.</p>
+                </div>
+
+                <div class="problem-image">
+                    <div class="phone-mockup">
+                        <div class="phone-notch"></div>
+                        <img src="screens/sidebar.jpg" alt="ReactLog sidebar showing energy entries and tracking" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section id="how-it-works" class="reveal">
+            <h2>How It Works in 3 Steps</h2>
+            <p class="section-subtitle">Transform energy guessing into evidence-based decisions.</p>
+
+            <div class="how-it-works">
+                <div class="step-card reveal">
+                    <div class="step-number">1</div>
+                    <h3>Rate Your Energy Daily</h3>
+                    <p>Quick check-ins, 1-3 times per day. Rate your energy level from 1-10. Morning, afternoon, evening—whatever works for your routine. Takes 10 seconds. Simple ratings build the foundation.</p>
+                </div>
+
+                <div class="step-card reveal">
+                    <div class="step-number">2</div>
+                    <h3>Log Your Inputs</h3>
+                    <p>Whenever you rate your energy, log what might affect it. Sleep hours, food eaten, supplements taken, exercise done, coffee consumed, stress level, time outdoors. You don't need to log everything every time.</p>
+                </div>
+
+                <div class="step-card reveal">
+                    <div class="step-number">3</div>
+                    <h3>Discover Your Equation</h3>
+                    <p>After 2-3 weeks of consistent tracking, ReactLog reveals your personal energy equation. Which specific factors most strongly correlate with your energy? What gives you energy? What drains you?</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- What You Can Track -->
+        <section id="features" class="reveal">
+            <h2>Track Everything That Matters</h2>
+            <p class="section-subtitle">ReactLog adapts to your unique health journey. Track any combination of these:</p>
+
+            <div class="trackable-grid">
+                <div class="trackable-item reveal">
+                    <svg class="trackable-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-13c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5z"/>
+                    </svg>
+                    <h4>Energy Levels</h4>
+                    <p>Daily energy ratings, morning alertness, afternoon crashes, and evening fatigue</p>
+                </div>
+
+                <div class="trackable-item reveal">
+                    <svg class="trackable-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M21 10c0-7.732-6.268-14-14-14s-14 6.268-14 14 6.268 14 14 14 14-6.268 14-14zm-13 0c0 .552.448 1 1 1s1-.448 1-1-.448-1-1-1-1 .448-1 1zm5 0c0 .552.448 1 1 1s1-.448 1-1-.448-1-1-1-1 .448-1 1zm4-1c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1z"/>
+                    </svg>
+                    <h4>Sleep Quality</h4>
+                    <p>Sleep duration, consistency, quality, wake-ups, and morning grogginess</p>
+                </div>
+
+                <div class="trackable-item reveal">
+                    <svg class="trackable-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                    </svg>
+                    <h4>Brain Fog & Focus</h4>
+                    <p>Mental clarity, focus duration, distractibility, and cognitive performance</p>
+                </div>
+
+                <div class="trackable-item reveal">
+                    <svg class="trackable-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M13.49 5.48c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-3.6 13.9L8 13.75v-2.5c0-.83.67-1.5 1.5-1.5S11 10.42 11 11.25v2.5l1.89 5.63c.1.25.35.42.6.42.25 0 .5-.17.6-.42l1.89-5.63v-2.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v2.5l1.89 5.63c.1.25.35.42.6.42.25 0 .5-.17.6-.42L21 9.75c0-2.07-1.65-3.75-3.75-3.75-1.3 0-2.44.66-3.11 1.65-.67-.99-1.81-1.65-3.11-1.65-2.1 0-3.75 1.68-3.75 3.75v8.63z"/>
+                    </svg>
+                    <h4>Exercise & Activity</h4>
+                    <p>Workout type, duration, intensity, and physical activity level</p>
+                </div>
+
+                <div class="trackable-item reveal">
+                    <svg class="trackable-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M15.5 1h-8C6.12 1 5 2.12 5 3.5v17C5 21.88 6.12 23 7.5 23h8c1.38 0 2.5-1.12 2.5-2.5v-17C18 2.12 16.88 1 15.5 1zm-4 21c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4.5-4H7V4h9v14z"/>
+                    </svg>
+                    <h4>Symptoms & Health</h4>
+                    <p>Any symptoms you're tracking: headaches, anxiety, pain, digestion, skin, etc.</p>
+                </div>
+
+                <div class="trackable-item reveal">
+                    <svg class="trackable-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M11 9H9V7h2v2zm3 0h-2V7h2v2zm3 0h-2V7h2v2zm3-8h-1V0h-2v1H8V0H6v1H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zm0 18H5V8h14v11zm-5-7H9v2h2v-2zm3 0h-2v2h2v-2z"/>
+                    </svg>
+                    <h4>Food & Diet</h4>
+                    <p>Meals eaten, nutrients, and dietary patterns</p>
+                </div>
+
+                <div class="trackable-item reveal">
+                    <svg class="trackable-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-2.45-3.15-.6.8 3.05 3.93 3.35-4.29z"/>
+                    </svg>
+                    <h4>Supplements & Meds</h4>
+                    <p>Supplements taken, medications, dosage, and timing</p>
+                </div>
+
+                <div class="trackable-item reveal">
+                    <svg class="trackable-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-13c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5z"/>
+                    </svg>
+                    <h4>Custom Tracking</h4>
+                    <p>Create unlimited custom metrics unique to your health goals</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Privacy Section -->
+        <section id="privacy" class="reveal">
+            <h2>Your Energy Data Stays on Your Phone</h2>
+            <p class="section-subtitle">Why privacy matters for energy tracking.</p>
+
+            <div class="privacy-content">
+                <div class="privacy-text">
+                    <p>Your energy levels and health data reveal things about you that are deeply personal: <strong>health conditions</strong> you're managing, <strong>lifestyle choices</strong>, and vulnerabilities. You don't want that data on someone else's server.</p>
+
+                    <p>Traditional apps sell your health data to data brokers, insurance companies, and advertisers. ReactLog takes a fundamentally different approach:</p>
+
+                    <ul>
+                        <li><strong>No backend servers</strong> — Your data lives on your device only. Period.</li>
+                        <li><strong>No analytics SDKs</strong> — We don't send telemetry about your usage patterns.</li>
+                        <li><strong>No data collection</strong> — We have nothing to collect. No servers means no data pipeline.</li>
+                        <li><strong>No account required</strong> — You don't need to create a login. No username, no email, nothing that identifies you.</li>
+                        <li><strong>Face ID/Touch ID lock</strong> — Your energy data is biometrically protected on your phone.</li>
+                    </ul>
+
+                    <p><strong>We charge for the app instead of charging you with your privacy.</strong> It's a sustainable business model that aligns our interests with yours. We want you to use ReactLog, but we don't want your data.</p>
+                </div>
+
+                <div class="privacy-image">
+                    <div class="phone-mockup">
+                        <div class="phone-notch"></div>
+                        <img src="screens/insights.jpg" alt="ReactLog insights showing correlations between daily factors and energy levels" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="reveal">
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="faq-content">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>Why am I always tired?</h4>
+                        <div class="faq-toggle">↓</div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Persistent fatigue has many causes: poor sleep quality, sleep inconsistency, blood sugar swings, dehydration, vitamin deficiencies, stress, sedentary lifestyle, medication side effects, hormonal imbalances, or underlying health conditions. The key is systematic tracking. Most people try one solution at a time, never discovering what actually correlates with higher energy in their specific situation.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>How do I track my energy levels?</h4>
+                        <div class="faq-toggle">↓</div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Rate your energy 1-3 times daily on a simple scale (1-10 works well). Morning, afternoon, and evening captures daily variation. Each rating takes about 10 seconds. Simultaneously, log the factors that might influence your energy: hours slept, quality of sleep, meals eaten, supplements taken, exercise completed, caffeine consumed, stress level, time outdoors. You don't need perfect logging. Consistent tracking of a few key factors reveals patterns quickly.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>Can tracking energy actually help?</h4>
+                        <div class="faq-toggle">↓</div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes. Data shows that most people discover 2-3 specific factors that significantly affect their energy once they track consistently. Someone discovers that morning light exposure raises afternoon energy by 20%. Another finds that magnesium at specific times eliminates afternoon crashes. A third discovers that sleep consistency matters far more than sleep duration for their energy levels. These discoveries can't happen without systematic tracking. Your brain detects obvious patterns, but misses subtle correlations and delayed effects.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>What's the best time to track energy?</h4>
+                        <div class="faq-toggle">↓</div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Consistency matters more than frequency or specific times. Morning, mid-afternoon, and evening works well for most people—it captures your energy across the full day and shows how different times vary. But if you prefer different times, pick consistent times and stick to them. 7am, 1pm, and 7pm. Or 8am and 4pm. Or even just morning and evening. As long as you're consistent, ReactLog finds patterns. The frequency is less important than consistency.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>Is ReactLog free?</h4>
+                        <div class="faq-toggle">↓</div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>ReactLog is currently free during Early Access. It will become a paid subscription app once we exit Early Access. Everyone who uses it during the Early Access period will receive a lifetime discount when subscriptions launch. We're not charging for Early Access so we can get real-world feedback from users and build exactly what people need.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA -->
+        <section id="cta" class="cta reveal">
+            <h2>Stop Guessing. Start Tracking.</h2>
+            <p class="section-subtitle">Free during Early Access. No account required. Your energy data stays on your phone.</p>
+
+            <div class="cta-buttons">
+                <button class="btn btn-primary">Download ReactLog</button>
+            </div>
+
+            <div class="trust-badge" style="justify-content: center;">
+                <div class="trust-badge-item">
+                    <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+                        <path d="M9 12l2 2 4-4"/>
+                    </svg>
+                    <span>100% on-device</span>
+                </div>
+                <div class="trust-badge-item">
+                    <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+                        <path d="M9 12l2 2 4-4"/>
+                    </svg>
+                    <span>Zero data collection</span>
+                </div>
+                <div class="trust-badge-item">
+                    <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+                        <path d="M9 12l2 2 4-4"/>
+                    </svg>
+                    <span>No backend servers</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-brand-name">ReactLog</div>
+                    <p>Track your health with real data, not hope.</p>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-links-col">
+                        <h4>Product</h4>
+                        <ul>
+                            <li><a href="/#features">Features</a></li>
+                            <li><a href="/#how-it-works">How It Works</a></li>
+                            <li><a href="/#privacy">Privacy</a></li>
+                            <li><a href="/">Homepage</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-links-col">
+                        <h4>Use Cases</h4>
+                        <ul>
+                            <li><a href="/brain-fog-tracker">Brain Fog Tracker</a></li>
+                            <li><a href="/energy-tracker">Energy Tracker</a></li>
+                            <li><a href="/mood-sleep-tracker">Mood &amp; Sleep Tracker</a></li>
+                            <li><a href="/health-tracker">Private Health Tracker</a></li>
+                            <li><a href="/medication-tracker">Medication Tracker</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="footer-legal">
+                    <p><a href="/privacy" style="color: inherit; text-decoration: none;">Privacy Policy</a> • <a href="/terms" style="color: inherit; text-decoration: none;">Terms of Service</a></p>
+                    <p style="margin-top: 1rem;"><a href="mailto:support@reactlog.com" style="color: var(--accent); text-decoration: none;">support@reactlog.com</a></p>
+                    <p style="margin-top: 2rem; color: var(--text-tertiary);">© 2026 ReactLog. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
     <script>
-        // Initialize particle canvas
-        const canvas = document.getElementById('particleCanvas');
+        // Animated canvas background
+        const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
 
-        let width = canvas.width = window.innerWidth;
-        let height = canvas.height = window.innerHeight;
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
 
-        const particles = [];
-        const particleCount = Math.min(50, Math.max(20, Math.floor((width * height) / 50000)));
-
+        // Particle system
         class Particle {
             constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.size = Math.random() * 2 + 0.5;
-                this.speedX = (Math.random() - 0.5) * 0.5;
-                this.speedY = (Math.random() - 0.5) * 0.5;
-                this.opacity = Math.random() * 0.5 + 0.2;
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 1.5 + 0.5;
+                this.speedX = Math.random() * 0.3 - 0.15;
+                this.speedY = Math.random() * 0.3 - 0.15;
+                this.opacity = Math.random() * 0.5 + 0.1;
             }
 
             update() {
                 this.x += this.speedX;
                 this.y += this.speedY;
 
-                if (this.x < 0) this.x = width;
-                if (this.x > width) this.x = 0;
-                if (this.y < 0) this.y = height;
-                if (this.y > height) this.y = 0;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
             }
 
             draw() {
-                ctx.fillStyle = `rgba(51, 235, 224, ${this.opacity})`;
+                ctx.fillStyle = `rgba(51, 235, 224, ${this.opacity * 0.3})`;
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
             }
         }
 
-        function initParticles() {
-            particles.length = 0;
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new Particle());
-            }
+        const particles = [];
+        for (let i = 0; i < 50; i++) {
+            particles.push(new Particle());
         }
 
         function animateParticles() {
-            ctx.clearRect(0, 0, width, height);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             for (let particle of particles) {
                 particle.update();
@@ -1213,21 +1393,58 @@
 
             requestAnimationFrame(animateParticles);
         }
-
-        window.addEventListener('resize', () => {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        });
-
-        // Start animation
-        initParticles();
         animateParticles();
 
-        // FAQ Interactivity
-        document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', function() {
-                const faqItem = this.closest('.faq-item');
-                faqItem.classList.toggle('active');
+        // Scroll reveal
+        const revealElements = document.querySelectorAll('.reveal');
+
+        function revealOnScroll() {
+            revealElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementBottom = element.getBoundingClientRect().bottom;
+
+                if (elementTop < window.innerHeight * 0.85 && elementBottom > 0) {
+                    element.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll();
+
+        // FAQ toggle
+        const faqItems = document.querySelectorAll('.faq-item');
+
+        faqItems.forEach(item => {
+            item.addEventListener('click', () => {
+                // Close other items
+                faqItems.forEach(other => {
+                    if (other !== item) {
+                        other.classList.remove('active');
+                    }
+                });
+
+                // Toggle current item
+                item.classList.toggle('active');
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Download button click handler
+        document.querySelectorAll('.download-btn, .btn-primary').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                // In production, this would link to App Store
+                console.log('Download ReactLog');
             });
         });
     </script>

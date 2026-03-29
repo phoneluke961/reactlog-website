@@ -30,7 +30,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         * {
@@ -47,13 +47,9 @@
             --bg-bottom: #080d17;
             --bg-primary: #0a1420;
             --text-primary: #ffffff;
-            --text-secondary: #b0b9c1;
-            --text-tertiary: #7a8390;
-            --card-bg: rgba(15, 31, 46, 0.4);
-            --card-border: rgba(51, 235, 224, 0.1);
-            --success: #33ebe0;
-            --warning: #ffa500;
-            --spacing-unit: 1rem;
+            --text-secondary: #b0c4de;
+            --text-tertiary: #7a8fa6;
+            --border-color: rgba(51, 235, 224, 0.15);
         }
 
         html {
@@ -63,45 +59,26 @@
         body {
             font-family: 'Work Sans', sans-serif;
             background: linear-gradient(135deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+            background-attachment: fixed;
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
-            position: relative;
-            min-height: 100vh;
         }
 
-        /* Animated Background */
-        body::before {
-            content: '';
+        /* Canvas background */
+        canvas {
             position: fixed;
-            width: 100%;
-            height: 100%;
             top: 0;
             left: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="1" fill="%2340f2e6" opacity="0.1"/><circle cx="80" cy="30" r="1.5" fill="%2357b8ff" opacity="0.08"/><circle cx="50" cy="60" r="1" fill="%2333ebe0" opacity="0.12"/><circle cx="90" cy="80" r="0.8" fill="%2340f2e6" opacity="0.1"/><circle cx="10" cy="70" r="1.2" fill="%2357b8ff" opacity="0.09"/></svg>') repeat;
-            animation: float-bg 20s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 1;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.5;
         }
 
-        @keyframes float-bg {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        /* Prevent animation in reduced motion */
-        @media (prefers-reduced-motion: reduce) {
-            body::before {
-                animation: none;
-            }
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
+        .content-wrapper {
             position: relative;
-            z-index: 2;
+            z-index: 1;
         }
 
         /* Navigation */
@@ -109,32 +86,32 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.5rem 1.5rem;
+            padding: 1.5rem 2rem;
+            background: rgba(10, 20, 32, 0.7);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
             position: sticky;
             top: 0;
-            background: rgba(10, 20, 32, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--card-border);
             z-index: 100;
         }
 
-        .logo {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--accent);
-            text-decoration: none;
+        .nav-logo {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            transition: opacity 0.3s ease;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            transition: color 0.3s ease;
         }
 
-        .logo:hover {
-            opacity: 0.8;
+        .nav-logo:hover {
+            color: var(--accent);
         }
 
-        .logo img {
+        .nav-logo img {
             width: 32px;
             height: 32px;
             border-radius: 8px;
@@ -143,15 +120,14 @@
         .nav-links {
             display: flex;
             gap: 2rem;
-            list-style: none;
             align-items: center;
+            list-style: none;
         }
 
         .nav-links a {
             color: var(--text-secondary);
             text-decoration: none;
             font-size: 0.95rem;
-            font-weight: 500;
             transition: color 0.3s ease;
         }
 
@@ -159,21 +135,24 @@
             color: var(--accent);
         }
 
-        .nav-cta {
+        .download-btn {
             background: linear-gradient(135deg, var(--accent) 0%, var(--glow) 100%);
-            color: var(--bg-primary) !important;
+            color: var(--bg-primary);
             padding: 0.75rem 1.5rem;
             border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Space Grotesk', sans-serif;
             font-weight: 600;
-            white-space: nowrap;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(51, 235, 224, 0.3);
         }
 
-        .nav-cta:hover {
-            opacity: 0.9;
+        .download-btn:hover {
+            box-shadow: 0 0 30px rgba(51, 235, 224, 0.5), 0 0 60px rgba(51, 235, 224, 0.2);
             transform: translateY(-2px);
         }
-
-        /* Dropdown Nav */
         .nav-dropdown { position: relative; }
         .nav-dropdown > a { display: flex; align-items: center; gap: 4px; }
         .dropdown-arrow { display: inline-block; width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 5px solid currentColor; transition: transform 0.3s; margin-left: 2px; }
@@ -181,112 +160,584 @@
         .nav-dropdown-menu { display: none; position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%); min-width: 220px; background: rgba(10,20,32,0.96); backdrop-filter: blur(24px); border: 1px solid rgba(51,235,224,0.18); border-radius: 14px; padding: 10px; z-index: 1001; box-shadow: 0 16px 48px rgba(0,0,0,0.4); }
         .nav-dropdown-menu::before { content: ''; position: absolute; top: -16px; left: 0; right: 0; height: 16px; }
         .nav-dropdown:hover .nav-dropdown-menu { display: block; }
-        .nav-dropdown-menu a { display: block; padding: 10px 14px; color: rgba(234,246,255,0.72) !important; font-size: 0.85rem; border-radius: 8px; white-space: nowrap; }
+        .nav-dropdown-menu a { display: block; padding: 10px 14px; font-size: 0.85rem; border-radius: 8px; white-space: nowrap; }
         .nav-dropdown-menu a:hover { background: rgba(51,235,224,0.08); color: #33ebe0 !important; }
-        .nav-dropdown-menu a::after { display: none; }
 
         @media (max-width: 768px) {
             nav {
-                padding: 1rem 1rem;
+                padding: 1rem;
             }
 
             .nav-links {
+                gap: 1rem;
                 display: none;
             }
 
-            .logo {
-                font-size: 1.25rem;
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(10, 20, 32, 0.95);
+                padding: 1rem;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding: 5rem 1.5rem 3rem;
+                min-height: auto;
+                gap: 2.5rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .trust-badge {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .phone-mockup {
+                width: 220px;
+            }
+
+            .problem-content {
+                grid-template-columns: 1fr;
+            }
+
+            .problem-image .phone-mockup,
+            .privacy-image .phone-mockup {
+                width: 200px;
+            }
+
+            .how-it-works {
+                grid-template-columns: 1fr;
+            }
+
+            .trackable-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
         /* Hero Section */
         .hero {
-            padding: 5rem 1.5rem;
-            text-align: center;
+            padding: 8rem 2rem 5rem;
+            max-width: 1200px;
+            margin: 0 auto;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 3rem;
+            gap: 4rem;
             align-items: center;
+            min-height: 90vh;
         }
 
         .hero-content h1 {
             font-family: 'Space Grotesk', sans-serif;
             font-size: 3.5rem;
             font-weight: 700;
-            line-height: 1.2;
             margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
+            line-height: 1.2;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: slideInDown 0.8s ease-out;
+            animation: fadeInUp 0.8s ease-out;
         }
 
         .hero-content p {
             font-size: 1.125rem;
             color: var(--text-secondary);
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             line-height: 1.8;
-            animation: slideInUp 0.8s ease-out 0.2s both;
+            animation: fadeInUp 0.8s ease-out 0.1s backwards;
         }
 
         .trust-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 1rem;
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 1rem 1.5rem;
+            display: flex;
+            gap: 1.5rem;
             margin-bottom: 2rem;
             font-size: 0.9rem;
-            color: var(--text-secondary);
-            animation: slideInUp 0.8s ease-out 0.3s both;
+            color: var(--text-tertiary);
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
         }
 
-        .badge-icon {
+        .trust-badge-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .trust-icon {
             width: 20px;
             height: 20px;
-            flex-shrink: 0;
+            fill: var(--accent);
         }
 
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--glow) 100%);
-            color: var(--bg-primary);
-            padding: 1rem 2.5rem;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            text-decoration: none;
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease-out 0.3s backwards;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 8px;
             border: none;
             cursor: pointer;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
             transition: all 0.3s ease;
-            animation: slideInUp 0.8s ease-out 0.4s both;
-            box-shadow: 0 20px 40px rgba(51, 235, 224, 0.2);
         }
 
-        .cta-button:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 30px 60px rgba(51, 235, 224, 0.3);
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--glow) 100%);
+            color: var(--bg-primary);
+            box-shadow: 0 0 20px rgba(51, 235, 224, 0.3);
         }
 
-        .cta-button:active {
+        .btn-primary:hover {
+            box-shadow: 0 0 30px rgba(51, 235, 224, 0.5);
             transform: translateY(-2px);
         }
 
-        @keyframes slideInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
         }
 
-        @keyframes slideInUp {
+        .btn-secondary:hover {
+            background: rgba(51, 235, 224, 0.1);
+        }
+
+        .hero-image {
+            position: relative;
+            animation: fadeIn 1s ease-out 0.2s backwards;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Phone Mockup Frame */
+        .phone-mockup {
+            width: 280px;
+            position: relative;
+            border-radius: 36px;
+            border: 3px solid rgba(255,255,255,0.08);
+            background: #0a0a0f;
+            overflow: hidden;
+            box-shadow:
+                0 0 0 1px rgba(255,255,255,0.04),
+                0 25px 60px rgba(0,0,0,0.5),
+                0 0 80px rgba(51, 235, 224, 0.06);
+            transform: perspective(1200px) rotateY(-5deg) rotateX(2deg);
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .phone-mockup:hover {
+            transform: perspective(1200px) rotateY(0deg) rotateX(0deg);
+        }
+
+        .phone-notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 28px;
+            background: #0a0a0f;
+            border-radius: 0 0 18px 18px;
+            z-index: 10;
+        }
+
+        .phone-mockup img {
+            width: 100%;
+            display: block;
+            border-radius: 0;
+            border: none;
+            box-shadow: none;
+        }
+
+        .hero-image img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 60px rgba(51, 235, 224, 0.15);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        /* Problem Section */
+        .problem-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .problem-text p {
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .problem-text strong {
+            color: var(--accent);
+        }
+
+        .problem-image {
+            display: flex;
+            justify-content: center;
+        }
+
+        .problem-image img {
+            width: 100%;
+            max-width: 450px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 60px rgba(51, 235, 224, 0.1);
+        }
+
+        .problem-image .phone-mockup {
+            width: 260px;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step-card {
+            background: rgba(15, 31, 46, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .step-card:hover {
+            background: rgba(15, 31, 46, 0.8);
+            border-color: var(--accent);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(51, 235, 224, 0.2);
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
+            border-radius: 50%;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--bg-primary);
+            margin-bottom: 1rem;
+        }
+
+        .step-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .step-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Trackable Items */
+        .trackable-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .trackable-item {
+            background: rgba(15, 31, 46, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .trackable-item:hover {
+            background: rgba(15, 31, 46, 0.8);
+            border-color: var(--accent);
+            transform: translateY(-4px);
+        }
+
+        .trackable-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 1rem;
+            fill: var(--accent);
+        }
+
+        .trackable-item h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .trackable-item p {
+            font-size: 0.9rem;
+            color: var(--text-tertiary);
+        }
+
+        /* Privacy Section */
+        .privacy-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .privacy-text ul {
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .privacy-text li {
+            padding: 1rem 0;
+            padding-left: 2.5rem;
+            position: relative;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .privacy-text li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+
+        .privacy-image {
+            display: flex;
+            justify-content: center;
+        }
+
+        .privacy-image img {
+            width: 100%;
+            max-width: 450px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 60px rgba(51, 235, 224, 0.1);
+        }
+
+        .privacy-image .phone-mockup {
+            width: 260px;
+        }
+
+        /* FAQ Section */
+        .faq-content {
+            margin-top: 3rem;
+        }
+
+        .faq-item {
+            background: rgba(15, 31, 46, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .faq-item:hover .faq-question {
+            background: rgba(15, 31, 46, 0.8);
+        }
+
+        .faq-question h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .faq-toggle {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0 2rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 0 2rem 2rem 2rem;
+            max-height: 500px;
+        }
+
+        /* CTA Section */
+        .cta {
+            text-align: center;
+            background: rgba(15, 31, 46, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 4rem 2rem;
+        }
+
+        .cta h2 {
+            margin-bottom: 1rem;
+        }
+
+        .cta .section-subtitle {
+            margin-bottom: 2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(10, 20, 32, 0.8);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border-color);
+            padding: 3rem 2rem;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 3rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .footer-brand-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--text-primary);
+        }
+
+        .footer-brand p {
+            font-size: 0.9rem;
+            color: var(--text-tertiary);
+        }
+
+        .footer-links {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .footer-links-col h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .footer-links-col ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .footer-links-col a {
+            color: var(--text-tertiary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links-col a:hover {
+            color: var(--accent);
+        }
+
+        .footer-legal {
+            text-align: right;
+            color: var(--text-tertiary);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
             from {
                 opacity: 0;
                 transform: translateY(30px);
@@ -295,106 +746,6 @@
                 opacity: 1;
                 transform: translateY(0);
             }
-        }
-
-        .hero-image {
-            position: relative;
-            animation: slideInRight 0.8s ease-out 0.2s both;
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .hero-image img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 20px;
-            box-shadow: 0 40px 80px rgba(51, 235, 224, 0.15);
-            border: 1px solid var(--card-border);
-            display: block;
-        }
-
-        @media (max-width: 1200px) {
-            .hero {
-                grid-template-columns: 1fr;
-                padding: 4rem 1.5rem;
-            }
-
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero-image {
-                order: -1;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero {
-                padding: 3rem 1rem;
-                gap: 2rem;
-            }
-
-            .hero-content h1 {
-                font-size: 1.75rem;
-            }
-
-            .hero-content p {
-                font-size: 1rem;
-            }
-
-            .nav-links {
-                gap: 1rem;
-                font-size: 0.85rem;
-            }
-        }
-
-        /* Section Styles */
-        section {
-            padding: 5rem 1.5rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        section h2 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 2rem;
-            text-align: center;
-            animation: revealText 0.8s ease-out;
-        }
-
-        @keyframes revealText {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Problem Section */
-        .problem {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 3rem;
-            max-width: 800px;
-            margin: 2rem auto;
-            backdrop-filter: blur(10px);
-            line-height: 1.8;
-            animation: fadeIn 0.8s ease-out;
         }
 
         @keyframes fadeIn {
@@ -406,749 +757,559 @@
             }
         }
 
-        .problem p {
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            font-size: 1.05rem;
-        }
-
-        .problem p:last-child {
-            margin-bottom: 0;
-        }
-
-        .problem strong {
-            color: var(--accent);
-        }
-
-        @media (max-width: 768px) {
-            .problem {
-                padding: 2rem;
-            }
-
-            section h2 {
-                font-size: 1.75rem;
-            }
-        }
-
-        /* Use Cases Grid */
-        .use-cases-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .use-case-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 2rem;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-            animation: cardSlideIn 0.6s ease-out;
-        }
-
-        @keyframes cardSlideIn {
+        @keyframes slideInLeft {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateX(-30px);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateX(0);
             }
         }
 
-        .use-case-card:hover {
-            background: rgba(15, 31, 46, 0.6);
-            border-color: var(--accent);
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(51, 235, 224, 0.1);
+        /* Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
         }
 
-        .use-case-card h3 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--accent);
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .use-case-card p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.7;
-        }
-
-        /* How It Works */
-        .how-it-works {
-            max-width: 1000px;
-            margin: 3rem auto;
-        }
-
-        .steps-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .step {
-            position: relative;
-            padding: 2rem;
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            backdrop-filter: blur(10px);
-            text-align: center;
-            animation: stepFadeIn 0.6s ease-out;
-        }
-
-        @keyframes stepFadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .step-number {
-            width: 50px;
-            height: 50px;
-            margin: 0 auto 1.5rem;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--bg-primary);
-        }
-
-        .step h3 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-        }
-
-        .step p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        .step-image {
-            margin-top: 1.5rem;
-            max-height: 300px;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        .step-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        @media (max-width: 768px) {
-            .steps-container {
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .problem-content,
+            .privacy-content {
                 grid-template-columns: 1fr;
             }
-        }
 
-        /* Clinicians Section */
-        .clinicians {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 3rem;
-            max-width: 900px;
-            margin: 3rem auto;
-            backdrop-filter: blur(10px);
-        }
-
-        .clinicians h2 {
-            margin-bottom: 1.5rem;
-        }
-
-        .clinicians p {
-            color: var(--text-secondary);
-            font-size: 1.05rem;
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-        }
-
-        .clinicians p:last-child {
-            margin-bottom: 0;
-        }
-
-        .quote-block {
-            background: rgba(51, 235, 224, 0.05);
-            border-left: 3px solid var(--accent);
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            border-radius: 4px;
-            font-style: italic;
-            color: var(--text-primary);
-        }
-
-        /* Privacy Section */
-        .privacy {
-            background: linear-gradient(135deg, rgba(51, 235, 224, 0.05) 0%, rgba(87, 184, 255, 0.05) 100%);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 3rem;
-            max-width: 900px;
-            margin: 3rem auto;
-            backdrop-filter: blur(10px);
-        }
-
-        .privacy h2 {
-            margin-bottom: 1.5rem;
-        }
-
-        .privacy p {
-            color: var(--text-secondary);
-            font-size: 1.05rem;
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-        }
-
-        .privacy-highlight {
-            background: var(--card-bg);
-            border: 1px solid var(--accent);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            text-align: center;
-        }
-
-        .privacy-highlight p {
-            margin-bottom: 0;
-            color: var(--accent);
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        /* FAQ Section */
-        .faq {
-            max-width: 800px;
-            margin: 3rem auto;
-        }
-
-        .faq-item {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            backdrop-filter: blur(10px);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .faq-item:hover {
-            background: rgba(15, 31, 46, 0.6);
-            border-color: var(--accent);
-        }
-
-        .faq-question {
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 600;
-            font-size: 1.05rem;
-            color: var(--text-primary);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .faq-toggle {
-            font-size: 1.5rem;
-            color: var(--accent);
-            transition: transform 0.3s ease;
-            flex-shrink: 0;
-        }
-
-        .faq-item.active .faq-toggle {
-            transform: rotate(45deg);
-        }
-
-        .faq-answer {
-            display: none;
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--card-border);
-            color: var(--text-secondary);
-            line-height: 1.7;
-            font-size: 0.95rem;
-        }
-
-        .faq-item.active .faq-answer {
-            display: block;
-            animation: slideDown 0.3s ease-out;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
+            .how-it-works {
+                grid-template-columns: 1fr;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
 
-        /* Related Pages */
-        .related-pages {
-            max-width: 1000px;
-            margin: 3rem auto;
-        }
-
-        .related-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .related-link {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            text-decoration: none;
-            color: var(--accent);
-            font-weight: 600;
-            text-align: center;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .related-link:hover {
-            background: rgba(15, 31, 46, 0.6);
-            border-color: var(--accent);
-            transform: translateY(-2px);
-        }
-
-        /* Final CTA Section */
-        .final-cta {
-            text-align: center;
-            padding: 4rem 1.5rem;
-            background: linear-gradient(135deg, rgba(51, 235, 224, 0.1) 0%, rgba(87, 184, 255, 0.1) 100%);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            max-width: 600px;
-            margin: 3rem auto;
-            backdrop-filter: blur(10px);
-        }
-
-        .final-cta h2 {
-            margin-bottom: 2rem;
-        }
-
-        /* Footer */
-        footer {
-            background: rgba(10, 20, 32, 0.9);
-            border-top: 1px solid var(--card-border);
-            padding: 3rem 1.5rem;
-            color: var(--text-secondary);
-            position: relative;
-            z-index: 2;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-section h4 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 1rem;
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-section a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: color 0.3s ease;
-            font-size: 0.9rem;
-        }
-
-        .footer-section a:hover {
-            color: var(--accent);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid var(--card-border);
-            font-size: 0.85rem;
-        }
-
-        @media (max-width: 768px) {
-            section {
-                padding: 3rem 1rem;
+            .trackable-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
 
             .footer-content {
                 grid-template-columns: 1fr;
-                gap: 1.5rem;
+                gap: 2rem;
             }
 
-            .final-cta {
-                margin: 2rem 1rem;
-                padding: 2rem 1.5rem;
+            .footer-legal {
+                text-align: left;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
             }
         }
 
-        /* Lazy Loading */
-        img[loading="lazy"] {
-            opacity: 0;
-            transition: opacity 0.3s ease;
+        @media (max-width: 768px) {
+            .trackable-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .hero {
+                padding: 2rem 1rem;
+                min-height: auto;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            .trust-badge {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+
+            h2 {
+                font-size: 1.75rem;
+            }
+
+            .step-card,
+            .trackable-item {
+                padding: 1.5rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .footer-links {
+                grid-template-columns: 1fr;
+            }
         }
 
-        img[loading="lazy"].loaded {
-            opacity: 1;
+        @media (max-width: 480px) {
+            .trackable-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-content h1 {
+                font-size: 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .download-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
         }
 
-        /* Accessibility */
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border-width: 0;
-        }
-
+        /* Reduced Motion */
         @media (prefers-reduced-motion: reduce) {
             * {
                 animation-duration: 0.01ms !important;
                 animation-iteration-count: 1 !important;
                 transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav>
-        <a href="/" class="logo" style="display:flex;align-items:center;gap:12px;">
-            <img src="screens/logo.jpg" alt="ReactLog" style="width:36px;height:36px;border-radius:10px;object-fit:cover;">
-            <span>ReactLog</span>
-        </a>
-        <ul class="nav-links">
-            <li><a href="/#features">Features</a></li>
-            <li class="nav-dropdown">
-                <a href="#">Use Cases <span class="dropdown-arrow"></span></a>
-                <div class="nav-dropdown-menu">
-                    <a href="/supplement-tracker">Supplement Tracker</a>
-                    <a href="/brain-fog-tracker">Brain Fog Tracker</a>
-                    <a href="/energy-tracker">Energy Tracker</a>
-                    <a href="/medication-tracker">Medication Tracker</a>
-                    <a href="/private-health-tracker">Private Health Tracker</a>
+    <canvas id="canvas"></canvas>
+
+    <div class="content-wrapper">
+        <!-- Navigation -->
+        <nav>
+            <a href="/" class="nav-logo">
+                <img src="screens/logo.jpg" alt="ReactLog" style="width:36px;height:36px;border-radius:10px;object-fit:cover;">
+                ReactLog
+            </a>
+            <ul class="nav-links">
+                <li><a href="/#features">Features</a></li>
+                <li class="nav-dropdown">
+                    <a href="#">Use Cases <span class="dropdown-arrow"></span></a>
+                    <div class="nav-dropdown-menu">
+                        <a href="/supplement-tracker">Supplement Tracker</a>
+                        <a href="/brain-fog-tracker">Brain Fog Tracker</a>
+                        <a href="/energy-tracker">Energy Tracker</a>
+                        <a href="/medication-tracker">Medication Tracker</a>
+                        <a href="/private-health-tracker">Private Health Tracker</a>
+                    </div>
+                </li>
+                <li><a href="/#how-it-works">How It Works</a></li>
+                <li><a href="/#privacy">Privacy</a></li>
+                <li><a href="/#download" class="download-btn">Download</a></li>
+            </ul>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Track If Your Medication Is Actually Working</h1>
+                <p>Your doctor prescribed it. But is it helping? Track your symptoms, mood, energy, and side effects alongside your medication — and bring real data to your next appointment instead of "I think I feel a little better?"</p>
+
+                <div class="trust-badge">
+                    <div class="trust-badge-item">
+                        <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+                            <path d="M9 12l2 2 4-4"/>
+                        </svg>
+                        <span>100% on-device</span>
+                    </div>
+                    <div class="trust-badge-item">
+                        <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+                            <path d="M9 12l2 2 4-4"/>
+                        </svg>
+                        <span>Zero data collection</span>
+                    </div>
+                    <div class="trust-badge-item">
+                        <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+                            <path d="M9 12l2 2 4-4"/>
+                        </svg>
+                        <span>No backend servers</span>
+                    </div>
                 </div>
-            </li>
-            <li><a href="/#how-it-works">How It Works</a></li>
-            <li><a href="/#privacy">Privacy</a></li>
-            <li><a href="/#download" class="nav-cta">Download</a></li>
-        </ul>
-    </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Track If Your Medication Is Actually Working</h1>
-            <p>Your doctor prescribed it. But is it helping? Track your symptoms, mood, energy, and side effects alongside your medication — and bring real data to your next appointment instead of "I think I feel a little better?"</p>
-            <div class="trust-badge">
-                <svg class="badge-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
-                    <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <span>100% on-device • Zero data collection • No backend servers</span>
-            </div>
-            <a href="#download" class="cta-button">Download</a>
-        </div>
-        <div class="hero-image">
-            <img
-                src="screens/health-metrics.jpg"
-                alt="ReactLog medication tracking interface showing daily mood, energy, and symptom logs"
-                loading="lazy"
-                width="400"
-                height="800"
-            >
-        </div>
-    </section>
-
-    <!-- The Problem Section -->
-    <section>
-        <h2>Your Doctor Asks "How Are You Feeling?" — And You Guess</h2>
-        <div class="problem">
-            <p>When a psychiatrist prescribes an SSRI, they tell you to check back in 6-8 weeks. When a doctor prescribes blood pressure medication, they rely on occasional office visits. The patient's subjective memory of how they've felt over weeks is unreliable.</p>
-
-            <p>Studies show patients recall their symptoms inaccurately — particularly for mood, pain, and energy levels. You forget the bad days. You overweight the recent days. You can't remember if week 3 was better than week 1.</p>
-
-            <p><strong>This isn't your fault — it's how human memory works.</strong> Psychological research on recall bias consistently shows that people are poor judges of their own historical emotional states. A 2015 study in <em>JAMA Psychiatry</em> found that patients with depression systematically overestimate their current mood compared to their actual ratings from earlier in the week. When you're asked in week 8 "How did you feel in weeks 1-2?", your brain doesn't retrieve accurate data. Instead, it constructs a narrative based on how you feel right now, recent standout events, and general patterns you think exist.</p>
-
-            <p>Your doctor knows this. They ask "How have you been feeling?" not because they expect a perfectly accurate answer, but because it's the only data they have. They can't watch you for 6 weeks. They rely on your memory.</p>
-
-            <p><strong>The solution is daily tracking.</strong> Not obsessive journaling. Just 30 seconds a day: What's your mood today? Your energy? Any side effects? Over weeks, the pattern becomes undeniable. You see the exact week your sleep improved. You notice that increased nausea on days 4-6, then it faded. You quantify the effect instead of guessing.</p>
-        </div>
-    </section>
-
-    <!-- Use Cases Section -->
-    <section id="features">
-        <h2>Medications People Track With ReactLog</h2>
-        <div class="use-cases-grid">
-            <div class="use-case-card">
-                <h3>Antidepressants (SSRIs, SNRIs)</h3>
-                <p>Track mood, anxiety, sleep quality, and side effects over the critical 6-8 week adjustment period. Many people need to find the right dose or medication — ReactLog shows whether changes are actually helping.</p>
-            </div>
-            <div class="use-case-card">
-                <h3>Anti-Anxiety Medications</h3>
-                <p>Track anxiety levels, panic attack frequency, and sleep quality. Know exactly how often you're reaching for medication, whether the dose is sufficient, and any tolerance buildup over time.</p>
-            </div>
-            <div class="use-case-card">
-                <h3>Blood Pressure Medications</h3>
-                <p>Track energy levels, dizziness, headaches, and other symptoms alongside your blood pressure readings and medication timing. Catch side effects early and show your doctor objective data.</p>
-            </div>
-            <div class="use-case-card">
-                <h3>Thyroid Medications</h3>
-                <p>Track fatigue, brain fog, mood, weight changes, and temperature regulation. Thyroid adjustments take 6-8 weeks to take effect — daily tracking shows when you've finally hit the right dose.</p>
-            </div>
-            <div class="use-case-card">
-                <h3>ADHD Medications</h3>
-                <p>Track focus quality, productivity, appetite changes, and sleep disruption. Log which time of day you feel most focused. Identify if medication effectiveness diminishes as the day goes on.</p>
-            </div>
-            <div class="use-case-card">
-                <h3>Pain Medications</h3>
-                <p>Track pain levels throughout the day, mobility improvements, and side effects. Know exactly how long medication takes to work and when it wears off. Identify patterns in your pain triggers.</p>
-            </div>
-            <div class="use-case-card">
-                <h3>Any New Medication</h3>
-                <p>Started something new? Track whatever outcomes matter to you. Custom tracking lets you measure the effects that matter most to your condition and your life.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- How It Works Section -->
-    <section id="how-it-works">
-        <h2>How It Works: 3 Simple Steps</h2>
-        <div class="steps-container">
-            <div class="step">
-                <div class="step-number">1</div>
-                <h3>Log Your Medication</h3>
-                <p>Add what medication you take, when you take it, and your dose. ReactLog reminds you daily. Takes 10 seconds.</p>
-                <div class="step-image">
-                    <img
-                        src="screens/sidebar.jpg"
-                        alt="ReactLog medication logging interface"
-                        loading="lazy"
-                        width="300"
-                        height="300"
-                    >
+                <div class="hero-buttons">
+                    <button class="btn btn-primary">Download</button>
+                    <button class="btn btn-secondary">Learn More</button>
                 </div>
             </div>
-            <div class="step">
-                <div class="step-number">2</div>
-                <h3>Track Outcomes Daily</h3>
-                <p>Each day, spend 30 seconds rating your mood, energy, symptoms, or side effects. Create custom tracking for what matters to you.</p>
-                <div class="step-image">
-                    <img
-                        src="screens/health-metrics.jpg"
-                        alt="ReactLog daily tracking interface"
-                        loading="lazy"
-                        width="300"
-                        height="300"
-                    >
+
+            <div class="hero-image">
+                <div class="phone-mockup">
+                    <div class="phone-notch"></div>
+                    <img src="screens/dashboard.jpg" alt="ReactLog Dashboard showing medication tracking and insights" loading="lazy">
                 </div>
             </div>
-            <div class="step">
-                <div class="step-number">3</div>
-                <h3>See Trends & Share With Doctor</h3>
-                <p>ReactLog shows you correlations between your medication and how you feel. Export clear, visual reports to discuss with your clinician.</p>
-                <div class="step-image">
-                    <img
-                        src="screens/insights.jpg"
-                        alt="ReactLog insights and trend analysis"
-                        loading="lazy"
-                        width="300"
-                        height="300"
-                    >
+        </section>
+
+        <!-- Problem Section -->
+        <section id="problem" class="reveal">
+            <h2>Your Doctor Asks "How Are You Feeling?" — And You Guess</h2>
+
+            <div class="problem-content">
+                <div class="problem-text">
+                    <p>When a psychiatrist prescribes an SSRI, they tell you to check back in 6-8 weeks. When a doctor prescribes blood pressure medication, they rely on occasional office visits. The patient's subjective memory of how they've felt over weeks is unreliable.</p>
+
+                    <p>Studies show patients recall their symptoms inaccurately — particularly for mood, pain, and energy levels. You forget the bad days. You overweight the recent days. You can't remember if week 3 was better than week 1.</p>
+
+                    <p><strong>This isn't your fault — it's how human memory works.</strong> Psychological research on recall bias consistently shows that people are poor judges of their own historical emotional states. A 2015 study in <em>JAMA Psychiatry</em> found that patients with depression systematically overestimate their current mood compared to their actual ratings from earlier in the week. When you're asked in week 8 "How did you feel in weeks 1-2?", your brain doesn't retrieve accurate data. Instead, it constructs a narrative based on how you feel right now, recent standout events, and general patterns you think exist.</p>
+
+                    <p>Your doctor knows this. They ask "How have you been feeling?" not because they expect a perfectly accurate answer, but because it's the only data they have. They can't watch you for 6 weeks. They rely on your memory.</p>
+
+                    <p><strong>The solution is daily tracking.</strong> Not obsessive journaling. Just 30 seconds a day: What's your mood today? Your energy? Any side effects? Over weeks, the pattern becomes undeniable. You see the exact week your sleep improved. You notice that increased nausea on days 4-6, then it faded. You quantify the effect instead of guessing.</p>
+                </div>
+
+                <div class="problem-image">
+                    <div class="phone-mockup">
+                        <div class="phone-notch"></div>
+                        <img src="screens/sidebar.jpg" alt="ReactLog sidebar showing medication entries and tracking" loading="lazy">
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- For Clinicians Section -->
-    <section>
-        <div class="clinicians">
-            <h2>Give Your Clinician Data, Not Guesses</h2>
-            <p>The standard appointment conversation goes like this:</p>
-            <div class="quote-block">
-                "How have you been feeling on the medication?"<br>
-                "Um... okay, I think? It's hard to remember exactly."
-            </div>
-            <p>That's not a conversation a doctor can work with. There's no baseline. No timeline. No specificity.</p>
-            <p>With ReactLog, the conversation changes:</p>
-            <div class="quote-block">
-                "I've been tracking daily for 6 weeks. My average mood went from 4.2 out of 10 in week 1 to 6.8 in week 6. Sleep quality improved significantly after week 2. Energy is better most days, but I'm noticing increased fatigue in the afternoons around 3-4pm — started in week 4. I haven't had a panic attack in 3 weeks, down from 2-3 per week when I started."
-            </div>
-            <p>Now your doctor has something to work with. Actual data. Timing. Patterns. They can see whether the dose is sufficient, whether you're reaching a plateau, whether the improvement is real or perceived. They can adjust your medication, your timing, or your dose based on evidence instead of intuition.</p>
-            <p>This is especially valuable during the first 6-8 weeks of a new medication, when adjustment periods matter and small changes in dosing can make the difference between a medication that works and one that needs to be replaced.</p>
-        </div>
-    </section>
+        <!-- How It Works -->
+        <section id="how-it-works" class="reveal">
+            <h2>How It Works in 3 Steps</h2>
+            <p class="section-subtitle">Transform medication guessing into evidence-based decisions.</p>
 
-    <!-- Privacy Section -->
-    <section id="privacy">
-        <div class="privacy">
+            <div class="how-it-works">
+                <div class="step-card reveal">
+                    <div class="step-number">1</div>
+                    <h3>Log Your Medication</h3>
+                    <p>Add what medication you take, when you take it, and your dose. ReactLog reminds you daily. Takes 10 seconds.</p>
+                </div>
+
+                <div class="step-card reveal">
+                    <div class="step-number">2</div>
+                    <h3>Track Outcomes Daily</h3>
+                    <p>Each day, spend 30 seconds rating your mood, energy, symptoms, or side effects. Create custom tracking for what matters to you.</p>
+                </div>
+
+                <div class="step-card reveal">
+                    <div class="step-number">3</div>
+                    <h3>See Trends & Share With Doctor</h3>
+                    <p>ReactLog shows you correlations between your medication and how you feel. Export clear, visual reports to discuss with your clinician.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Medications You Can Track -->
+        <section id="features" class="reveal">
+            <h2>Medications People Track With ReactLog</h2>
+            <p class="section-subtitle">ReactLog adapts to your unique health journey. Track any medication:</p>
+
+            <div class="trackable-grid">
+                <div class="trackable-item reveal">
+                    <h4>Antidepressants (SSRIs, SNRIs)</h4>
+                    <p>Track mood, anxiety, sleep quality, and side effects over the critical 6-8 week adjustment period. Many people need to find the right dose or medication — ReactLog shows whether changes are actually helping.</p>
+                </div>
+
+                <div class="trackable-item reveal">
+                    <h4>Anti-Anxiety Medications</h4>
+                    <p>Track anxiety levels, panic attack frequency, and sleep quality. Know exactly how often you're reaching for medication, whether the dose is sufficient, and any tolerance buildup over time.</p>
+                </div>
+
+                <div class="trackable-item reveal">
+                    <h4>Blood Pressure Medications</h4>
+                    <p>Track energy levels, dizziness, headaches, and other symptoms alongside your blood pressure readings and medication timing. Catch side effects early and show your doctor objective data.</p>
+                </div>
+
+                <div class="trackable-item reveal">
+                    <h4>Thyroid Medications</h4>
+                    <p>Track fatigue, brain fog, mood, weight changes, and temperature regulation. Thyroid adjustments take 6-8 weeks to take effect — daily tracking shows when you've finally hit the right dose.</p>
+                </div>
+
+                <div class="trackable-item reveal">
+                    <h4>ADHD Medications</h4>
+                    <p>Track focus quality, productivity, appetite changes, and sleep disruption. Log which time of day you feel most focused. Identify if medication effectiveness diminishes as the day goes on.</p>
+                </div>
+
+                <div class="trackable-item reveal">
+                    <h4>Pain Medications</h4>
+                    <p>Track pain levels throughout the day, mobility improvements, and side effects. Know exactly how long medication takes to work and when it wears off. Identify patterns in your pain triggers.</p>
+                </div>
+
+                <div class="trackable-item reveal">
+                    <h4>Any New Medication</h4>
+                    <p>Started something new? Track whatever outcomes matter to you. Custom tracking lets you measure the effects that matter most to your condition and your life.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Privacy Section -->
+        <section id="privacy" class="reveal">
             <h2>Your Medication Data Is Nobody's Business</h2>
-            <p>Why this matters specifically for medication tracking: <strong>Medication data reveals some of the most sensitive information about you.</strong> Your prescriptions can expose mental health conditions, chronic illness, reproductive health choices, addiction recovery, sexual dysfunction — all among the most stigmatized and sensitive health data that exists.</p>
-            <p>Insurance companies would love access to your medication history to adjust your premiums. Employers could discriminate based on your mental health medications. Data brokers sell prescription data to pharmaceutical companies running targeted ads. This has happened. It's happening now.</p>
-            <p>Most health apps solve this by promising privacy. They build sophisticated encryption. They undergo security audits. They pinky-promise not to sell your data. But they still have your data. Your information lives on their servers. There's always a risk — a breach, a business pivot, a change in privacy policy, a government subpoena.</p>
-            <div class="privacy-highlight">
-                <p>ReactLog takes a different approach: We don't keep your data. There is no server. Your medication information never leaves your iPhone. Not even we can see it.</p>
-            </div>
-            <p>This is a more radical privacy guarantee than typical health apps offer. You don't have to trust our security practices. You don't have to trust our business model. You don't have to trust that we'll stay private-friendly in the future. Your data simply isn't anywhere we could access it.</p>
-            <p><strong>We'd rather build a great product than sell your prescriptions to data brokers.</strong> That's why ReactLog is built to be used entirely on your device. Your medication data, your symptoms, your side effects — all of it stays on your phone. Period.</p>
-        </div>
-    </section>
+            <p class="section-subtitle">Why privacy matters for medication tracking.</p>
 
-    <!-- FAQ Section -->
-    <section>
-        <h2>Frequently Asked Questions</h2>
-        <div class="faq">
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>How do I track if my medication is working?</span>
-                    <span class="faq-toggle">+</span>
-                </div>
-                <div class="faq-answer">
-                    Log your medication daily and alongside it, rate the outcomes you care about — mood, energy, specific symptoms, side effects, or sleep quality. ReactLog tracks these alongside your medication timing. After 2-4 weeks, patterns emerge and you can see clear correlations. If your mood has been steadily improving since you started the medication, you'll see it in the data. If your energy only improved in weeks 3-6, you'll see exactly when the change happened. This is the data your doctor needs to make good decisions about your treatment.
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>Can I track medication side effects?</span>
-                    <span class="faq-toggle">+</span>
-                </div>
-                <div class="faq-answer">
-                    Yes. Create custom tracking entries for any side effect you experience — nausea, fatigue, appetite changes, dizziness, sexual dysfunction, tremors, weight gain, mood swings, or anything else. Track the severity and frequency. You'll be able to see whether side effects decrease over time (as your body adjusts) or worsen (which might indicate you need a dose adjustment). This information is incredibly valuable when discussing side effect management with your doctor.
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>Should I show this data to my doctor?</span>
-                    <span class="faq-toggle">+</span>
-                </div>
-                <div class="faq-answer">
-                    Many patients find it extremely helpful. Your doctor is making treatment decisions based on limited information — typically a 15-minute conversation once every few weeks or months. Objective daily tracking data gives your doctor much better information than your memory of how you've felt. You can export charts and trends from ReactLog to show your doctor exactly what you've experienced. Some doctors find this invaluable; others may be less familiar with patient-tracked data. Either way, you're bringing better information to the conversation than you would otherwise.
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>Is my medication data completely private?</span>
-                    <span class="faq-toggle">+</span>
-                </div>
-                <div class="faq-answer">
-                    Completely. ReactLog has no backend servers and uses zero data collection. Your medication data, symptoms, and side effect tracking never leave your iPhone. Not encrypted and sent to the cloud — never sent anywhere. Your phone is the only place this data exists. We can't access it. Apple can't access it. Your internet service provider can't see it. This is a more absolute privacy guarantee than typical health apps can offer.
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>Is ReactLog free?</span>
-                    <span class="faq-toggle">+</span>
-                </div>
-                <div class="faq-answer">
-                    ReactLog is free during Early Access with no account required. You download the app, start tracking, and all features are immediately available. No subscription hidden behind a paywall. No "freemium" model where tracking more than 3 medications requires payment. We believe medication tracking should be accessible to everyone, regardless of ability to pay.
-                </div>
-            </div>
-        </div>
-    </section>
+            <div class="privacy-content">
+                <div class="privacy-text">
+                    <p>Why this matters specifically for medication tracking: <strong>Medication data reveals some of the most sensitive information about you.</strong> Your prescriptions can expose mental health conditions, chronic illness, reproductive health choices, addiction recovery, sexual dysfunction — all among the most stigmatized and sensitive health data that exists.</p>
 
-    <!-- Related Pages -->
-    <section>
-        <h2>Other Ways to Track Your Health</h2>
-        <div class="related-grid">
-            <a href="/supplement-tracker" class="related-link">Supplement Tracker</a>
-            <a href="/anxiety-trigger-tracker" class="related-link">Anxiety Trigger Tracker</a>
-            <a href="/mood-and-sleep-tracker" class="related-link">Mood & Sleep Tracker</a>
-            <a href="/private-health-tracker" class="related-link">Private Health Tracker</a>
-        </div>
-    </section>
+                    <p>Insurance companies would love access to your medication history to adjust your premiums. Employers could discriminate based on your mental health medications. Data brokers sell prescription data to pharmaceutical companies running targeted ads. This has happened. It's happening now.</p>
 
-    <!-- Final CTA -->
-    <section class="final-cta" id="download">
-        <h2>Know If It's Working</h2>
-        <p style="margin-bottom: 1.5rem; color: var(--text-secondary);">Download ReactLog free for iPhone and start tracking today. No account. No servers. Just you and your data.</p>
-        <a href="#" class="cta-button">Download ReactLog Free</a>
-    </section>
+                    <p>Most health apps solve this by promising privacy. They build sophisticated encryption. They undergo security audits. They pinky-promise not to sell your data. But they still have your data. Your information lives on their servers. There's always a risk — a breach, a business pivot, a change in privacy policy, a government subpoena.</p>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>ReactLog</h4>
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/features">Features</a></li>
-                    <li><a href="/download">Download</a></li>
-                </ul>
+                    <ul>
+                        <li><strong>No backend servers</strong> — Your data lives on your device only. Period.</li>
+                        <li><strong>No analytics SDKs</strong> — We don't send telemetry about your usage patterns.</li>
+                        <li><strong>No data collection</strong> — We have nothing to collect. No servers means no data pipeline.</li>
+                        <li><strong>No account required</strong> — You don't need to create a login. No username, no email, nothing that identifies you.</li>
+                        <li><strong>Face ID/Touch ID lock</strong> — Your medication data is biometrically protected on your phone.</li>
+                    </ul>
+
+                    <p><strong>We'd rather build a great product than sell your prescriptions to data brokers.</strong> That's why ReactLog is built to be used entirely on your device. Your medication data, your symptoms, your side effects — all of it stays on your phone. Period.</p>
+                </div>
+
+                <div class="privacy-image">
+                    <div class="phone-mockup">
+                        <div class="phone-notch"></div>
+                        <img src="screens/insights.jpg" alt="ReactLog insights showing correlations between medication and daily outcomes" loading="lazy">
+                    </div>
+                </div>
             </div>
-            <div class="footer-section">
-                <h4>Use Cases</h4>
-                <ul>
-                    <li><a href="/medication-tracker">Medication Tracker</a></li>
-                    <li><a href="/supplement-tracker">Supplement Tracker</a></li>
-                    <li><a href="/mood-and-sleep-tracker">Mood & Sleep</a></li>
-                    <li><a href="/anxiety-trigger-tracker">Anxiety Triggers</a></li>
-                </ul>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="reveal">
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="faq-content">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>How do I track if my medication is working?</h4>
+                        <div class="faq-toggle">↓</div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Log your medication daily and alongside it, rate the outcomes you care about — mood, energy, specific symptoms, side effects, or sleep quality. ReactLog tracks these alongside your medication timing. After 2-4 weeks, patterns emerge and you can see clear correlations. If your mood has been steadily improving since you started the medication, you'll see it in the data. If your energy only improved in weeks 3-6, you'll see exactly when the change happened. This is the data your doctor needs to make good decisions about your treatment.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>Can I track medication side effects?</h4>
+                        <div class="faq-toggle">↓</div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes. Create custom tracking entries for any side effect you experience — nausea, fatigue, appetite changes, dizziness, sexual dysfunction, tremors, weight gain, mood swings, or anything else. Track the severity and frequency. You'll be able to see whether side effects decrease over time (as your body adjusts) or worsen (which might indicate you need a dose adjustment). This information is incredibly valuable when discussing side effect management with your doctor.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>Should I show this data to my doctor?</h4>
+                        <div class="faq-toggle">↓</div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Many patients find it extremely helpful. Your doctor is making treatment decisions based on limited information — typically a 15-minute conversation once every few weeks or months. Objective daily tracking data gives your doctor much better information than your memory of how you've felt. You can export charts and trends from ReactLog to show your doctor exactly what you've experienced. Some doctors find this invaluable; others may be less familiar with patient-tracked data. Either way, you're bringing better information to the conversation than you would otherwise.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>Is my medication data completely private?</h4>
+                        <div class="faq-toggle">↓</div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Completely. ReactLog has no backend servers and uses zero data collection. Your medication data, symptoms, and side effect tracking never leave your iPhone. Not encrypted and sent to the cloud — never sent anywhere. Your phone is the only place this data exists. We can't access it. Apple can't access it. Your internet service provider can't see it. This is a more absolute privacy guarantee than typical health apps can offer.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>Is ReactLog free?</h4>
+                        <div class="faq-toggle">↓</div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>ReactLog is free during Early Access with no account required. You download the app, start tracking, and all features are immediately available. No subscription hidden behind a paywall. No "freemium" model where tracking more than 3 medications requires payment. We believe medication tracking should be accessible to everyone, regardless of ability to pay.</p>
+                    </div>
+                </div>
             </div>
-            <div class="footer-section">
-                <h4>Legal</h4>
-                <ul>
-                    <li><a href="/privacy">Privacy Policy</a></li>
-                    <li><a href="/terms">Terms of Service</a></li>
-                </ul>
+        </section>
+
+        <!-- Final CTA -->
+        <section id="cta" class="cta reveal">
+            <h2>Know If It's Working</h2>
+            <p class="section-subtitle">Download ReactLog free for iPhone and start tracking today. No account. No servers. Just you and your data.</p>
+
+            <div class="cta-buttons">
+                <button class="btn btn-primary">Download ReactLog Free</button>
             </div>
-            <div class="footer-section">
-                <h4>Connect</h4>
-                <ul>
-                    <li><a href="https://twitter.com/reactlogapp">Twitter</a></li>
-                    <li><a href="mailto:support@reactlog.com">Email</a></li>
-                </ul>
+
+            <div class="trust-badge" style="justify-content: center;">
+                <div class="trust-badge-item">
+                    <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+                        <path d="M9 12l2 2 4-4"/>
+                    </svg>
+                    <span>100% on-device</span>
+                </div>
+                <div class="trust-badge-item">
+                    <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+                        <path d="M9 12l2 2 4-4"/>
+                    </svg>
+                    <span>Zero data collection</span>
+                </div>
+                <div class="trust-badge-item">
+                    <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+                        <path d="M9 12l2 2 4-4"/>
+                    </svg>
+                    <span>No backend servers</span>
+                </div>
             </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 ReactLog. Built for privacy. Made for accuracy.</p>
-        </div>
-    </footer>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-brand-name">ReactLog</div>
+                    <p>Track your health with real data, not hope.</p>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-links-col">
+                        <h4>Product</h4>
+                        <ul>
+                            <li><a href="/#features">Features</a></li>
+                            <li><a href="/#how-it-works">How It Works</a></li>
+                            <li><a href="/#privacy">Privacy</a></li>
+                            <li><a href="/">Homepage</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-links-col">
+                        <h4>Use Cases</h4>
+                        <ul>
+                            <li><a href="/brain-fog-tracker">Brain Fog Tracker</a></li>
+                            <li><a href="/energy-tracker">Energy Tracker</a></li>
+                            <li><a href="/mood-sleep-tracker">Mood &amp; Sleep Tracker</a></li>
+                            <li><a href="/health-tracker">Private Health Tracker</a></li>
+                            <li><a href="/medication-tracker">Medication Tracker</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="footer-legal">
+                    <p><a href="/privacy" style="color: inherit; text-decoration: none;">Privacy Policy</a> • <a href="/terms" style="color: inherit; text-decoration: none;">Terms of Service</a></p>
+                    <p style="margin-top: 1rem;"><a href="mailto:support@reactlog.com" style="color: var(--accent); text-decoration: none;">support@reactlog.com</a></p>
+                    <p style="margin-top: 2rem; color: var(--text-tertiary);">© 2026 ReactLog. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Animated canvas background
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Particle system
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 1.5 + 0.5;
+                this.speedX = Math.random() * 0.3 - 0.15;
+                this.speedY = Math.random() * 0.3 - 0.15;
+                this.opacity = Math.random() * 0.5 + 0.1;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+
+            draw() {
+                ctx.fillStyle = `rgba(51, 235, 224, ${this.opacity * 0.3})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        const particles = [];
+        for (let i = 0; i < 50; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let particle of particles) {
+                particle.update();
+                particle.draw();
+            }
+
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // Scroll reveal
+        const revealElements = document.querySelectorAll('.reveal');
+
+        function revealOnScroll() {
+            revealElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll();
+
+        // FAQ Toggle
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.querySelector('.faq-question').addEventListener('click', () => {
+                item.classList.toggle('active');
+            });
+        });
+    </script>
 
     <!-- Schema Markup -->
     <script type="application/ld+json">
@@ -1174,7 +1335,7 @@
             "@type": "Organization",
             "name": "ReactLog"
         },
-        "screenshot": "https://reactlog.com/screens/health-metrics.jpg",
+        "screenshot": "https://reactlog.com/screens/dashboard.jpg",
         "keywords": "medication tracker, track medication effectiveness, medication side effects tracker, health tracking app, mood tracker, symptom tracker, private health app"
     }
     </script>
@@ -1197,7 +1358,7 @@
                 "name": "Can I track medication side effects?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Yes. Create custom tracking entries for any side effect you experience — nausea, fatigue, appetite changes, dizziness, or anything else. Track severity and frequency to see whether side effects decrease over time as your body adjusts."
+                    "text": "Yes. Create custom tracking entries for any side effect you experience — nausea, fatigue, appetite changes, dizziness, sexual dysfunction, tremors, weight gain, mood swings, or anything else. Track the severity and frequency and see whether side effects decrease or worsen over time."
                 }
             },
             {
@@ -1205,7 +1366,7 @@
                 "name": "Should I show this data to my doctor?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Many patients find it extremely helpful. Objective daily tracking data gives your doctor much better information than your memory of how you've felt. You can export charts and trends to show your doctor exactly what you've experienced."
+                    "text": "Many patients find it extremely helpful. Your doctor is making treatment decisions based on limited information. Objective daily tracking data gives your doctor much better information than your memory of how you've felt. You can export charts and trends from ReactLog to show your doctor exactly what you've experienced."
                 }
             },
             {
@@ -1213,7 +1374,7 @@
                 "name": "Is my medication data completely private?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Completely. ReactLog has no backend servers and uses zero data collection. Your medication data never leaves your iPhone. We can't access it. Apple can't access it. Your phone is the only place this data exists."
+                    "text": "Completely. ReactLog has no backend servers and uses zero data collection. Your medication data, symptoms, and side effect tracking never leave your iPhone. Your phone is the only place this data exists."
                 }
             },
             {
@@ -1221,91 +1382,11 @@
                 "name": "Is ReactLog free?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "ReactLog is free during Early Access with no account required. All features are immediately available. No subscription or freemium model — we believe medication tracking should be accessible to everyone."
+                    "text": "ReactLog is free during Early Access with no account required. You download the app, start tracking, and all features are immediately available. No subscription hidden behind a paywall."
                 }
             }
         ]
     }
-    </script>
-
-    <!-- JavaScript -->
-    <script>
-        // Lazy loading images
-        const images = document.querySelectorAll('img[loading="lazy"]');
-
-        const imageObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.addEventListener('load', () => {
-                        img.classList.add('loaded');
-                    });
-                    img.addEventListener('error', () => {
-                        img.classList.add('loaded');
-                    });
-                    // Trigger load
-                    if (img.src) {
-                        img.classList.add('loaded');
-                    }
-                    observer.unobserve(img);
-                }
-            });
-        });
-
-        images.forEach(img => imageObserver.observe(img));
-
-        // FAQ Toggle
-        const faqItems = document.querySelectorAll('.faq-item');
-
-        faqItems.forEach(item => {
-            item.addEventListener('click', () => {
-                // Close other items
-                faqItems.forEach(otherItem => {
-                    if (otherItem !== item) {
-                        otherItem.classList.remove('active');
-                    }
-                });
-                // Toggle current item
-                item.classList.toggle('active');
-            });
-        });
-
-        // Scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const scrollObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Observe cards and sections
-        document.querySelectorAll('.use-case-card, .step, .faq-item').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            scrollObserver.observe(el);
-        });
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                const href = this.getAttribute('href');
-                if (href !== '#download' && href.startsWith('#')) {
-                    e.preventDefault();
-                    const target = document.querySelector(href);
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                }
-            });
-        });
     </script>
 </body>
 </html>
