@@ -314,6 +314,38 @@
             opacity: 0;
         }
 
+        
+        .nav-dropdown-divider { height: 1px; background: rgba(51,235,224,0.1); margin: 4px 8px; }
+        .nav-dropdown-label { font-size: 0.7rem; font-weight: 700; color: rgba(51,235,224,0.5); text-transform: uppercase; letter-spacing: 0.1em; padding: 8px 14px 4px; }
+        .nav-dropdown-menu { max-height: 70vh; overflow-y: auto; }
+
+        
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px 6px 8px;
+            border-radius: 100px;
+            border: 1px solid rgba(51, 235, 224, 0.15);
+            background: rgba(51, 235, 224, 0.06);
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease-out backwards;
+        }
+        .hero-badge-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--accent);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(51, 235, 224, 0.4); }
+            50% { opacity: 0.8; box-shadow: 0 0 0 6px rgba(51, 235, 224, 0); }
+        }
+
         /* Hero Section */
         #hero {
             padding: 6rem 2rem;
@@ -811,13 +843,32 @@
                     <li class="nav-dropdown">
                         <a href="#">Use Cases <span class="dropdown-arrow"></span></a>
                         <div class="nav-dropdown-menu">
-                            <a href="/supplement-tracker">Supplement Tracker</a>
-                            <a href="/brain-fog-tracker">Brain Fog Tracker</a>
-                            <a href="/energy-tracker">Energy Tracker</a>
-                            <a href="/medication-tracker">Medication Tracker</a>
-                            <a href="/private-health-tracker">Private Health Tracker</a>
-                        </div>
-                    </li>
+                        <div class="nav-dropdown-label">Popular</div>
+                        <a href="/supplement-tracker">Supplement Tracker</a>
+                        <a href="/brain-fog-tracker">Brain Fog Tracker</a>
+                        <a href="/energy-tracker">Energy Tracker</a>
+                        <a href="/medication-tracker">Medication Tracker</a>
+                        <div class="nav-dropdown-divider"></div>
+                        <div class="nav-dropdown-label">Mental Health</div>
+                        <a href="/anxiety-trigger-tracker">Anxiety Trigger Tracker</a>
+                        <a href="/mood-and-sleep-tracker">Mood &amp; Sleep Tracker</a>
+                        <a href="/adhd-symptom-tracker">ADHD Symptom Tracker</a>
+                        <a href="/cortisol-and-stress-tracker">Cortisol &amp; Stress Tracker</a>
+                        <div class="nav-dropdown-divider"></div>
+                        <div class="nav-dropdown-label">Conditions</div>
+                        <a href="/gut-health-tracker">Gut Health Tracker</a>
+                        <a href="/food-reaction-tracker">Food Reaction Tracker</a>
+                        <a href="/histamine-intolerance-tracker">Histamine Intolerance</a>
+                        <a href="/migraine-trigger-tracker">Migraine Trigger Tracker</a>
+                        <a href="/long-covid-tracker">Long COVID Tracker</a>
+                        <a href="/autoimmune-tracker">Autoimmune Tracker</a>
+                        <a href="/perimenopause-tracker">Perimenopause Tracker</a>
+                        <a href="/inflammation-tracker">Inflammation Tracker</a>
+                        <div class="nav-dropdown-divider"></div>
+                        <a href="/symptom-journal">Symptom Journal</a>
+                        <a href="/private-health-tracker"><strong style="color:var(--accent);">100% Private</strong> — Why ReactLog?</a>
+                    </div>
+                </li>
                     <li><a href="/#how-it-works">How It Works</a></li>
                     <li><a href="/#privacy">Privacy</a></li>
                     <li><a href="/#download" class="cta-button">Download</a></li>
@@ -828,6 +879,10 @@
         <!-- Hero Section -->
         <section id="hero" class="reveal">
             <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="hero-badge-dot"></span>
+                    Available on iPhone &middot; Android coming soon
+                </div>
                 <h1>The Health Tracker That Keeps Your Data on YOUR Phone</h1>
                 <p class="hero-subtitle">Most health apps collect your most intimate data — mood, medications, symptoms, menstrual cycles — and store it on their servers. Many sell it. ReactLog is architecturally different: there are no servers. Your data never leaves your iPhone.</p>
 
