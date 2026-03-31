@@ -6,7 +6,7 @@
 
 - Platform: iPhone (iOS). Android coming soon.
 - Privacy: 100% on-device. No backend servers. No data collection. No analytics SDKs. No data sold.
-- Price: Free during Early Access. Will be a paid subscription app.
+- Price: 14-day free trial. $2.99/month or $29.99/year.
 - Security: Face ID / Touch ID lock. GDPR & CCPA compliant.
 - Website: https://reactlog.com
 - Support: support@reactlog.com
