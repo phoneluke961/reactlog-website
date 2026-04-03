@@ -18,17 +18,20 @@ Track mood, symptoms, supplements, medications, sleep, exercise, food, and custo
 - Supplement, medication, and lifestyle logging
 - Sleep quality tracking
 - Automated correlation discovery engine
+- Apple HealthKit integration (HRV, heart rate, sleep, steps, and more)
 - Visual health dashboards and trends
 - Smart journaling with health context
 - Custom tracking categories
+- PDF export with cited sources
 - GDPR & CCPA compliant
 
 ## Links
 
+- **App Store:** [Download ReactLog](https://apps.apple.com/us/app/reactlog/id6761349662)
 - **Website:** [reactlog.com](https://reactlog.com)
-- **Privacy Policy:** [reactlog.com/privacy.html](https://reactlog.com/privacy.html)
+- **Privacy Policy:** [reactlog.com/privacy](https://reactlog.com/privacy.html)
 - **Support:** support@reactlog.com
 
 ## Status
 
-Free during Early Access. iPhone only — Android coming soon.
+Live on the App Store. Free to download — $2.99/month for full access. iPhone only — Android coming soon.
